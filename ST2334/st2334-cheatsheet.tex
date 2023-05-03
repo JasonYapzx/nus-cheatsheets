@@ -1,0 +1,462 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{listings} 
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{fancyhdr}
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.20in,left=.20in,right=.20in,bottom=.20in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\title{ST2334-cheatsheet}
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\scriptsize
+
+
+\begin{multicols*}{3}
+\setlength{\premulticols}{0.1pt}
+\setlength{\postmulticols}{0.1pt}
+\setlength{\multicolsep}{0.1pt}
+\setlength{\columnsep}{0.1pt}
+\begin{tiny}
+    \small{\textbf{ST2334 Cheatsheet AY22/23 || \href{https://github.com/JasonYapzx}{@JasonYapzx}}} \\
+\end{tiny}
+\subsection{Chapter 1}
+\textbf{Observation:} Recording of information, numerical or categorical \\ 
+\textbf{Statistical Exp:} Procedure that generates a set of observations \\ 
+\textbf{Sample Space:} Set of all possible outcomes of a statistical experiment, represented by the symbol $S$. \\
+\textbf{Sample Points:} Every outcome in a sample space. \\ 
+\textbf{Events:} Subset of sample space. \\ 
+\textbf{Simple/Compound Event:} Exactly one/More than one outcome or sample point. \\ 
+\textbf{Sure/null Event:} Sample space/Event with no outcomes. \\
+
+\textbf{\underline{Operations on Events}} \\ 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Complement}: $A'$ Elements not in $A$
+    \item \textbf{Mutually Exclusive:} $A \cap B = \emptyset$ 
+    \item \textbf{Union:} $A \cup B$ contains $A$ or $B$ or both elements
+    \item \textbf{Intersection:} $A \cap B$ contains elements common to both
+\end{itemize}
+
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \begin{minipage}[c]{0.35\linewidth}
+        \item $A \cap A'= \emptyset$
+        \item $A \cap \emptyset = \emptyset$
+        \item $A \cup A' = S$
+        \item $(A')' = A$
+        \item $(A \cap B)' = A' \cup B'$
+    \end{minipage}
+    \begin{minipage}[c]{0.55\linewidth}
+        \item $(A \cup B)' = A' \cap B'$
+        \item $A \cup (B \cap C)=(A \cup B) \cap (A \cup C)$
+        \item $A \cap (B \cup C)=(A \cap B) \cup (A \cap C)$
+        \item $A \cup B = A \cup (B \cap A')$
+        \item $A = (A \cap B) \cup (A \cap B')$
+    \end{minipage}
+\end{enumerate}
+
+$A \subset B$ if all elements in event $A$ are in event $B$, if $A\subset B$ and $B \subset A$ then $A=B$.
+We assume \textbf{contained} means \underline{proper subset}.
+
+\textbf{\underline{Permutations and Combinations}} \\ 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item P: Arrange $r$ objects from $n$ objects where $r \leq n$, $_nP_r=\frac{n!}{(n-r)!}$
+    \item P: Number of ways around a circle = $(n-1)!$
+    \item C: No. of ways to select $r$ from $n$ without regard to order: ${n\choose r}={_nC_r}=\frac{n!}{r!(n-r)!}$
+\end{itemize}
+
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Conditional:} $\text{Pr}(A|B)=\frac{\text{Pr}(A\cap B)}{\text{Pr}(B)}, \text{ if Pr}(A) \neq 0$
+    \item \textbf{Multiplicative:} $\text{Pr}(A\cap B)=\text{Pr}(A)\text{Pr}(B|A)=\text{Pr}(B)\text{Pr}(A|B)$
+    \item \textbf{LoTP:} $\text{Pr}(B)=\sum^n_{i=1}\text{Pr}(B\cap A_i)=\sum^n_{i=1}\text{Pr}(A_i)\text{Pr}(B|A_i)$
+    \item \textbf{Bayes:} $\text{Pr}(A_k|B)=\frac{\text{Pr}(A_k)\text{Pr}(B|A_k)}{\sum_{i=1}^n\text{Pr}(A_i)\text{Pr}(B|A_i)}$ 
+\end{itemize}
+
+\textbf{\underline{Properties of Independent Events}} 
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $\text{Pr}(B|A)=\text{Pr}(B)$ and $\text{Pr}(A|B)=\text{Pr}(A)$
+    \item $A$ and $B$ cannot be mutually exclusive if they are independent, supposing $\text{Pr}(A),\text{Pr}(B)>0$
+    \item $A$ and $B$ cannot be independent if they are mutually exclusive
+    \item Sample space $S$ and empty set $\emptyset$ are independent of \underline{any event}
+    \item If $A\subset B$, then $A$ and $B$ are dependent unless $B=S$.
+\end{enumerate}
+
+\textbf{\underline{Birthday Problem}}
+$p_n=\text{Pr}(A)=1-q_n$, once have 23 people, probability exceeds 0.5.
+How large does a group of randomly selected people have to be such that the probability that someone is sharing his or her birthday with me is larger than 0.5? 
+$n$ s.t. $1-(\frac{364}{365})^n \geq 0.5$. $1 - \frac{n \times n - 1 \times \cdots  \times n - p + 1}{n^p}$, $n$ is the number of days, $p$ is number of people.
+
+\subsection*{Chapter 2}
+\textbf{Random Variable:} $R_X=\{x|x=X(s),s∈S\}$ \\ 
+\textbf{Equivalent:} If $A=\{s\in S|X(s)\in B\}$, $A$ and $B$ are equivalent \\
+\textbf{Probability Function:} 
+1. $f(x_i)≥0$ for all $x_i$
+2. $\sum_{i=1}^\infty f(x_i)=1$ \\ 
+\textbf{Continuous Random Variable:} The probability density function (p.d.f.) $f(x)$ of a continuous random variable must satisfy the following conditions
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $f(x)≥0$ for all $x\in R_X$. This also means that we may set $f(x)=0$ for $x\notin R_X$, i.e. $\text{Pr}(A)=0$ does not imply $A=\empty$
+    \item $\int _{R_X}f(x)dx=1$, $\int^\infty\infty f(x)dx=1$ $\rightarrow$ $f(x)=0$ for $x$ not in $R_X$
+    \item For any $(c,d)\subset R_X, c<d$, $\text{Pr}(c≤X≤d)=\int_c^df(x)dx$
+    \item $\text{Pr}(X=x_0)=\int_{x_0}^{x_0}f(x)dx=0$
+\end{itemize}
+
+\textbf{\underline{Cumulative Distribution Function c.d.f}} \\ 
+$F(x)$ as cumulative distribution function (c.d.f.) of the random variable $X$ where $F(x)=\text{Pr}(X≤x)$.
+For any $a≤b$, $\text{Pr}(a≤B≤b)=\text{Pr}(X≤b)-\text{Pr}(X<a)=F(b)-F(a^-)$
+where $a^-$ is the largest possible value of $X$ that is strictly less than $a$
+\begin{multicols*}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $F(x)=\int^x_{-\infty}f(t)dt$
+        \item $f(x)=\frac{dF(x)}{dx}$
+    \end{itemize}
+\end{multicols*}
+
+\textbf{\underline{Expectation}} 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Discrete:} $\mu_X=E(X)=\sum_{i}x_if_X(x_i)=\sum_xxf_X(x)$
+    \item \textbf{Cont.:} $\mu_X=E(X)=\int_{-\infty}^\infty xf_X(x)dx$; $E[g(x)] = \int_{-\infty}^\infty g(x)f(x)dx$ 
+\end{itemize}
+\textbf{\underline{Variance}}
+$g(x)=(x-\mu_X)^2$, leads us to the definition of variance.
+$\sigma_X^2=V(X)=E[(X-\mu_X)^2]=\begin{cases}\sum_x(x-\mu_X)^2f_X(x),&\text{if }X \text{ is discrete,}\\\int_{-\infty}^{\infty}(x-\mu_X)^2f_X(x)dx,&\text{if }X\text{ is continuous.}\end{cases}$
+
+\begin{multicols*}{2}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $\sigma_X=\sqrt{V(X)}$
+    \item $V(X)=E(X^2)-[E(X)]^2$    
+    \item $V(X)=E(X^2)-[E(X)]^2$
+    \item $V(aX+b)=a^2V(X)$
+    \item $E(aX+b)=aE(X)+b$, where $a$ and $b$ are constants
+    \item $V(aX+bY)=a^2V(X)+b^2V(Y)+2abCov(X,Y)$, if $X$,$Y$ independent, $Cov(X,Y)=0$
+\end{itemize}
+\end{multicols*}
+
+\subsection*{Chapter 3}
+$(X,Y)$ is a two-dimensional random variable, where $X,Y$ are functions assigning a real number to each $s\in S$.\\ 
+\textbf{Range Space:} $R_{X,Y}=\{(x,y)|x=X(s),y=Y(s),s∈S\}$
+
+\textbf{\underline{Joint Probability | Discrete Random Variables}} \\
+With each possible value $(x_i,y_j)$, we associate a number $f_{X,Y}(x_i,y_j)$ representing $\text{Pr}(X=x_i,Y=y_j)$ and satisfying the following conditions:
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $f_{X,Y}(x_i,y_j)≥0$ for all $(x_i,y_j)\in R_{X,Y}$. \\ 
+    \item $\sum^\infty{i=1}\sum^\infty{j=1}f_{X,Y}(x_i,y_j)=\sum^\infty{i=1}\sum^\infty{j=1}\text{Pr}(X=x_i,Y=y_j)=1$.
+\end{enumerate}
+
+\textbf{\underline{Joint Probability | Continuous Random Variables}} \\ 
+$f_{X,Y}(x,y)$ is called a \textbf{joint probability density function} if it satisfies the following:
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $f_{X,Y}(x,y)≥0$ for all $(x,y)\in R_{X,Y}$.
+    \item $\iint_{(x,y)\in R_{X,Y}}f_{X,Y}(x,y)dxdy=1$ or $\int_\infty^\infty\int_\infty^\infty f_{X,Y}(x,y)dxdy=1$.
+\end{enumerate}
+
+\textbf{\underline{Marginal Probabilty Densities}} \\
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Discrete:} $f_X(x)=\sum_y f_{X,Y}(x,y)$ and $f_Y(y)=\sum_xf_{X,Y}(x,y)$
+    \item \textbf{Cont:} $f_X(x)=\int_{-\infty}^\infty f_{X,Y}(x,y)dy$, $f_Y(y)=\int_{-\infty}^\infty f_{X,Y}(x,y)dx$
+\end{itemize}
+
+\textbf{\underline{Conditional Probabilty Densities}} \\
+The conditional distribution of $Y$ given that $X=x$ is given by $f_{Y|X}(y|x)=\frac{f_{X,Y}(x,y)}{f_X(x)}, \text{ if }f_X(x)>0$, for each $x$ within the range of $X$. Flip the variables for $X$ given $Y=y$.
+
+\textbf{\underline{Independent Random Variables}} \\
+Random variables $X$ and $Y$ are independent if and only if $f_{X,Y}(x,y)=f_X(x)f_Y(y)$ for all $x,y$, extendable to $n$ variables.
+
+\textbf{\underline{Expectation and Covariance}} \\
+\begin{multicols*}{2}
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Discrete, $E(g(X,Y)) = \sum_{x}\sum_{y}g(x,y)f_{X,Y}(x,y)$
+        \item Continous $E(g(X,Y)) = \int_{-\infty}^{\infty}\int_{-\infty}^{\infty}g(x,y)f_{X,Y}(x,y)dydx$
+        \item $E(XY)=\int\int xy(f(x,y))dydx$
+        \item $Cov(X,Y)=E(XY)-\mu_X\mu_Y$.
+        \item If $X$ and $Y$ are independent, then $Cov(X,Y)=0$. However, $Cov(X,Y)=0$ does not imply independence.
+        \item $Cov(aX+b,cY+d)=acCov(X,Y)$.
+        \item $V(aX+bY)=a^2V(X)+b^2V(Y)+2abCov(X,Y)$.
+        \item If $X \perp Y$, $Var(aX-bY)=a^2V(X)+b^2V(Y)$ ($Cov = 0$)
+        \item $Var(X-Y) = V(X) + V(Y)$ 
+    \end{enumerate}
+\end{multicols*}
+
+\subsection*{Chapter 4}
+\textbf{\underline{Discrete Uniform Distributions}} \\
+If the random variable $X$ assumes the values $x_1,x_2,\cdots,x_k$ with equal probability, then the random variable $X$ is said to have a discrete uniform distribution and the probability function is given by $f_X(x)=\frac{1}{k'}$, $x=x_1,x_2,\cdots, x_k$, and 0 otherwise.
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Mean, $\mu=E(X)=\sum_{i=1}^kx_i\frac{1}{k}=\frac{1}{k}\sum_{i=1}^kx_i$.
+    \item Variance, $\sigma^2=V(X)=\sum_{\text{all x}}(x-\mu)^2f_X(x)=\frac{1}{k}\sum_{i=1}^k(x_i-\mu)^2$.
+    \item Variance, $\sigma^2=E(X^2)-\mu^2=\frac{1}{k}(\sum_{i=1}^kx_i^2)-\mu^2$.
+\end{enumerate}
+
+\textbf{\underline{Bernoulli Distributions}} \\
+Bernoulli experiments only have two possible outcomes, and we can code them as 1 and 0.
+A random variable $X$ is defined to have a Bernoulli distribution is the probability function of $X$ is given by $f_X(x)=p^x(1-p)^{1-x},x=0,1$, where $0<p<1$. $f_X(x)=0$ for all other $X$ values.
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $(1-p)$ is often denoted by $q$. 
+    \item $\text{Pr}(X=1)=p$ and $\text{Pr}(X=0)=1-p=q$.
+    \item Mean, $\mu=E(X)=p$ | Variance, $\sigma^2=V(X)=p(1-p)=pq$.
+\end{enumerate}
+
+\textbf{\underline{Discrete Distributions | Formula Sheet}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Binomial $\sim$ $B(n,p)$:} Bernoulli is speical case when $n$ = 1 | number of successes in $n$ trials
+    \item \textbf{Negative Binomial $\sim$ $NB(k,p)$:} Consider a binomial experiment, except that trials \textit{repeated} until a fixed number of successes occur. Interested in probability of the $k^{th}$ success occuring on the $x^{th}$ trial, where $x$ is the random variable. | $x$ trials needed till $k^{th}$ success
+    \item \textbf{Geometric $\sim$ $Geometric(p)$:} Negative binomial distribution with $k=1$, stop after $1^{st}$ success. | $x$ trials needed till $1^{st}$ success
+    \item \textbf{Poisson $\sim$ $P(\lambda)$:} Yield the number of successes occuring during a \underline{given time interval}. \textit{Poisson process} with rate parameter $\alpha$ are: \\
+        $\bullet$ $\lambda$ is the number of expected outcomes \\ 
+        $\bullet$ expected number of occurences in interval of length $T$ is $\alpha T$ \\
+        $\bullet$ there are no simultaneous occurences \\
+        $\bullet$ no. of occurrences in disjoint time intervals are independent \\
+        $\bullet$ Approx. to $B(n,p)$: $\lim_{\substack{p\rightarrow0\\n\rightarrow\infty}}\text{Pr}(X=x)=\frac{e^{-np}(np)^x}{x!}$
+\end{itemize}
+
+\textbf{\underline{Continuous Distributions | Formula Sheet}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Uniform $\sim$ $U(a,b)$:} Has uniform distribution over interval $[a,b]$ where $-\infty<a<b<\infty$, probability density function given by $f_X(x)=\frac{1}{b-a},a≤x≤b$, and $0$ otherwise.
+    \item \textbf{Exponential $\sim$ $Exp(\lambda)$:} \textbf{non-negative} values is said to have exponential distribution with parameter $\lambda > 0$.
+    \begin{itemize}[noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{No Memory:} $\text{Pr}(X>s+t\text{ }|\text{ }X>s)=\text{Pr}(X>t)$.
+    \end{itemize} 
+    \item \textbf{Normal $\sim$ $N(\mu, \sigma^2$):} symmetric about $x = \mu$, maximum point is at $\mu$ and its value is $\frac{1}{\sqrt{2\pi}}$. Total area under curve is 1, as $\sigma$ increases, curve flattens. Standardized normal = $Z = \frac{(X-\mu)}{\sigma}$ 
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Some statistical tables give the $100\alpha$ percentage points, $z_\alpha$, of a standardized normal distribution, where $\alpha=\text{Pr}(Z≥z_\alpha)=\int_{z_\alpha}^\infty\frac{1}{\sqrt{2\pi}}\text{exp}(-\frac{z^2}{2})dx$. $\rightarrow$ $\text{Pr}(Z≥z_\alpha)=\text{Pr}(Z≤-z_\alpha)=\alpha$
+        \item $\Phi(z)=\text{Pr}(Z≤z)$, $1-\Phi(z)=\text{Pr}(Z>z)$
+        \item Approx. to $B(n,p)$ as $n \rightarrow \infty$ and $p \rightarrow \frac{1}{2}$, generally can approximate when $np > 5$ and $n(1-p) > 5$: $Z=\frac{X-np}{\sqrt{npq}}$
+        \item \textbf{Continuity Correction:} When approximating binomial using normal, $Pr(X=k) \approx Pr(k-\frac{1}{2} < X < k + \frac{1}{2})$
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Chapter 5}
+\textbf{Population:} Totality of all possible outcomes/observations of survey or experiment. \textbf{Sample:} Subset of a population 
+\textbf{SRS:} every subset of $n$ observations of the population has \textit{same probability} of being selected.
+\textbf{Statistic:} A function of a random sample $(X_1,X_2,\ldots,X_n)$ is called a statistic e.g. \textit{mean}.
+
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+\textbf{Sample Mean:} For some random sample of size $n$ represented by $X_1,X_2,\cdots,X_n$, the sample mean is defined by the statistic $\overline{X}=\frac{1}{n}\sum^n_{i=1}X_i$.
+If the values in the random sample are observed and they are $x_1,x_2,\cdots,x_n$, then the realization of the statistic $\overline{X}$ is given by $\overline{x}=\frac{1}{n}\sum^n_{i=1}x_i$. \\ 
+\textbf{Sample Variance:} The sample variance, defined as $S^2 = \frac{1}{n-1}\sum^n_{i=1}(X_i - \overline{X})^2$ is a statistic, if the values are observed to be $x_1 \ldots x_n$, realization of the
+statistic $S^2$ is given by $s^2 = \frac{1}{n-1}\sum^n_{i=1}(x_i - \overline{x})^2$ \\ 
+\textbf{Sampling Distribution:} For random samples of size $n$ taken from an infinite population or a finite population with replacement having population mean $\mu$ and population standard deviation $\sigma$, the sampling distribution of the sample mean $\overline{X}$ has its mean and variance given by:
+1. $\mu_{\overline{X}}=\mu_X$, i.e. $E(\overline{X})=E(X)$.
+2. $\sigma^2_{\overline{X}}=\frac{\sigma^2_X}{n}$, i.e. $V(\overline{X})=\frac{V(X)}{n}$.
+}}
+\textbf{Law of Large Numbers:} $X_1,X_2,\cdots,X_n$ be a random sample of size $n$ from a population having any distribution with mean $\mu$ and \textbf{finite} population variance $\sigma^2$.
+For any $\epsilon\in\mathbb{R}$, $\text{P}(|\overline{X}-\mu|>\epsilon)\rightarrow0$ as $n\rightarrow\infty$.
+
+\textbf{Central Limit Theorem:} The sampling distribution of the sample mean $\overline{X}$ is approximately normal with mean $\mu$ and variance $\frac{\sigma^2}{n}$ if $n$ is sufficiently large.
+Hence $Z=\frac{\overline{X}-\mu}{\sigma/\sqrt{n}}$ follows approximately $N(0,1)$. \\ 
+1. Central Tendency: $\mu_{\overline{X}}=\mu$. 
+2. Variation: $\sigma_{\overline{X}}=\frac{\sigma}{\sqrt{n}}$.
+
+\textbf{\underline{Chi-square Distribution $\sim$ $\chi^2(n)$}} Let $Z_1, \ldots, Z_n$ be $n$ independent and identically distributed \textit{standard normal} random variables. A random variable
+with the same distribution as $Z_1^2 + \ldots + Z_n^2$ is called a $\chi^2$ random variable with $n$ degrees of freedom. \\ 
+1. For $Y \sim \chi^2(n)$ then $E(Y) = n$ and $V(Y) = 2n$ \\
+2. For large $n$, $\chi^2(n)$ is approximately $N(n, 2n)$ \\
+3. $Y_1$, $Y_2$ are \textit{independent} $\chi^2$ random variables with $m$, $n$ \textit{df}, then $Y_1 + Y_2$ is a $\chi^2$ random variable with $m+n$ \textit{df}. \\ 
+4. All density functions have long right tail.\\
+5. Define $\chi^2(n;\alpha)$ such that $Y \sim \chi^2(n)$ s.t $Pr(Y > \chi^2(n;\alpha)) = \alpha$ \\ 
+6. \textbf{Sampling Distribution:} $\frac{(n-1)S^2}{\sigma^2}$. If $S^2$ is variance of random sample of size $n$ taken 
+from a normal population with $\sigma^2$ then, random variable $\frac{(n-1)S^2}{\sigma^2} = \frac{\sum^n_{i=1}(X_i - \overline{X})^2}{\sigma^2}$ has $\chi^2$ distribution with $n-1$ df.
+
+\includegraphics*[width=8.5cm, height=7.5cm]{chi-square-distribution-table.png}
+
+\textbf{\underline{$t$-distribution:}} Suppose $Z \sim N(0,1)$ and $U \sim \chi^2(n)$. If $Z$ and $U$ are independent then $T = \frac{Z}{\sqrt{U/n}}$ follows \textit{t-distribution} with $n$ df. \\ 
+1. \textit{t-distribution} with $n$ df denoted by $t(n)$, approaches $N(0,1)$ as parameter $n\rightarrow\infty$. When $n\geq 30$ we can replace it with $N(0,1)$. \\ 
+2. If $T\sim t(n)$, then $E(T) = 0$ and $V(T) = \frac{n}{n-2}$ for $n > 2$ \\ 
+3. Graph of $t(n)$ resembles graph of $N(0,1)$,  $Pr(T > t_{n;\alpha}) = \alpha$ \\ 
+4. If $X_1, \ldots X_n$ are independent and identically distributed normal random variables with $\mu$, $\sigma^2$ then $\frac{\overline{X}-\mu}{S/\sqrt{n}}$ follows a $t$-dist with $n-1$ df.
+
+\includegraphics*[width=8.5cm, height=6cm]{ttable.png}
+
+\textbf{\underline{$F$-distribution $\sim$ $F(n_1,n_2)$:}} Suppose $U \sim \chi^2(m)$ and $V \sim \chi^2(n)$ are \textit{independent}, distirbution of random variable $F = \frac{U/m}{V/n}$ is an $F$-distribution with $(m, n)$ df. \\ 
+1. Denoted by $F(m,n)$, if $X \sim F(m,n)$ then $E(X) = \frac{n}{n-2}$ for $n>2$ and $V(X) = \frac{2n^2(m+n-2)}{m(n-2)^2(n-4)}$ for $n>4$ \\ 
+2. If $F \sim F(n,m)$ then $1/F \sim F(m,n)$, follows from def$^{\underline{n}}$ of $F$-distr.
+3. Values in $F$: $F(m,n;\alpha)$ s.t. $P(F> F(m,n;\alpha)) = \alpha$, $F\sim F(m,n)$ \\ 
+4. It can be sown that $F(m,n;1-\alpha) = 1/F(n,m;\alpha)$
+
+\subsection*{Chapter 6}
+\textbf{Statistic:} Function of random sample, not dependent on unknown parameters.  \\ 
+\textbf{Estimator:} Rule, usually expressed as a formula, indicate how to calculate an estimate based on information in the sample.
+For example, $\overline{X}$ is an estimator of $\mu$. The value of $\overline{X}$, denoted by $\overline{x}$, is an estimate of $\mu$.
+\textbf{Unbiased Estimator:} A statistic $\widehat{\Theta}$ is said to be an unbiased estimator of the parameter $\theta$ if $E(\widehat{\Theta})=\theta$. \\ 
+\textbf{Maximum Error of Estimate:} Typically $\overline{X} \neq \mu$, so $\overline{X} - \mu$ measures the difference between the estimator and
+the true value of the parameter. If the population is normal or if $n$ is large, $\frac{\overline{X}-\mu}{\sigma\sqrt{n}}$
+follows an approximately standard normal distribution. \\ $\rightarrow$ $Pr(\left|\overline{X} - \mu\right| \leq z_{\alpha/2} \cdot  \frac{\sigma}{\sqrt{n}}) = 1 - \alpha$, there is a probability error $\left|\overline{X} - \mu\right|$ $\leq$ $E = z_{\alpha/2} \cdot  \frac{\sigma}{\sqrt{n}}$, aka \textbf{maximum error of estimate}. \\ 
+\textbf{Confidence Interval:} An \textbf{interval estimator} is a rule for calculating, from the sample, an interval
+$(a,b)$ in which you are fairly certain the parameter of interest lies in: $Pr(a < \mu < b) = 1 - \alpha$. \\ 
+
+% \textbf{\underline{Independent Samples (Known and Unequal Variances)}} \\ 
+% 1. A random sample of size $n_1$, $n_2$ from population $1$, $2$ with mean $\mu_1$, $\mu_2$ and variance $\sigma_1^2$, $\sigma_2^2$ \\
+% 2. The two samples are \textit{independent} \\
+% 3. Population variances known and not the same  $\sigma_1^2 \neq \sigma_2^2$ \\ 
+% 4. Either 1 of the following conditions holds (1) 2 populations are \textit{normal} OR (2) both samples are large ($n_i \geq 30$)
+
+% \framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+% $\overline{X} = \frac{1}{n_1}\sum_{i=1}^{n_1}X_i$ and $\overline{Y} = \frac{1}{n_2}\sum_{i=1}^{n_2}Y_i$ are random samples,
+% then $E(\overline{X}) = \mu_1$, $V(\overline{X}) = \frac{\sigma_1^2}{n_1}$, $E(\overline{Y}) = \mu_2$, $V(\overline{Y}) = \frac{\sigma_2^2}{n_2}$ 
+% thus $E(\overline{X} - \overline{Y}) = \mu_1 - \mu 2 = \delta$ and $V(\overline{X} - \overline{Y}) = \frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}$  
+% when both samples are large or $n_1 \geq 30$, then $Z = \frac{(\overline{X} - \overline{Y}) - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \approx N(0,1)$
+% }}
+
+
+\textbf{\underline{Pooled Estimator:}} \\ 
+$\sigma^2$ can be estimated by: $S_p = \frac{(n_1 - 1)S_1^2 + (n_2 - 1)S_2^2}{n_1 + n_2 - 2}$
+with $S_i^2$ being the sample variances of either samples. This follows a $t$-distribution with degrees of freedom $n_1 + n_2 - 2$: 
+$T = \frac{(\overline{X} - \overline{Y}) - (\mu_1 - \mu_2)}{S_p\sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t_{n_1 + n_2 - 2}$
+
+\textbf{\underline{Paired Data:}} \\ 
+1. $(X_1,Y_1),\cdots ,(X_n,Y_n)$ are matched pairs, where $X_1,\cdots, X_n$ is a random sample from
+population $1$, $Y_1, \cdots, Y_n$ is a random sample from population $2$. \\
+2. $X_i$ and $Y_i$ are \textit{dependent}. \\
+3. $(X_i, Y_i)$ and $(X_j, Y_j)$ are independent for any $i \neq j$. \\
+4. For matched pairs, define $D_i = X_i Y_i, \mu_D = \mu_1  \mu_2$. \\
+5. Now we can treat $D_1,D_2,\cdots,D_n$ as a random sample from a single population with mean $\mu_D$ and variance $\sigma_D^2$. \\ 
+
+Point estimate of $\mu_D$ is $\overline{d}=\frac{1}{n}\sum^n_{i=1}d_i=\frac{1}{n}\sum_{i=1}^n(x_i-y_i)$
+Point estimate of variance $\sigma^2_D$ is given by $s_D^2=\frac{1}{n-1}\sum^n_{i=1}(d_i-\overline{d})^2$
+
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+    \centering
+    $\text{Pr}(-t_{n-1;\alpha/2}<T<t_{n-1;\alpha-2})=1-\alpha$
+    \par
+}}
+
+where $T=\frac{\overline{d}-\mu_D}{s_d/\sqrt{n}}$ ~ $t_{n-1}$ distribution.
+We have a $(1-\alpha)100\%$ confidence interval for $\mu_D=\mu_1-\mu_2$
+
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+\centering 
+$\overline{d}-t_{n-1;\alpha/2}(\frac{S_D}{\sqrt{n}})<\mu_D<\overline{d}+t_{n-1;\alpha/2}(\frac{S_D}{\sqrt{n}})$
+\par
+}}
+
+Sufficiently large sample $n>30$, can replace $t_{n-1;\alpha/2}$ by $z_{\alpha/2}$ and get
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+\centering
+$\overline{d}-z_{\alpha/2}(\frac{S_D}{\sqrt{n}})<\mu_D<\overline{d}+z_{\alpha/2}(\frac{S_D}{\sqrt{n}})$
+\par
+}}
+
+\subsubsection{Chapter 7} 
+\textbf{\underline{Null and Alternative Hypotheses}} \\ 
+\textbf{Null hypothesis $H_0$:} Formulated hypothesis with the hope of rejecting.
+Rejection of $H_0$ $\rightarrow$ acceptance of an alternative hypothesis, denoted by $H_1$.
+Reject hypothesis: conclude it is false. Accept hypothesis: insufficient evidence to believe otherwise.
+
+{
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \cline{1-3}
+                & Do not reject $H_0$       & Reject $H_0$          \\ \cline{1-3}
+    $H_0$ True  & Correct Decision          & \textbf{Type I Error} \\ \cline{1-3}
+    $H_0$ False & \textbf{Type II Error}    & Correct Decision      \\ \cline{1-3}
+    \end{tabular}\par
+}
+\textbf{\underline{Significance Level vs Power}} \\
+\textbf{Level of Significance $\alpha$:} Probability of making a Type I error, $P(Type \ I \ Error) = P(Reject \ H_0 | H_0 \ true)$ 
+\textbf{Power of the test $\beta$:} Define $1 - \beta = P(Reject \ H_0 | H_0 \ false)$ to be power of test.
+
+\textbf{\underline{Hypothesis testing concerning mean}} \\ 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Known Variance (Two-sided) - Critical Value:} 1. Variance, $\sigma^2$, known, AND
+    2. Underlying distribution is normal OR $n>30$. Test $H_0:\mu=\mu_0$ against $H_1:\mu\neq\mu_0$.  \\
+
+    1. $\overline{x}_1<\overline{X}<\overline{x}_2$ OR $-z_{\alpha/2} < z < z_{\alpha/2}$defines the acceptance region \\ 
+    2. 2 tails, $\overline{X}<\overline{x}_1$, $\overline{X}>\overline{x}_2$ constitute the critical/rejection region. \\
+
+    We need $\overline{x}_1=\mu_0-z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$ and $\overline{x}_2=\mu_0+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}$.
+    If $\overline{X}$ \underline{falls in the acceptance region}, we \textit{accept the null hypothesis}, else reject. The critical region is often stated in terms of $Z$ instead of $\overline{X}$, where
+    $Z=\frac{\overline{X}-\mu_0}{\sigma/\sqrt{n}}$ ~ $N(0,1)$
+
+    \item \textbf{Known Variance (Two-sided) - $p$-Value:} Probability of obtaining test statistic more extreme than the observed sample value given $H_0$ is true. aka observed level of significance. \\
+    1. Sample statistic ($\overline{X}$) into test statistic ($Z$), obtain $p$-value \\ 
+    2. Compare $p$ with $\alpha/2$. If $p < \alpha/2$, reject $H_0$, else do not reject.
+    
+    \item \textbf{Known Variance (One-sided) - Critical Value:} Same as before but alternative hypothesis is now either $H_1:\mu>\mu_0$ or $H_1:\mu<\mu_0$.
+    In both cases, let $Z=\frac{\overline{X}-\mu_0}{\sigma/\sqrt{n}}$. Need to check if the observed values of $Z$ is $>$ $z_\alpha$ or $<$ $-z_\alpha$ respectively.
+
+    \item \textbf{Known Variance (One-sided) - p-Value:} Same as the two-sided known variance approach, just that we will compare against the relevant side, and against $\alpha$ itself.
+    
+    \item \textbf{Unknown Variance (Two-sided) - Critical Value:} 1. Variance unknown, AND 2. Underlying distribution is \textit{normal}. Let $T=\frac{\overline{X}-\mu_0}{S/\sqrt{n}}$, where $S^2$ is the sample variance.
+    Then $H_0$ is rejected if the observed value of $T$, say $t$, $>t_{n-1;\alpha/2}$ or $<-t_{n-1;\alpha/2}$.
+
+    \item \textbf{Unknown Variance (One-sided) - Critical Value:} We test the relevant side, $t>t_{n-1;\alpha}$ or $t<-t_{n-1;\alpha}$. When $n \geq 30$ can replace $t_{n-1}$ by $Z \sim N(0, 1)$.
+\end{itemize}
+
+\textbf{\underline{Hypotheses Testing Concerning Difference Between Two Means}} \\ 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Known Variances:} 1. ariances $\sigma_1^2$ and $\sigma_2^2$ are known and 2. Underlying distribution is normal or both $n_1≥30, n_2≥30$.
+    Generally, since variance is known, we will be using the $Z$ distribution.
+    For the null hypothesis $H_0$: $\mu_1 - \mu_2 = \delta_0$, test statistic given by: $Z = \frac{(\overline{X} - \overline{Y}) - \delta_0}{\sqrt{\frac{\sigma_1^2}{n_1} + \frac{\sigma_2^2}{n_2}}} \sim N(0, 1)$.
+
+    \item \textbf{Unknown Variances (Large Samples):} 1. Variances $\sigma_1^2$ and $\sigma_2^2$ are unknown and 2. Both $n_1≥30, n_2≥30$.
+    For the null hypothesis $H_0$: $\mu_1 - \mu_2 = \delta_0$, test statistic given by: $Z = \frac{(\overline{X} - \overline{Y}) - \delta_0}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}} \sim N(0, 1)$.
+
+    {
+        \centering
+        \begin{tabular}{|l|l|l|}
+        \cline{1-3}
+        $H_1$                           & Rejection Region                             & $p$-value         \\ \cline{1-3}
+        $\mu_1 - \mu_2 > \delta_0$      & $z > z_{\alpha}$                             & $P(Z > |z|)$      \\ \cline{1-3}
+        $\mu_1 - \mu_2 < \delta_0$      & $z < -z_{\alpha}$                            & $P(Z < -|z|)$     \\ \cline{1-3}
+        $\mu_1 - \mu_2 \neq \delta_0$   & $z > z_{\alpha/2}$ or $z < -z_{\alpha/2}$    & $2P(Z > |z|)$     \\ \cline{1-3}
+        \end{tabular}\par
+    }   
+
+    \item \textbf{Unknown but Equal Variances (Small Samples):} 1. Variances $\sigma_1^2$ and $\sigma_2^2$ are unknown but equal and 2. The populations are normal and 3. Both are small samples $n_1≤30, n_2≤30$.
+    For the null hypothesis $H_0$: $\mu_1 - \mu_2 = \delta_0$, test statistic given by: $Z = \frac{(\overline{X} - \overline{Y}) - \delta_0}{S_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}} \sim t_{n_1 + n_2 - 2}$.
+\end{itemize}
+
+\textbf{\underline{Paired Data}}
+For paired data, define $D_i = X_i - Y_i$, null hypothesis $H_0$: $\mu_D = \mu_D_0$, test statistic given by: $T = \frac{\overline{D} - \mu_{D_0}}{S_D / \sqrt{n}}$.
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{$n < 30$} and population normally distributed, then $T \sim t_{n-1}$
+    \item \textbf{$n \geq 30$} then $T \sim N(0,1)$
+\end{itemize}
+
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{%
+    \centering
+    We can roughly assume equal variance if
+    $\frac{1}{2} \leq \frac{S_1}{S_2} \leq 2$
+    as statistic not overly sensitive to small differences between population variances.
+    \par
+}}
+
+\textbf{By parts:} $\int u v dx = u \int v dx - \int \frac{du}{dx} (\int v dx) dx$ \\ 
+\textbf{Subst:} $I = \int f(x) dx$, $x =g(t)$ $\rightarrow$ $dx = g'(t) dt \mid$ $I = \int f(g(t)) g'(t) dt$
+
+\includegraphics*[width=8.5cm, height=3.2cm]{exampleqn.png}
+
+\end{multicols*}
+
+\end{document}

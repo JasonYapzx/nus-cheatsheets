@@ -1,0 +1,25 @@
+\BOOKMARK [3][-]{section*.18}{General System Call Mechanism}{}% 1
+\BOOKMARK [3][-]{section*.28}{Criteria for Scheduling Algorithms}{}% 2
+\BOOKMARK [3][-]{section*.31}{Criteria for batch processing}{}% 3
+\BOOKMARK [3][-]{section*.32}{First-Come First-Served \205 Non-Preemptive}{}% 4
+\BOOKMARK [3][-]{section*.33}{Shortest Job First \(SJF\)}{}% 5
+\BOOKMARK [3][-]{section*.34}{Shortest Remaining Time \(SRT\) \205 Preemptive}{}% 6
+\BOOKMARK [3][-]{section*.36}{Round Robin \(RR\)}{}% 7
+\BOOKMARK [3][-]{section*.37}{Priority Scheduling}{}% 8
+\BOOKMARK [3][-]{section*.38}{Multi-level Feedback Queue \(MLFQ\)}{}% 9
+\BOOKMARK [3][-]{section*.39}{Lottery Scheduling}{}% 10
+\BOOKMARK [3][-]{section*.42}{Solution Outline}{}% 11
+\BOOKMARK [3][-]{section*.48}{Priority Inversion Solution}{}% 12
+\BOOKMARK [3][-]{section*.53}{Benefits of Threads}{}% 13
+\BOOKMARK [3][-]{section*.54}{Problems of Threads}{}% 14
+\BOOKMARK [3][-]{section*.57}{Hybrid Thread Model}{}% 15
+\BOOKMARK [3][-]{section*.59}{pthread Synchronisation}{}% 16
+\BOOKMARK [2][-]{section*.60}{Classical Synchronisation Problems}{}% 17
+\BOOKMARK [3][-]{section*.61}{Producer-Consumer}{section*.60}% 18
+\BOOKMARK [3][-]{section*.62}{Readers Writers}{section*.60}% 19
+\BOOKMARK [3][-]{section*.63}{Dining Philosophers}{section*.60}% 20
+\BOOKMARK [2][-]{section*.64}{Memory Abstraction}{}% 21
+\BOOKMARK [2][-]{section*.71}{Disjoint Memory Schemes}{}% 22
+\BOOKMARK [2][-]{section*.82}{Virtual Memory Management}{}% 23
+\BOOKMARK [3][-]{section*.102}{cs2106-cheatsheet-2.cpt}{section*.82}% 24
+\BOOKMARK [3][-]{section*.103}{cs2106-cheatsheet-3.cpt}{section*.82}% 25

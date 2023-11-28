@@ -1,0 +1,1135 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.8.26)  28 NOV 2023 23:53
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**/home/jasony/Repositories/school/Y3S1/CS4225/cs4225-cheatsheet
+(/home/jasony/Repositories/school/Y3S1/CS4225/cs4225-cheatsheet.tex
+LaTeX2e <2023-06-01> patch level 1
+L3 programming layer <2023-08-11>
+(/usr/local/texlive/2023/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
+(/usr/local/texlive/2023/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count185
+\c@section=\count186
+\c@subsection=\count187
+\c@subsubsection=\count188
+\c@paragraph=\count189
+\c@subparagraph=\count190
+\c@figure=\count191
+\c@table=\count192
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen140
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks17
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (/usr/local/texlive/2023/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2023/05/13 v2.17o AMS math features
+\@mathmargin=\skip50
+
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2023/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2021/08/26 v2.01 AMS text
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks18
+\ex@=\dimen141
+)) (/usr/local/texlive/2023/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen142
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
+)
+\inf@bad=\count193
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count194
+\leftroot@=\count195
+LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
+\classnum@=\count196
+\DOTSCASE@=\count197
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box51
+\strutbox@=\box52
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen143
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count198
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
+\c@MaxMatrixCols=\count199
+\dotsspace@=\muskip16
+\c@parentequation=\count266
+\dspbrk@lvl=\count267
+\tag@help=\toks19
+\row@=\count268
+\column@=\count269
+\maxfields@=\count270
+\andhelp@=\toks20
+\eqnshift@=\dimen144
+\alignsep@=\dimen145
+\tagshift@=\dimen146
+\tagwidth@=\dimen147
+\totwidth@=\dimen148
+\lineht@=\dimen149
+\@envbody=\toks21
+\multlinegap=\skip51
+\multlinetaggap=\skip52
+\mathdisplay@stack=\toks22
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/amscls/amsthm.sty
+Package: amsthm 2020/05/29 v2.20.6
+\thm@style=\toks23
+\thm@bodyfont=\toks24
+\thm@headfont=\toks25
+\thm@notefont=\toks26
+\thm@headpunct=\toks27
+\thm@preskip=\skip53
+\thm@postskip=\skip54
+\thm@headsep=\skip55
+\dth@everypar=\toks28
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2023/03/30 v1.9f multicolumn formatting (FMi)
+\c@tracingmulticols=\count271
+\mult@box=\box53
+\multicol@leftmargin=\dimen150
+\c@unbalance=\count272
+\c@collectmore=\count273
+\doublecol@number=\count274
+\multicoltolerance=\count275
+\multicolpretolerance=\count276
+\full@width=\dimen151
+\page@free=\dimen152
+\premulticols=\dimen153
+\postmulticols=\dimen154
+\multicolsep=\skip56
+\multicolbaselineskip=\skip57
+\partial@page=\box54
+\last@line=\box55
+\mc@boxedresult=\box56
+\maxbalancingoverflow=\dimen155
+\mult@rightbox=\box57
+\mult@grightbox=\box58
+\mult@firstbox=\box59
+\mult@gfirstbox=\box60
+\@tempa=\box61
+\@tempa=\box62
+\@tempa=\box63
+\@tempa=\box64
+\@tempa=\box65
+\@tempa=\box66
+\@tempa=\box67
+\@tempa=\box68
+\@tempa=\box69
+\@tempa=\box70
+\@tempa=\box71
+\@tempa=\box72
+\@tempa=\box73
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\@tempa=\box78
+\@tempa=\box79
+\@tempa=\box80
+\@tempa=\box81
+\@tempa=\box82
+\@tempa=\box83
+\@tempa=\box84
+\@tempa=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\@tempa=\box91
+\@tempa=\box92
+\@tempa=\box93
+\@tempa=\box94
+\@tempa=\box95
+\@tempa=\box96
+\c@minrows=\count277
+\c@columnbadness=\count278
+\c@finalcolumnbadness=\count279
+\last@try=\dimen156
+\multicolovershoot=\dimen157
+\multicolundershoot=\dimen158
+\mult@nat@firstbox=\box97
+\colbreak@box=\box98
+\mc@col@check@num=\count280
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip58
+\multirow@cntb=\count281
+\multirow@dima=\skip59
+\bigstrutjot=\dimen159
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count282
+\calc@Bcount=\count283
+\calc@Adimen=\dimen160
+\calc@Bdimen=\dimen161
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count284
+\calc@Cskip=\skip62
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2022/04/13 v1.1d Standard LaTeX ifthen package (DPC)
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks29
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
+))
+\Gin@req@height=\dimen162
+\Gin@req@width=\dimen163
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1357.
+Package xcolor Info: Model `RGB' extended on input line 1369.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1371.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks30
+\inpenc@posthook=\toks31
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/enumitem/enumitem.sty
+Package: enumitem 2019/06/20 v3.9 Customized lists
+\labelindent=\skip63
+\enit@outerparindent=\dimen164
+\enit@toks=\toks32
+\enit@inbox=\box99
+\enit@count@id=\count285
+\enitdp@description=\count286
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count287
+\lst@gtempboxa=\box100
+\lst@token=\toks33
+\lst@length=\count288
+\lst@currlwidth=\dimen165
+\lst@column=\count289
+\lst@pos=\count290
+\lst@lostspace=\dimen166
+\lst@width=\dimen167
+\lst@newlines=\count291
+\lst@lineno=\count292
+\lst@maxwidth=\dimen168
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
+\c@lstnumber=\count293
+\lst@skipnumbers=\count294
+\lst@framebox=\box101
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2023/02/27 1.9 listings configuration
+))
+Package: listings 2023/02/27 1.9 (Carsten Heinz)
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+ (/usr/local/texlive/2023/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+ (/usr/local/texlive/2023/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2022/02/03 v1.0f TeX engine tests
+))
+\Gm@cnth=\count295
+\Gm@cntv=\count296
+\c@Gm@tempcnt=\count297
+\Gm@bindingoffset=\dimen169
+\Gm@wd@mp=\dimen170
+\Gm@odd@mp=\dimen171
+\Gm@even@mp=\dimen172
+\Gm@layoutwidth=\dimen173
+\Gm@layoutheight=\dimen174
+\Gm@layouthoffset=\dimen175
+\Gm@layoutvoffset=\dimen176
+\Gm@dimlist=\toks34
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2023-07-08 v7.01b Hypertext links for LaTeX
+ (/usr/local/texlive/2023/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (/usr/local/texlive/2023/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
+ (/usr/local/texlive/2023/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+) (/usr/local/texlive/2023/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (/usr/local/texlive/2023/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2023-08-07 v2.53 Cross-referencing by name of section
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+) (/usr/local/texlive/2023/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
+))
+\c@section@level=\count298
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count299
+)
+\@linkdim=\dimen177
+\Hy@linkcounter=\count300
+\Hy@pagecounter=\count301
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2023-07-08 v7.01b Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+) (/usr/local/texlive/2023/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+\Hy@SavedSpaceFactor=\count302
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2023-07-08 v7.01b Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 4050.
+Package hyperref Info: Hyper figures OFF on input line 4167.
+Package hyperref Info: Link nesting OFF on input line 4172.
+Package hyperref Info: Hyper index ON on input line 4175.
+Package hyperref Info: Plain pages OFF on input line 4182.
+Package hyperref Info: Backreferencing OFF on input line 4187.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4434.
+\c@Hy@tempcnt=\count303
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4772.
+\XeTeXLinkMargin=\dimen178
+ (/usr/local/texlive/2023/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+ (/usr/local/texlive/2023/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+))
+\Fld@menulength=\count304
+\Field@Width=\dimen179
+\Fld@charsize=\dimen180
+Package hyperref Info: Hyper figures OFF on input line 6051.
+Package hyperref Info: Link nesting OFF on input line 6056.
+Package hyperref Info: Hyper index ON on input line 6059.
+Package hyperref Info: backreferencing OFF on input line 6066.
+Package hyperref Info: Link coloring ON on input line 6069.
+Package hyperref Info: Link coloring with OCG OFF on input line 6076.
+Package hyperref Info: PDF/A mode OFF on input line 6081.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count305
+\c@Item=\count306
+\c@Hfootnote=\count307
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2023-07-08 v7.01b Hyperref driver for pdfTeX
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+with kernel methods
+)
+\Fld@listcount=\count308
+\c@bookmark@seq@number=\count309
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
+ (/usr/local/texlive/2023/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+)
+\Hy@SectionHShift=\skip64
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2022/11/09 v4.1 Extensive control of page headers and footers
+\f@nch@headwidth=\skip65
+\f@nch@O@elh=\skip66
+\f@nch@O@erh=\skip67
+\f@nch@O@olh=\skip68
+\f@nch@O@orh=\skip69
+\f@nch@O@elf=\skip70
+\f@nch@O@erf=\skip71
+\f@nch@O@olf=\skip72
+\f@nch@O@orf=\skip73
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2023-04-19 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count310
+\l__pdf_internal_box=\box102
+) (./cs4225-cheatsheet.aux)
+\openout1 = `cs4225-cheatsheet.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 74.
+LaTeX Font Info:    ... okay on input line 74.
+ (/usr/local/texlive/2023/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count311
+\scratchdimen=\dimen181
+\scratchbox=\box103
+\nofMPsegments=\count312
+\nofMParguments=\count313
+\everyMPshowfont=\toks35
+\MPscratchCnt=\count314
+\MPscratchDim=\dimen182
+\MPnumerator=\count315
+\makeMPintoPDFobject=\count316
+\everyMPtoPDFconversion=\toks36
+) (/usr/local/texlive/2023/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
+))
+\c@lstlisting=\count317
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: landscape 
+* h-part:(L,W,R)=(14.45377pt, 766.06245pt, 14.45377pt)
+* v-part:(T,H,B)=(14.45377pt, 585.38747pt, 14.45377pt)
+* \paperwidth=794.96999pt
+* \paperheight=614.295pt
+* \textwidth=766.06245pt
+* \textheight=585.38747pt
+* \oddsidemargin=-57.81622pt
+* \evensidemargin=-57.81622pt
+* \topmargin=-94.81622pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=144.0pt
+* \marginparsep=11.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package hyperref Info: Link coloring ON on input line 74.
+(./cs4225-cheatsheet.out) (./cs4225-cheatsheet.out)
+\@outlinefile=\write3
+\openout3 = `cs4225-cheatsheet.out'.
+
+LaTeX Font Info:    Trying to load font information for U+msa on input line 89.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 89.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 89.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@@underline' on input line 89.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\hbox' on input line 89.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathsurround' on input line 89.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 89.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 89.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 101.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@@underline' on input line 101.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\hbox' on input line 101.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathsurround' on input line 101.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 101.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 101.
+
+<images/storage_hiearchy.jpg, id=322, 1172.38pt x 625.33624pt>
+File: images/storage_hiearchy.jpg Graphic file (type jpg)
+<use images/storage_hiearchy.jpg>
+Package pdftex.def Info: images/storage_hiearchy.jpg  used on input line 108.
+(pdftex.def)             Requested size: 184.93704pt x 56.89804pt.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 114.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@@underline' on input line 114.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\hbox' on input line 114.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathsurround' on input line 114.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 114.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 114.
+
+<images/mapreduceimplementation.jpg, id=324, 1284.8pt x 875.27pt>
+File: images/mapreduceimplementation.jpg Graphic file (type jpg)
+<use images/mapreduceimplementation.jpg>
+Package pdftex.def Info: images/mapreduceimplementation.jpg  used on input line 146.
+(pdftex.def)             Requested size: 241.84042pt x 128.02608pt.
+<images/preservingstate.jpg, id=326, 1284.8pt x 708.6475pt>
+File: images/preservingstate.jpg Graphic file (type jpg)
+<use images/preservingstate.jpg>
+Package pdftex.def Info: images/preservingstate.jpg  used on input line 175.
+(pdftex.def)             Requested size: 213.39436pt x 85.35841pt.
+<images/hdfsarchitecture.png, id=328, 645.91313pt x 362.85562pt>
+File: images/hdfsarchitecture.png Graphic file (type png)
+<use images/hdfsarchitecture.png>
+Package pdftex.def Info: images/hdfsarchitecture.png  used on input line 197.
+(pdftex.def)             Requested size: 241.8423pt x 113.80736pt.
+<images/hdfshighleveloverview.png, id=331, 611.28375pt x 309.40594pt>
+File: images/hdfshighleveloverview.png Graphic file (type png)
+<use images/hdfshighleveloverview.png>
+Package pdftex.def Info: images/hdfshighleveloverview.png  used on input line 216.
+(pdftex.def)             Requested size: 241.84152pt x 113.81271pt.
+<images/broadcastjoin.PNG, id=333, 271.76532pt x 147.55125pt>
+File: images/broadcastjoin.PNG Graphic file (type png)
+<use images/broadcastjoin.PNG>
+Package pdftex.def Info: images/broadcastjoin.PNG  used on input line 242.
+(pdftex.def)             Requested size: 227.63025pt x 113.81293pt.
+<images/commonjoin.PNG, id=335, 337.26pt x 152.06813pt>
+File: images/commonjoin.PNG Graphic file (type png)
+<use images/commonjoin.PNG>
+Package pdftex.def Info: images/commonjoin.PNG  used on input line 249.
+(pdftex.def)             Requested size: 142.26576pt x 85.35944pt.
+<images/commonjoin2.PNG, id=337, 146.04562pt x 158.84344pt>
+File: images/commonjoin2.PNG Graphic file (type png)
+<use images/commonjoin2.PNG>
+Package pdftex.def Info: images/commonjoin2.PNG  used on input line 250.
+(pdftex.def)             Requested size: 71.13287pt x 85.35971pt.
+[1
+
+{/usr/local/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2023/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./images/storage_hiearchy.jpg> <./images/mapreduceimplementation.jpg> <./images/preservingstate.jpg> <./images/hdfsarchitecture.png> <./images/hdfshighleveloverview.png> <./images/broadcastjoin.PNG>]
+<images/shingling.PNG, id=392, 536.0025pt x 222.8325pt>
+File: images/shingling.PNG Graphic file (type png)
+<use images/shingling.PNG>
+Package pdftex.def Info: images/shingling.PNG  used on input line 271.
+(pdftex.def)             Requested size: 227.62221pt x 71.13104pt.
+<images/minhash.PNG, id=394, 423.83344pt x 201.00093pt>
+File: images/minhash.PNG Graphic file (type png)
+<use images/minhash.PNG>
+Package pdftex.def Info: images/minhash.PNG  used on input line 297.
+(pdftex.def)             Requested size: 227.61847pt x 93.89384pt.
+<images/SQLtoNoSQL.PNG, id=396, 224.33812pt x 106.14656pt>
+File: images/SQLtoNoSQL.PNG Graphic file (type png)
+<use images/SQLtoNoSQL.PNG>
+Package pdftex.def Info: images/SQLtoNoSQL.PNG  used on input line 380.
+(pdftex.def)             Requested size: 113.80846pt x 48.36964pt.
+LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 400.
+ (/usr/local/texlive/2023/texmf-dist/tex/latex/base/ts1cmtt.fd
+File: ts1cmtt.fd 2023/04/13 v2.5m Standard LaTeX font definitions
+)
+<images/columnfamilies.PNG, id=398, 503.63156pt x 152.82094pt>
+File: images/columnfamilies.PNG Graphic file (type png)
+<use images/columnfamilies.PNG>
+Package pdftex.def Info: images/columnfamilies.PNG  used on input line 431.
+(pdftex.def)             Requested size: 241.84798pt x 85.35759pt.
+<images/vectordb.PNG, id=400, 369.63094pt x 140.02313pt>
+File: images/vectordb.PNG Graphic file (type png)
+<use images/vectordb.PNG>
+Package pdftex.def Info: images/vectordb.PNG  used on input line 445.
+(pdftex.def)             Requested size: 241.84776pt x 85.36057pt.
+ [2 <./images/commonjoin.PNG> <./images/commonjoin2.PNG> <./images/shingling.PNG> <./images/minhash.PNG> <./images/SQLtoNoSQL.PNG> <./images/columnfamilies.PNG> <./images/vectordb.PNG>]
+<images/strongvseventual1.PNG, id=473, 432.11438pt x 138.5175pt>
+File: images/strongvseventual1.PNG Graphic file (type png)
+<use images/strongvseventual1.PNG>
+Package pdftex.def Info: images/strongvseventual1.PNG  used on input line 455.
+(pdftex.def)             Requested size: 241.85052pt x 62.59648pt.
+<images/strongvseventual2.PNG, id=475, 428.35031pt x 146.04562pt>
+File: images/strongvseventual2.PNG Graphic file (type png)
+<use images/strongvseventual2.PNG>
+Package pdftex.def Info: images/strongvseventual2.PNG  used on input line 456.
+(pdftex.def)             Requested size: 241.84843pt x 62.59558pt.
+<images/strongvseventual3.PNG, id=477, 427.5975pt x 163.3603pt>
+File: images/strongvseventual3.PNG Graphic file (type png)
+<use images/strongvseventual3.PNG>
+Package pdftex.def Info: images/strongvseventual3.PNG  used on input line 457.
+(pdftex.def)             Requested size: 241.84749pt x 62.59602pt.
+<images/duplication.PNG, id=479, 409.53pt x 137.01187pt>
+File: images/duplication.PNG Graphic file (type png)
+<use images/duplication.PNG>
+Package pdftex.def Info: images/duplication.PNG  used on input line 475.
+(pdftex.def)             Requested size: 241.8518pt x 71.13368pt.
+<images/nosqlsummary.PNG, id=481, 781.41937pt x 315.42844pt>
+File: images/nosqlsummary.PNG Graphic file (type png)
+<use images/nosqlsummary.PNG>
+Package pdftex.def Info: images/nosqlsummary.PNG  used on input line 481.
+(pdftex.def)             Requested size: 241.84402pt x 73.97649pt.
+<images/distributeddatabasesarchitecture.PNG, id=483, 808.52063pt x 524.71031pt>
+File: images/distributeddatabasesarchitecture.PNG Graphic file (type png)
+<use images/distributeddatabasesarchitecture.PNG>
+Package pdftex.def Info: images/distributeddatabasesarchitecture.PNG  used on input line 491.
+(pdftex.def)             Requested size: 241.84251pt x 128.03873pt.
+<images/partitionkey.PNG, id=485, 779.16093pt x 255.20343pt>
+File: images/partitionkey.PNG Graphic file (type png)
+<use images/partitionkey.PNG>
+Package pdftex.def Info: images/partitionkey.PNG  used on input line 500.
+(pdftex.def)             Requested size: 230.45682pt x 65.44011pt.
+<images/rangepartition.PNG, id=487, 773.13844pt x 260.47313pt>
+File: images/rangepartition.PNG Graphic file (type png)
+<use images/rangepartition.PNG>
+Package pdftex.def Info: images/rangepartition.PNG  used on input line 519.
+(pdftex.def)             Requested size: 230.46867pt x 65.44005pt.
+<images/hashpartition.PNG, id=489, 770.88pt x 258.21469pt>
+File: images/hashpartition.PNG Graphic file (type png)
+<use images/hashpartition.PNG>
+Package pdftex.def Info: images/hashpartition.PNG  used on input line 528.
+(pdftex.def)             Requested size: 230.46593pt x 65.44002pt.
+<images/consistenthashing.PNG, id=491, 700.11563pt x 246.9225pt>
+File: images/consistenthashing.PNG Graphic file (type png)
+<use images/consistenthashing.PNG>
+Package pdftex.def Info: images/consistenthashing.PNG  used on input line 536.
+(pdftex.def)             Requested size: 230.46199pt x 65.43791pt.
+<images/architecturemongodb.PNG, id=493, 721.19438pt x 500.62032pt>
+File: images/architecturemongodb.PNG Graphic file (type png)
+<use images/architecturemongodb.PNG>
+Package pdftex.def Info: images/architecturemongodb.PNG  used on input line 550.
+(pdftex.def)             Requested size: 230.46779pt x 128.0346pt.
+<images/mongodbquery.jpg, id=495, 1284.8pt x 820.06375pt>
+File: images/mongodbquery.jpg Graphic file (type jpg)
+<use images/mongodbquery.jpg>
+Package pdftex.def Info: images/mongodbquery.jpg  used on input line 556.
+(pdftex.def)             Requested size: 230.45024pt x 128.03453pt.
+ [3 <./images/strongvseventual1.PNG> <./images/strongvseventual2.PNG> <./images/strongvseventual3.PNG> <./images/duplication.PNG> <./images/nosqlsummary.PNG> <./images/distributeddatabasesarchitecture.PNG> <./images/partitionkey.PNG> <./images/rangepartition.PNG> <./images/hashpartition.PNG> <./images/consistenthashing.PNG> <./images/architecturemongodb.PNG>]
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 589.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@@underline' on input line 589.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\hbox' on input line 589.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathsurround' on input line 589.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 589.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 589.
+
+<images/sparkcomponents.PNG, id=531, 572.1375pt x 176.91093pt>
+File: images/sparkcomponents.PNG Graphic file (type png)
+<use images/sparkcomponents.PNG>
+Package pdftex.def Info: images/sparkcomponents.PNG  used on input line 599.
+(pdftex.def)             Requested size: 230.466pt x 56.90419pt.
+<images/sparkarchitecture.PNG, id=533, 270.25969pt x 230.36063pt>
+File: images/sparkarchitecture.PNG Graphic file (type png)
+<use images/sparkarchitecture.PNG>
+Package pdftex.def Info: images/sparkarchitecture.PNG  used on input line 602.
+(pdftex.def)             Requested size: 116.65477pt x 99.5839pt.
+<images/sparkruntime.jpg, id=535, 681.54625pt x 372.39125pt>
+File: images/sparkruntime.jpg Graphic file (type jpg)
+<use images/sparkruntime.jpg>
+Package pdftex.def Info: images/sparkruntime.jpg  used on input line 610.
+(pdftex.def)             Requested size: 230.46431pt x 99.581pt.
+<images/sparkapis.PNG, id=537, 594.72188pt x 272.51813pt>
+File: images/sparkapis.PNG Graphic file (type png)
+<use images/sparkapis.PNG>
+Package pdftex.def Info: images/sparkapis.PNG  used on input line 611.
+(pdftex.def)             Requested size: 230.46143pt x 85.35713pt.
+<images/sparkprocessing.PNG, id=539, 535.2497pt x 134.00063pt>
+File: images/sparkprocessing.PNG Graphic file (type png)
+<use images/sparkprocessing.PNG>
+Package pdftex.def Info: images/sparkprocessing.PNG  used on input line 616.
+(pdftex.def)             Requested size: 230.4714pt x 56.90553pt.
+<images/rdds.PNG, id=541, 624.08156pt x 389.20406pt>
+File: images/rdds.PNG Graphic file (type png)
+<use images/rdds.PNG>
+Package pdftex.def Info: images/rdds.PNG  used on input line 645.
+(pdftex.def)             Requested size: 230.45898pt x 113.81055pt.
+<images/sparkcache.PNG, id=543, 556.32843pt x 492.33937pt>
+File: images/sparkcache.PNG Graphic file (type png)
+<use images/sparkcache.PNG>
+Package pdftex.def Info: images/sparkcache.PNG  used on input line 649.
+(pdftex.def)             Requested size: 230.47302pt x 165.02673pt.
+<images/sparkdag.PNG, id=545, 249.18094pt x 392.21532pt>
+File: images/sparkdag.PNG Graphic file (type png)
+<use images/sparkdag.PNG>
+Package pdftex.def Info: images/sparkdag.PNG  used on input line 680.
+(pdftex.def)             Requested size: 116.65498pt x 142.26268pt.
+[4 <./images/mongodbquery.jpg> <./images/sparkcomponents.PNG> <./images/sparkarchitecture.PNG> <./images/sparkruntime.jpg> <./images/sparkapis.PNG> <./images/sparkprocessing.PNG> <./images/rdds.PNG> <./images/sparkcache.PNG> <./images/sparkdag.PNG>]
+<images/dataframes.PNG, id=596, 363.60844pt x 158.09062pt>
+File: images/dataframes.PNG Graphic file (type png)
+<use images/dataframes.PNG>
+Package pdftex.def Info: images/dataframes.PNG  used on input line 709.
+(pdftex.def)             Requested size: 173.56467pt x 56.90533pt.
+<images/sparksqlfull.png, id=598, 416.05438pt x 382.93062pt>
+File: images/sparksqlfull.png Graphic file (type png)
+<use images/sparksqlfull.png>
+Package pdftex.def Info: images/sparksqlfull.png  used on input line 777.
+(pdftex.def)             Requested size: 241.85132pt x 128.03859pt.
+<images/sparksqlarchitecture.png, id=600, 586.19pt x 342.27875pt>
+File: images/sparksqlarchitecture.png Graphic file (type png)
+<use images/sparksqlarchitecture.png>
+Package pdftex.def Info: images/sparksqlarchitecture.png  used on input line 784.
+(pdftex.def)             Requested size: 116.65453pt x 71.12857pt.
+<images/rddvsdataframe.png, id=602, 742.775pt x 410.03188pt>
+File: images/rddvsdataframe.png Graphic file (type png)
+<use images/rddvsdataframe.png>
+Package pdftex.def Info: images/rddvsdataframe.png  used on input line 800.
+(pdftex.def)             Requested size: 241.84103pt x 128.04079pt.
+<images/catalystoptimizer.png, id=604, 349.80687pt x 230.8625pt>
+File: images/catalystoptimizer.png Graphic file (type png)
+<use images/catalystoptimizer.png>
+Package pdftex.def Info: images/catalystoptimizer.png  used on input line 812.
+(pdftex.def)             Requested size: 241.85272pt x 128.0386pt.
+<images/machinelearningpipeline.png, id=606, 472.76625pt x 234.8775pt>
+File: images/machinelearningpipeline.png Graphic file (type png)
+<use images/machinelearningpipeline.png>
+Package pdftex.def Info: images/machinelearningpipeline.png  used on input line 824.
+(pdftex.def)             Requested size: 241.85062pt x 113.81151pt.
+ [5 <./images/dataframes.PNG> <./images/sparksqlfull.png> <./images/sparksqlarchitecture.png> <./images/rddvsdataframe.png> <./images/catalystoptimizer.png> <./images/machinelearningpipeline.png>]
+<images/normalization.png, id=674, 378.41376pt x 237.88875pt>
+File: images/normalization.png Graphic file (type png)
+<use images/normalization.png>
+Package pdftex.def Info: images/normalization.png  used on input line 869.
+(pdftex.def)             Requested size: 241.84908pt x 113.81142pt.
+<images/spamclassification.png, id=676, 336.25626pt x 138.01563pt>
+File: images/spamclassification.png Graphic file (type png)
+<use images/spamclassification.png>
+Package pdftex.def Info: images/spamclassification.png  used on input line 872.
+(pdftex.def)             Requested size: 213.3972pt x 71.13463pt.
+<images/sigmoid.PNG, id=678, 213.04594pt x 103.88812pt>
+File: images/sigmoid.PNG Graphic file (type png)
+<use images/sigmoid.PNG>
+Package pdftex.def Info: images/sigmoid.PNG  used on input line 880.
+(pdftex.def)             Requested size: 105.27763pt x 42.6784pt.
+<images/sigmoidparameters.PNG, id=680, 484.81125pt x 126.4725pt>
+File: images/sigmoidparameters.PNG Graphic file (type png)
+<use images/sigmoidparameters.PNG>
+Package pdftex.def Info: images/sigmoidparameters.PNG  used on input line 891.
+(pdftex.def)             Requested size: 241.8502pt x 65.44186pt.
+<images/traininglogisticregression.PNG, id=682, 459.21562pt x 155.83218pt>
+File: images/traininglogisticregression.PNG Graphic file (type png)
+<use images/traininglogisticregression.PNG>
+Package pdftex.def Info: images/traininglogisticregression.PNG  used on input line 893.
+(pdftex.def)             Requested size: 241.84857pt x 71.13202pt.
+<images/parallelgradientdescent.PNG, id=684, 477.28313pt x 278.54062pt>
+File: images/parallelgradientdescent.PNG Graphic file (type png)
+<use images/parallelgradientdescent.PNG>
+Package pdftex.def Info: images/parallelgradientdescent.PNG  used on input line 899.
+(pdftex.def)             Requested size: 241.84538pt x 122.34573pt.
+<images/accuracysensitivityspecity.PNG, id=686, 447.92343pt x 242.40562pt>
+File: images/accuracysensitivityspecity.PNG Graphic file (type png)
+<use images/accuracysensitivityspecity.PNG>
+Package pdftex.def Info: images/accuracysensitivityspecity.PNG  used on input line 935.
+(pdftex.def)             Requested size: 213.39464pt x 91.04982pt.
+<images/mlpipeline.PNG, id=688, 388.45125pt x 104.64093pt>
+File: images/mlpipeline.PNG Graphic file (type png)
+<use images/mlpipeline.PNG>
+Package pdftex.def Info: images/mlpipeline.PNG  used on input line 959.
+(pdftex.def)             Requested size: 241.85085pt x 65.44032pt.
+ [6 <./images/normalization.png> <./images/spamclassification.png> <./images/sigmoid.PNG> <./images/sigmoidparameters.PNG> <./images/traininglogisticregression.PNG> <./images/parallelgradientdescent.PNG> <./images/accuracysensitivityspecity.PNG> <./images/mlpipeline.PNG>]
+<images/structuredstreaming.PNG, id=741, 434.37282pt x 205.5178pt>
+File: images/structuredstreaming.PNG Graphic file (type png)
+<use images/structuredstreaming.PNG>
+Package pdftex.def Info: images/structuredstreaming.PNG  used on input line 1050.
+(pdftex.def)             Requested size: 233.31839pt x 96.73763pt.
+<images/structuredstreaming2.PNG, id=743, 508.14844pt x 345.54094pt>
+File: images/structuredstreaming2.PNG Graphic file (type png)
+<use images/structuredstreaming2.PNG>
+Package pdftex.def Info: images/structuredstreaming2.PNG  used on input line 1053.
+(pdftex.def)             Requested size: 241.84598pt x 125.19078pt.
+<images/incrementalexecution.PNG, id=745, 569.12625pt x 291.33844pt>
+File: images/incrementalexecution.PNG Graphic file (type png)
+<use images/incrementalexecution.PNG>
+Package pdftex.def Info: images/incrementalexecution.PNG  used on input line 1071.
+(pdftex.def)             Requested size: 241.85374pt x 99.58276pt.
+<images/distributedstatemanagement.PNG, id=747, 666.99188pt x 412.54124pt>
+File: images/distributedstatemanagement.PNG Graphic file (type png)
+<use images/distributedstatemanagement.PNG>
+Package pdftex.def Info: images/distributedstatemanagement.PNG  used on input line 1091.
+(pdftex.def)             Requested size: 241.84706pt x 125.19226pt.
+
+Overfull \hbox (13.03424pt too wide) in paragraph at lines 1098--1099
+[][]\OT1/cmtt/m/n/7 baselineValues = sensorReadings.groupBy("sensorId").mean("value")  
+ []
+
+<images/timesemantics.PNG, id=749, 566.115pt x 517.935pt>
+File: images/timesemantics.PNG Graphic file (type png)
+<use images/timesemantics.PNG>
+Package pdftex.def Info: images/timesemantics.PNG  used on input line 1107.
+(pdftex.def)             Requested size: 227.61678pt x 142.26263pt.
+
+Overfull \hbox (103.32304pt too wide) in paragraph at lines 1107--1108
+[]  
+ []
+
+<images/tumblingwindow.PNG, id=751, 604.50844pt x 375.65344pt>
+File: images/tumblingwindow.PNG Graphic file (type png)
+<use images/tumblingwindow.PNG>
+Package pdftex.def Info: images/tumblingwindow.PNG  used on input line 1127.
+(pdftex.def)             Requested size: 199.16556pt x 93.8902pt.
+<images/slidingwindow.PNG, id=753, 677.53125pt x 451.6875pt>
+File: images/slidingwindow.PNG Graphic file (type png)
+<use images/slidingwindow.PNG>
+Package pdftex.def Info: images/slidingwindow.PNG  used on input line 1130.
+(pdftex.def)             Requested size: 199.16698pt x 93.89226pt.
+<images/slidingwindow2.PNG, id=755, 606.76688pt x 289.08pt>
+File: images/slidingwindow2.PNG Graphic file (type png)
+<use images/slidingwindow2.PNG>
+Package pdftex.def Info: images/slidingwindow2.PNG  used on input line 1132.
+(pdftex.def)             Requested size: 199.16896pt x 93.89253pt.
+<images/watermarking.PNG, id=757, 688.07062pt x 493.0922pt>
+File: images/watermarking.PNG Graphic file (type png)
+<use images/watermarking.PNG>
+Package pdftex.def Info: images/watermarking.PNG  used on input line 1135.
+(pdftex.def)             Requested size: 227.62045pt x 128.03542pt.
+<images/logicaldataflow.PNG, id=759, 693.34032pt x 133.24782pt>
+File: images/logicaldataflow.PNG Graphic file (type png)
+<use images/logicaldataflow.PNG>
+Package pdftex.def Info: images/logicaldataflow.PNG  used on input line 1153.
+(pdftex.def)             Requested size: 227.6181pt x 34.14343pt.
+[7 <./images/structuredstreaming.PNG> <./images/structuredstreaming2.PNG> <./images/incrementalexecution.PNG> <./images/distributedstatemanagement.PNG> <./images/timesemantics.PNG> <./images/tumblingwindow.PNG> <./images/slidingwindow.PNG> <./images/slidingwindow2.PNG> <./images/watermarking.PNG>]
+<images/physicaldataflow.PNG, id=789, 636.87938pt x 231.11343pt>
+File: images/physicaldataflow.PNG Graphic file (type png)
+<use images/physicaldataflow.PNG>
+Package pdftex.def Info: images/physicaldataflow.PNG  used on input line 1155.
+(pdftex.def)             Requested size: 227.61462pt x 71.12955pt.
+<images/dataexchangestrategies.PNG, id=791, 570.63188pt x 307.90031pt>
+File: images/dataexchangestrategies.PNG Graphic file (type png)
+<use images/dataexchangestrategies.PNG>
+Package pdftex.def Info: images/dataexchangestrategies.PNG  used on input line 1157.
+(pdftex.def)             Requested size: 227.6218pt x 99.58249pt.
+<images/flinksystemarchitecture.PNG, id=793, 683.55376pt x 312.41719pt>
+File: images/flinksystemarchitecture.PNG Graphic file (type png)
+<use images/flinksystemarchitecture.PNG>
+Package pdftex.def Info: images/flinksystemarchitecture.PNG  used on input line 1161.
+(pdftex.def)             Requested size: 227.61775pt x 71.12984pt.
+<images/flinktaskexecution.PNG, id=795, 376.40625pt x 162.6075pt>
+File: images/flinktaskexecution.PNG Graphic file (type png)
+<use images/flinktaskexecution.PNG>
+Package pdftex.def Info: images/flinktaskexecution.PNG  used on input line 1174.
+(pdftex.def)             Requested size: 227.62596pt x 71.13315pt.
+<images/flinkdatatransfer.PNG, id=797, 353.06906pt x 168.63pt>
+File: images/flinkdatatransfer.PNG Graphic file (type png)
+<use images/flinkdatatransfer.PNG>
+Package pdftex.def Info: images/flinkdatatransfer.PNG  used on input line 1184.
+(pdftex.def)             Requested size: 227.62274pt x 71.13287pt.
+<images/flinkeventtimeprocessing.PNG, id=799, 361.35pt x 100.12407pt>
+File: images/flinkeventtimeprocessing.PNG Graphic file (type png)
+<use images/flinkeventtimeprocessing.PNG>
+Package pdftex.def Info: images/flinkeventtimeprocessing.PNG  used on input line 1192.
+(pdftex.def)             Requested size: 227.62413pt x 42.67972pt.
+<images/flinkstatemanagement.PNG, id=801, 271.76532pt x 153.57375pt>
+File: images/flinkstatemanagement.PNG Graphic file (type png)
+<use images/flinkstatemanagement.PNG>
+Package pdftex.def Info: images/flinkstatemanagement.PNG  used on input line 1207.
+(pdftex.def)             Requested size: 119.50246pt x 42.6793pt.
+<images/operatorkeyedstate.PNG, id=803, 449.42906pt x 210.03468pt>
+File: images/operatorkeyedstate.PNG Graphic file (type png)
+<use images/operatorkeyedstate.PNG>
+Package pdftex.def Info: images/operatorkeyedstate.PNG  used on input line 1210.
+(pdftex.def)             Requested size: 233.31355pt x 82.5125pt.
+<images/flinkcheckpoint.PNG, id=805, 807.015pt x 263.48438pt>
+File: images/flinkcheckpoint.PNG Graphic file (type png)
+<use images/flinkcheckpoint.PNG>
+Package pdftex.def Info: images/flinkcheckpoint.PNG  used on input line 1235.
+(pdftex.def)             Requested size: 241.84776pt x 71.13368pt.
+<images/flinkcheckpoint1.PNG, id=807, 492.33937pt x 233.37187pt>
+File: images/flinkcheckpoint1.PNG Graphic file (type png)
+<use images/flinkcheckpoint1.PNG>
+Package pdftex.def Info: images/flinkcheckpoint1.PNG  used on input line 1265.
+(pdftex.def)             Requested size: 227.62074pt x 71.13023pt.
+<images/flinkcheckpoint2.PNG, id=809, 478.03593pt x 216.05719pt>
+File: images/flinkcheckpoint2.PNG Graphic file (type png)
+<use images/flinkcheckpoint2.PNG>
+Package pdftex.def Info: images/flinkcheckpoint2.PNG  used on input line 1267.
+(pdftex.def)             Requested size: 227.61649pt x 71.13095pt.
+<images/flinkcheckpoint3.PNG, id=811, 487.8225pt x 286.82156pt>
+File: images/flinkcheckpoint3.PNG Graphic file (type png)
+<use images/flinkcheckpoint3.PNG>
+Package pdftex.def Info: images/flinkcheckpoint3.PNG  used on input line 1269.
+(pdftex.def)             Requested size: 227.62413pt x 85.35562pt.
+<images/flinkcheckpoint4.PNG, id=813, 448.67625pt x 260.47313pt>
+File: images/flinkcheckpoint4.PNG Graphic file (type png)
+<use images/flinkcheckpoint4.PNG>
+Package pdftex.def Info: images/flinkcheckpoint4.PNG  used on input line 1271.
+(pdftex.def)             Requested size: 227.61691pt x 85.35625pt.
+<images/flinkcheckpoint5.PNG, id=815, 483.30562pt x 234.8775pt>
+File: images/flinkcheckpoint5.PNG Graphic file (type png)
+<use images/flinkcheckpoint5.PNG>
+Package pdftex.def Info: images/flinkcheckpoint5.PNG  used on input line 1273.
+(pdftex.def)             Requested size: 227.61827pt x 71.1304pt.
+ [8 <./images/logicaldataflow.PNG> <./images/physicaldataflow.PNG> <./images/dataexchangestrategies.PNG> <./images/flinksystemarchitecture.PNG> <./images/flinktaskexecution.PNG> <./images/flinkdatatransfer.PNG> <./images/flinkeventtimeprocessing.PNG> <./images/flinkstatemanagement.PNG> <./images/operatorkeyedstate.PNG> <./images/flinkcheckpoint.PNG> <./images/flinkcheckpoint1.PNG> <./images/flinkcheckpoint2.PNG> <./images/flinkcheckpoint3.PNG>]
+<images/flinkcheckpoint6.PNG, id=864, 484.05844pt x 210.7875pt>
+File: images/flinkcheckpoint6.PNG Graphic file (type png)
+<use images/flinkcheckpoint6.PNG>
+Package pdftex.def Info: images/flinkcheckpoint6.PNG  used on input line 1275.
+(pdftex.def)             Requested size: 227.62567pt x 71.13289pt.
+<images/flinkcheckpoint7.PNG, id=866, 505.13719pt x 232.61906pt>
+File: images/flinkcheckpoint7.PNG Graphic file (type png)
+<use images/flinkcheckpoint7.PNG>
+Package pdftex.def Info: images/flinkcheckpoint7.PNG  used on input line 1277.
+(pdftex.def)             Requested size: 227.62566pt x 71.1315pt.
+<images/pagerankimportance.jpg, id=868, 1284.8pt x 470.75874pt>
+File: images/pagerankimportance.jpg Graphic file (type jpg)
+<use images/pagerankimportance.jpg>
+Package pdftex.def Info: images/pagerankimportance.jpg  used on input line 1314.
+(pdftex.def)             Requested size: 241.84042pt x 71.12794pt.
+<images/votingformula.jpg, id=870, 1284.8pt x 395.4775pt>
+File: images/votingformula.jpg Graphic file (type jpg)
+<use images/votingformula.jpg>
+Package pdftex.def Info: images/votingformula.jpg  used on input line 1322.
+(pdftex.def)             Requested size: 213.39436pt x 56.90526pt.
+<images/flowequations.jpg, id=872, 1552.80125pt x 391.4625pt>
+File: images/flowequations.jpg Graphic file (type jpg)
+<use images/flowequations.jpg>
+Package pdftex.def Info: images/flowequations.jpg  used on input line 1355.
+(pdftex.def)             Requested size: 213.38644pt x 48.36523pt.
+<images/poweriteration.jpg, id=874, 1284.8pt x 504.88625pt>
+File: images/poweriteration.jpg Graphic file (type jpg)
+<use images/poweriteration.jpg>
+Package pdftex.def Info: images/poweriteration.jpg  used on input line 1362.
+(pdftex.def)             Requested size: 241.84042pt x 68.27995pt.
+<images/deadendspidertrap.jpg, id=876, 1981.4025pt x 700.6175pt>
+File: images/deadendspidertrap.jpg Graphic file (type jpg)
+<use images/deadendspidertrap.jpg>
+Package pdftex.def Info: images/deadendspidertrap.jpg  used on input line 1388.
+(pdftex.def)             Requested size: 241.8396pt x 85.35333pt.
+<images/googlepagerank.jpg, id=878, 1284.8pt x 573.14125pt>
+File: images/googlepagerank.jpg Graphic file (type jpg)
+<use images/googlepagerank.jpg>
+Package pdftex.def Info: images/googlepagerank.jpg  used on input line 1410.
+(pdftex.def)             Requested size: 241.84042pt x 93.89082pt.
+ [9 <./images/flinkcheckpoint4.PNG> <./images/flinkcheckpoint5.PNG> <./images/flinkcheckpoint6.PNG> <./images/flinkcheckpoint7.PNG> <./images/pagerankimportance.jpg> <./images/votingformula.jpg> <./images/flowequations.jpg> <./images/poweriteration.jpg> <./images/deadendspidertrap.jpg> <./images/googlepagerank.jpg>]
+<images/pregel.PNG, id=907, 453.94594pt x 502.12593pt>
+File: images/pregel.PNG Graphic file (type png)
+<use images/pregel.PNG>
+Package pdftex.def Info: images/pregel.PNG  used on input line 1460.
+(pdftex.def)             Requested size: 113.81175pt x 99.5806pt.
+<images/pagerankimplementation.PNG, id=909, 584.1825pt x 498.36188pt>
+File: images/pagerankimplementation.PNG Graphic file (type png)
+<use images/pagerankimplementation.PNG>
+Package pdftex.def Info: images/pagerankimplementation.PNG  used on input line 1515.
+(pdftex.def)             Requested size: 241.8518pt x 184.93852pt.
+<images/pagerankinpregel.PNG, id=911, 696.35156pt x 490.83376pt>
+File: images/pagerankinpregel.PNG Graphic file (type png)
+<use images/pagerankinpregel.PNG>
+Package pdftex.def Info: images/pagerankinpregel.PNG  used on input line 1517.
+(pdftex.def)             Requested size: 241.846pt x 165.02386pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1541--1541
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1541--1541
+
+ []
+
+<images/mapreducerwithcombiner.PNG, id=913, 560.8453pt x 292.84406pt>
+File: images/mapreducerwithcombiner.PNG Graphic file (type png)
+<use images/mapreducerwithcombiner.PNG>
+Package pdftex.def Info: images/mapreducerwithcombiner.PNG  used on input line 1610.
+(pdftex.def)             Requested size: 241.8434pt x 110.96463pt.
+[10 <./images/pregel.PNG> <./images/pagerankimplementation.PNG> <./images/pagerankinpregel.PNG> <./images/mapreducerwithcombiner.PNG>]
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 1714.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1737.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\@@underline' on input line 1737.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\hbox' on input line 1737.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\mathsurround' on input line 1737.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\z@' on input line 1737.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 1737.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 1759.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 1759.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 1759.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 1760.
+
+
+LaTeX Warning: Command \textendash invalid in math mode on input line 1760.
+
+<images/pagerankiterationwithwithoutteleport.PNG, id=970, 565.36218pt x 390.70969pt>
+File: images/pagerankiterationwithwithoutteleport.PNG Graphic file (type png)
+<use images/pagerankiterationwithwithoutteleport.PNG>
+Package pdftex.def Info: images/pagerankiterationwithwithoutteleport.PNG  used on input line 1767.
+(pdftex.def)             Requested size: 241.84149pt x 122.34686pt.
+[11 <./images/pagerankiterationwithwithoutteleport.PNG>]
+
+Package hyperref Warning: Difference (2) between bookmark levels is greater 
+(hyperref)                than one, level fixed on input line 1877.
+
+<images/tutorial5graph.PNG, id=1022, 282.30469pt x 201.00093pt>
+File: images/tutorial5graph.PNG Graphic file (type png)
+<use images/tutorial5graph.PNG>
+Package pdftex.def Info: images/tutorial5graph.PNG  used on input line 1926.
+(pdftex.def)             Requested size: 119.5019pt x 73.9766pt.
+<images/topicspecificpagerank.PNG, id=1024, 534.49687pt x 451.6875pt>
+File: images/topicspecificpagerank.PNG Graphic file (type png)
+<use images/topicspecificpagerank.PNG>
+Package pdftex.def Info: images/topicspecificpagerank.PNG  used on input line 1936.
+(pdftex.def)             Requested size: 241.85075pt x 216.24237pt.
+[12 <./images/tutorial5graph.PNG> <./images/topicspecificpagerank.PNG>] (./cs4225-cheatsheet.aux)
+ ***********
+LaTeX2e <2023-06-01> patch level 1
+L3 programming layer <2023-08-11>
+ ***********
+Package rerunfilecheck Info: File `cs4225-cheatsheet.out' has not changed.
+(rerunfilecheck)             Checksum: EDEA409DE594C7D5800C970F23B3455D;14395.
+ ) 
+Here is how much of TeX's memory you used:
+ 14292 strings out of 475189
+ 225017 string characters out of 5763838
+ 2230254 words of memory out of 5000000
+ 34981 multiletter control sequences out of 15000+600000
+ 566222 words of font info for 67 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 75i,14n,79p,595b,1174s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/amsfonts/symbols/msam7.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sfrm0700.pfb></usr/local/texlive/2023/texmf-dist/fonts/type1/public/cm-super/sftt0800.pfb>
+Output written on cs4225-cheatsheet.pdf (12 pages, 6267443 bytes).
+PDF statistics:
+ 1227 PDF objects out of 1440 (max. 8388607)
+ 922 compressed objects within 10 object streams
+ 427 named destinations out of 1000 (max. 500000)
+ 1579 words of extra memory for PDF output out of 10000 (max. 10000000)
+

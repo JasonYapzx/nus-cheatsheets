@@ -14,3 +14,5 @@ A repository of cheatsheets for modules taken in NUS
   - CS2107
   - GEC1010
   - ST2334
+- [x] **AY23/24 S1**
+  - CS4225

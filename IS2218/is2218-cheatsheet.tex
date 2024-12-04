@@ -1,0 +1,1111 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{listings} 
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{lmodern}
+\usepackage{soul}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.pathmorphing}
+
+
+\lstset{
+    tabsize=2,    
+%   rulecolor=,
+    language={c++},
+        captionpos = t,
+        basicstyle = \scriptsize\ttfamily,
+        frame=lines,
+        numbersep=5pt,
+        numbers=left,
+        numberstyle=\scriptsize,
+        backgroundcolor=\color{white},
+        columns=fixed,
+        extendedchars=false,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        frame=single,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        keywordstyle=\color[rgb]{0,0,1},
+        keywordstyle=[2]\color{gray},
+        commentstyle=\color{teal},
+        stringstyle=\color{red},
+        numberstyle=\color[rgb]{0.205, 0.142, 0.73},
+}
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.20in,left=.20in,right=.20in,bottom=.20in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\newcommand{\subsubsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\scriptsize\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+
+\makeatletter
+
+\newcommand{\defhighlighter}[3][]{%
+  \tikzset{every highlighter/.style={color=#2, fill opacity=#3, #1}}%
+}
+
+\defhighlighter{yellow}{.5}
+
+\newcommand{\highlight@DoHighlight}{
+  \fill [ decoration = {random steps, amplitude=1pt, segment length=15pt}
+        , outer sep = -15pt, inner sep = 0pt, decorate
+        , every highlighter, this highlighter ]
+        ($(begin highlight)+(0,8pt)$) rectangle ($(end highlight)+(0,-3pt)$) ;
+}
+
+\newcommand{\highlight@BeginHighlight}{
+  \coordinate (begin highlight) at (0,0) ;
+}
+
+\newcommand{\highlight@EndHighlight}{
+  \coordinate (end highlight) at (0,0) ;
+}
+
+\newdimen\highlight@previous
+\newdimen\highlight@current
+
+\DeclareRobustCommand*\highlight[1][]{%
+  \tikzset{this highlighter/.style={#1}}%
+  \SOUL@setup
+  %
+  \def\SOUL@preamble{%
+    \begin{tikzpicture}[overlay, remember picture]
+      \highlight@BeginHighlight
+      \highlight@EndHighlight
+    \end{tikzpicture}%
+  }%
+  %
+  \def\SOUL@postamble{%
+    \begin{tikzpicture}[overlay, remember picture]
+      \highlight@EndHighlight
+      \highlight@DoHighlight
+    \end{tikzpicture}%
+  }%
+  %
+  \def\SOUL@everyhyphen{%
+    \discretionary{%
+      \SOUL@setkern\SOUL@hyphkern
+      \SOUL@sethyphenchar
+      \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+    }{%
+    }{%
+      \SOUL@setkern\SOUL@charkern
+    }%
+  }%
+  %
+  \def\SOUL@everyexhyphen##1{%
+    \SOUL@setkern\SOUL@hyphkern
+    \hbox{##1}%
+    \discretionary{%
+      \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+    }{%
+    }{%
+      \SOUL@setkern\SOUL@charkern
+    }%
+  }%
+  %
+  \def\SOUL@everysyllable{%
+    \begin{tikzpicture}[overlay, remember picture]
+      \path let \p0 = (begin highlight), \p1 = (0,0) in \pgfextra
+        \global\highlight@previous=\y0
+        \global\highlight@current =\y1
+      \endpgfextra (0,0) ;
+      \ifdim\highlight@current < \highlight@previous
+        \highlight@DoHighlight
+        \highlight@BeginHighlight
+      \fi
+    \end{tikzpicture}%
+    \the\SOUL@syllable
+    \tikz[overlay, remember picture] \highlight@EndHighlight ;%
+  }%
+  \SOUL@
+}
+\makeatother
+
+\pdfinfo{
+  /Title (is2218-cheatsheet.pdf)
+  /Creator (TeX)
+  /Producer (pdfTeX 1.40.0)
+  /Author (Jason Yap)
+  /Subject (IS2218)
+/Keywords (IS2218, nus,cheatsheet,pdf)}
+
+\title{IS2218-cheatsheet}
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\scriptsize
+
+
+\begin{multicols*}{3}
+\setlength{\premulticols}{0.1pt}
+\setlength{\postmulticols}{0.1pt}
+\setlength{\multicolsep}{0.1pt}
+\setlength{\columnsep}{0.1pt}
+\begin{tiny}
+    \small{\textbf{IS2218 Cheatsheet AY24/25 || \href{https://github.com/JasonYapzx}{@JasonYapzx}}} \\
+\end{tiny}
+
+\subsubsection*{1. Investing and Financing Decisions}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Capital Budgeting Decisions:} Decision to invest in tangible/intangile assets 
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item (Investment Decision, Capital Expenditure (CAPEX) Decision)
+    \end{itemize} 
+    \item \textbf{Financing Decision:} sources / amt of financing
+    \item \textbf{Capital Structure:} mix of long-term debt / equity financing
+    \item \textbf{Real Assets:} used to produce goods/services
+    \item \textbf{Financial Assets:} financial claims to income gen. by firm's real assets
+\end{itemize}
+\subsubsubsection{1.1 Corporation \& Types of corporations}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Business organized as separate legal entity owned by shareholders
+    \item Shareholders elect board of directors, appoint managers and monitor perf.
+    \item Separation of ownership and control; Permanence
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Public Companies:} traded in public markets
+        \item \textbf{Private Corporations:} closely held by small group of investors
+    \end{itemize}
+    \item Types of Business Organizations
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{Sole Propretorships:} owned/controlled by single individual
+        \item \textit{Partnerships:} owned/controlled by $\geq$ 2 people
+        \item \textit{Corporations:} separate legal entity
+        \item \textit{Others:}
+        \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textit{Limited Liability Partnerships / Limited Liability Companies:} limited liability and no double taxation
+            \item \textit{Professional Corporations:} corporation with limited liability, however professionals can be sued for malpractice
+        \end{enumerate}
+        \item \textit{Limited Liability:} owners of corp. not personally liable for its obligations
+    \end{itemize}
+\end{itemize}
+\setlength{\tabcolsep}{2pt}
+\noindent
+\begin{tabular}{|p{4.5cm}|c|c|c|}
+\hline
+& \textbf{SP} & \textbf{P} & \textbf{C} \\
+\hline
+Who owns the business? & Manager & Partners & Stockholders \\
+\hline
+Are managers/Owners Separate? & No & No & Usually \\
+\hline
+What is the owner's liability? & Unlimited & Unlimited & Unlimited \\
+\hline
+Are owner and business taxed separately? & No & No & Yes \\
+\hline
+\end{tabular}
+
+\vspace{0.5em}
+\textbf{\tiny{Table:}} \begin{tiny}Business Types (SP: Sole Proprietorship, P: Partnership, C: Corporation)\end{tiny}
+
+\subsubsubsection{1.2 Financial Managers}
+\begin{enumerate}[label=\alph*., topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{CFO:}: Responsible for financial policy and corporate planning
+    \item \textbf{Treasurer:} Responsible for cash mgmt, raising of capital and banking r/s
+    \item \textbf{Controller:} Responsible for prep. of financial statements, accounting, taxes
+    \item \textbf{Cash flow:}
+    \begin{enumerate}[label=$\cdot$,topsep=0pt,noitemsep,wide=-6.5pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{Raised from investors:} Investors/Financial Assets → Financial Managers
+        \item \textit{Invested by firm:} Financial Managers → Firm's Operations/Real Assets
+        \item \textit{Gen. by operations:} Firm's Operations/Real Assets → Financial Managers
+        \item \textit{Reinvested:} Financial Managers → Financial Managers
+        \item \textit{Returned to investors:} Financial Managers → Investors/Financial Assets
+    \end{enumerate}
+\end{enumerate}
+
+\subsubsubsection{1.3 Goals of the Corporation}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Shareholders desire wealth maximization:} maximise current market value of shareholder's investments in the firm
+    \item \textbf{Why not profit maximization:} Which year's profits / Earning manipulation
+    \item \textbf{Opp. cost of capital:} Min. acceptable rate of return on capital investments, set by investment opportunities available to shareholders in financial markets
+    \includegraphics*[width=8cm, height=2.4cm]{images/investmenttradeoff.PNG}
+\end{itemize}
+
+\subsubsubsection{1.4 Agency Problem}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Managers have many constituencies called `stakeholders' (anyone with financial interest in the company)
+    \item \textbf{Agency problem:} Managers are agents for stockholders and are tempted to act in their own interests than maximize value
+    \item \textbf{Agency cost:} Value lost from agency problems/from cost of mitigating 
+    \item \textbf{Solutions:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Executive Compensation:} fixed based salary + annual award tied to earnings / other financial performance measure / stock options
+        \item \textbf{Corporate governance:} laws, regulation, instituition, corporate practices that protect shareholders / investors
+        \item \textbf{Elements of good corporate governance}
+        \begin{multicols*}{2}
+            \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item Legal requirements
+                \item Board of directors
+                \item Activist shareholders
+                \item Takeovers
+                \item Information for investors: accounting/reporting standards
+            \end{enumerate}
+        \end{multicols*}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{2. Platform Business Models}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Linear Value Chain:} Design $\rightarrow$ Manufacture $\rightarrow$ Sell $\rightarrow$ Deliver
+    \item \textbf{Platform Structure:} Producers $\rightarrow$ Platform $\leftarrow$ Consumers
+\end{itemize}
+\subsubsubsection{2.1 Advantages of platforms}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{No gatekeepers to manage flow:} (anyone can publish on kindle), gatekeepers replaced by market signals, consumers have freedom
+    \item \textbf{New sources of value/supple:} Airbnb expands faster than Marriot, does not own assets, reduced risk of expansion (sharing economy)
+    \item \textbf{Community feedback loops:} Wikipedia vs Encyclopedia Britannica, YouTube comments signal quality
+\end{itemize}
+
+\subsubsubsection{2.2 Network effects}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Impact that number of users of a platform has on value created for users
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{positive:} ability of large well-mananged platform can produce value
+        \item \textbf{negative:} growth in numbers of poorly-managed platform reduces value
+    \end{itemize}
+    \item \textbf{Advantages:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Industrial revolution promoted \textit{\underline{economies of scale}}, reducing unit cost of producing product/service as quantities produced increased
+        \item Internet era led by demand economies of scale-bigger networks are more valuable for user-driven by efficiencies networks/demand aggregation $\rightarrow$ 1 phone no value, 2 phones | 1 connection, 4 phones | 6 connections etc.
+    \end{itemize}
+    \item \textbf{Disadvantages:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Firms spend money to attract participants; price effects vs brand effects
+        \item Virality attracks people, but network effect keeps them there (stickier)
+        \item More important for firms to be able to \textit{\underline{scale seamlessly}}
+    \end{itemize}
+\end{itemize}
+
+\textbf{2.2.1 Network Effect Types}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Positive Same-Side:} benefits recevied $\uparrow$ when no. of users of same kind $\uparrow$
+    \item \textbf{Negative Same-Side:} effect of competition
+    \item \textbf{Positive Cross-Side Effects:} Users benefit from $\uparrow$ no. of participants on other side of market (e.g. Visa/Mastercard)
+    \item \textbf{Negative Cross-Side Effects:} Matching problems and clutter (e.g. dating apps, men $>$ women, but there could be matching problems)
+\end{itemize}
+
+\subsubsubsection{2.3 Monetization}
+\textbf{2.3.1 Sources of value}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{consumers:} access to value created on platform
+    \item \textbf{producers:} access to community or market
+    \item \textbf{both:} access to tools to facillitate interaction / access to curation mechanisms to $\uparrow$ quality of interactions
+\end{itemize}
+\textbf{2.3.2 How to charge}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Txn fee:} not discouraged from joining, only on txn (requires exp.)
+    \item \textbf{Access:} producers charged access to community, $\times$ discourage users
+    \item \textbf{Enhanced access:} customers distinguish btw content that has been elevated by paid access. Limit sponsored posts so platform still relevant $\times$ cluttered
+    \item \textbf{Enhanced Curation:} $\uparrow$ quality of interactions for premium (vet providers)
+    \item \textbf{Who to charge:} All users, one side while subsidizing other, charge most full price (except stars), price discrimination based on price sensitivity
+\end{itemize}
+\textbf{2.3.3 Principles of Monetization}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Avoid charging for value that users previously got for free
+    \item Avoid reducing access to value that users are accustomed to receiving
+    \item Strive to create additional value that justifies charges imposed
+    \item Monetization strategies considered when making the initial platform choices
+\end{enumerate}
+
+\subsubsubsection{2.4 Metrics}
+They should be \textit{actionable}, \textit{accessible}, \textit{auditable}
+\textbf{2.4.1 Pipeline Model vs Platform}
+\begin{enumerate}[label=\alph*.,topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Operations:} produce goods/services efficiently in sufficient numbers
+    \item \textbf{Marketing:} reach customers through proper channels at appropriate prices
+    \item \textbf{Finance:} Ensure adequate revenues generated to produce profits/value
+\end{enumerate}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Generate value through network effect
+    \item Metrics should measure \textit{rate of interaction success} + factors that contribute
+    \item Focus on metrics that quantify success in generating desirable interactions
+\end{enumerate}
+
+\textbf{2.4.3 Metrics in Startup phase}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Liquidity:} min. number of producers/consumers, \% of interactions high
+    \item \textbf{Matching Quality:} accuracy of search algorithms and curation (e.g. searching $\rightarrow$ interactions / sales conversion rate)
+    \item \textbf{Trust:} degree to which users are comfortable with level of risk associated with engaging in interactions on platform (requires good curation)
+    \item \textbf{Platform specific:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \begin{multicols*}{2}
+            \item \textit{Range of metrics measuring commitment to ecosystem}
+            \item \textit{Outcome based metrics}
+            \item \textit{Content creation metrics}
+            \item \textit{Market access regardless of complete interaction}
+        \end{multicols*}
+    \end{itemize}
+\end{itemize}
+
+\textbf{2.4.4 Metrics in Growth phase}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Producers:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Producer participation:} freq. of listing created, outcomes acheived
+        \item \textbf{Interactions failures:} interactions initiated but fall through
+        \item \textbf{Producer fraud:} failure of producer to deliver timely/accurately
+        \item \textbf{Retention/Lifetime value:} low churn rates/ repeat producers
+    \end{itemize}
+    \item Consumers:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Consumer participation:} freq. of consumption, searches, conversions
+        \item \textbf{Retention/Lifetime value:} promote loyalty and reduce churn
+    \end{itemize}
+\end{itemize}
+
+\textbf{2.4.5 Metrics in Maturity Phase}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Driving Innovation:} adapt to users, changes in regulations/competitors
+    \item \textbf{Care for existing ecosytem:} incorporate applications into existing env.
+\end{itemize}
+
+\subsubsection{3. Balance Sheet}
+\begin{multicols}{2}
+    \begin{itemize}[topsep=0pt, noitemsep, wide=0pt, leftmargin=\dimexpr\labelwidth + 1\labelsep\relax]
+        \item Ordered in $\downarrow$ liquidity
+        \item \textbf{Inventory}: Raw materials, Work-In-Progress, Finished
+        \item $Assets = L + E$
+    \end{itemize}
+    
+    \vspace*{-32pt}
+    \includegraphics*[width=4cm, height=2.2cm]{images/balancesheet.PNG}
+\end{multicols}
+
+
+\subsubsubsection{3.1 Definitions in a Balance Sheet}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Assets:} $= \text{liabilities} + \text{equity}$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Current Assets:}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Cash and Marketable Securities:} Liquid assets $\rightarrow$ converted into cash
+            \item \textbf{Receivables:} Owed by customers for goods/services provided on credit
+            \item \textbf{Inventories:} Value of goods available for sale/process of production
+            \item \textbf{Other Current Assets:} Assets to be converted to cash/used in a year
+            \item \textbf{Total Current Assets:} The sum of all current assets
+        \end{itemize}
+        \item \textbf{Fixed Assets:}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Tangible Fixed Assets:} Long-term physical assets (property, eqpmt)
+            \item \textbf{Less Accumulated Depreciation:} $\downarrow$ value of tangible fixed assets)
+            \item \textbf{Net Tangible Fixed Assets:} TFA - accumulated depreciation
+            \item \textbf{Intangible Asset (Goodwill):} Non-physical assets like goodwill which may arise during acquisitions
+            \item \textbf{Other Assets:} Other non-current assets not fixed/intangible
+            \item \textbf{Total Assets:} The sum of current and fixed assets
+        \end{itemize}
+        \item \textit{Working Capital:} = Current Assets - Current Liabilities
+    \end{itemize}
+    \item \textbf{Liabilities and Shareholders' Equity:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Current Liabilities:}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Debt Due for Repayment:} Short-term borrowings due within a year
+            \item \textbf{Accounts Payable:} Amts owed for unpaid goods/services but received
+            \item \textbf{Other Current Liabilities:} Obligat$^n$ company must settle (short term)
+            \item \textbf{Total Current Liabilities:} The sum of all current liabilities
+        \end{itemize}
+        \item \textbf{Long-Term Debt:} Debt obligations that are due after more than one year
+        \item \textbf{Other Long-Term Liabilities:} Other obligat$^n$ that due beyond short term
+        \item \textbf{Total Liabilities:} The sum of current liabilities and long-term liabilities
+        \item \textbf{Shareholders' Equity:}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Common Stock and Paid-in Capital:} Equity financing by shareholders
+            \item \textbf{Retained Earnings:} Profits reinvested instead of giving dividends
+            \item \textbf{Treasury Stock:} Shares issued, subsequently repurchased by company
+            \item \textbf{Total Shareholders' Equity:} Sum of all shareholders' equity
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{3.2 Book Values and Market Values}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Book:} Values of assets/liabilities according to balance sheet (backward-looking) | historical cost adjusted for depreciation
+    \item \textbf{Market:} Values of assets/liabilities if they were to be resold to market (forward looking) | depends on profits investors expect asset to provide
+    \item \textbf{GAAP:} Generally Accepted Accounting Principles
+    \item Equity/Asset `market values' usually $>$ `book values'
+    \item \textit{Short-term} liability `market' close to `book', \textit{Long-term} depends
+\end{itemize}
+
+\subsubsubsection{3.3 Income Statement}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Net Sales:} total revenue from sales of goods/services, before deductions
+    \item \textbf{Other Income:} $I$ generated from activities not part of company’s core ops.
+    \item \textbf{Cost of Goods Sold (COGS):} direct costs of producing the goods sold
+    \item \textbf{Selling, General \& Administrative Expenses (SG\&A):} costs related to selling products, managing business operations
+    \item \textbf{Depreciation:} $\downarrow$ value of a company's fixed assets (wear/tear/obsolescence)
+    \item \textbf{Earnings Before Interest and Income Taxes (EBIT):} company’s \underline{operating profit}, excluding interest and income tax expenses
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $Total \ Revenue + Other \ Income - Costs - Depreciation$
+    \end{itemize}
+    \item \textbf{Interest Expense:} cost incurred by a company for borrowed funds
+    \item \textbf{Taxable Income:} earnings subject to tax after accounting for deductions
+    \item \textbf{Taxes:} amt owed to the govt. based on the company’s taxable income.
+    \item \textbf{Net Income:} company’s total earnings/profit 1Y after all expenses and tax
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Allocation of net income:
+        \item \textbf{Dividends:} distribution of portion of company’s earnings to shareholders
+        \item \textbf{Addition to Retained Earnings:} profits reinvested in company instead of being paid out as dividends
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{3.4 Profits vs CashFlows}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Depreciation}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item `profits' subtract depreciation (non-cash expense)
+        \item `profits' ignore cash expenditures on new capital (expense is capitalized)
+        \item To calculate cash produced by business, necessary to add $\triangle$depreciation back to accounting profits and subtract expenditure on new capital equipment (cash-payment)
+    \end{itemize}
+    \item \textbf{Accrual Accounting}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item `profits' record $I \ \& \ EX$ at time of sales, not when cash exchange occur
+        \item `profits' do not consider changes in working capital
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{3.5 Cashflow Statement}
+
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Cash provided by operations} measures cash generated/used by company's core business operations
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Net Income}: total profit after expenses/taxes/other costs
+        \item \textbf{Depreciation}: non-cash expense $\rightarrow$ reduction in value of assets over time
+        \item \textbf{Changes in Working Capital Items}: $\triangle$ current assets/liabilities
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{$\downarrow (\uparrow)$ Accounts Receivable}: amt of money owed by customers to coy
+            \item \textbf{$\downarrow (\uparrow)$ Inventories}: value of goods and materials held by the coy
+            \item \textbf{$\uparrow (\downarrow)$ Accounts Payable}: company's obligations to pay suppliers for products and services purchased on credit
+            \item \textbf{$\uparrow (\downarrow)$ Other Current Assets and Liabilities}: other short-term changes in the balance sheet affecting cash
+        \end{itemize}
+        \item \textbf{Cash Provided by Operations}: total cash generated from business's operating activities, after adjusting for $\triangle$ working capital $+$ non-cash expenses (depreciation)
+    \end{itemize}
+    \item \textbf{Cash flows from investments:} captures cash flow related to purchase/sale of long-term investments, capital expenditures, and other investing activities
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Capital Expenditure (CapEx)}: money spent by the company to acquire, maintain, or upgrade physical assets like property, plants, and equipment
+        \item \textbf{Sales (Acquisitions) of Long-Term Assets}: cash inflows or outflows from the sale or purchase of long-term investments or fixed assets
+        \item \textbf{Other Investing Activities}: cash inflows or outflows from other investment-related activities not covered by asset sales or purchases
+    \end{itemize}
+    \item \textbf{Cash provided for (used by) financing activities:} tracks cash flows related to the company's financing decisions, including debt and equity transactions
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{$\uparrow (\downarrow)$ Short-Term Debt}: $\triangle$ cash from the issuance/repayment of short-term borrowings
+        \item \textbf{$\uparrow (\downarrow)$ Long-Term Debt}: $\triangle$ cash from the issuance/repayment of long-term borrowings
+        \item \textbf{Dividends}: cash paid out to shareholders as a return on their investment
+        \item \textbf{Repurchases of Stock}: cash used buy back company shares from market
+        \item \textbf{Other Financing Activities}: other cash inflows or outflows from financing activities, such as equity issuances or additional transactions.
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{3.6 Free Cashflow}
+How much is company making for investors after firm pays for new investments/additions to working capital. \\ 
+$\text{Free Cashflow} = \text{Interest} + \text{Cashflow from Ops} + \text{Cashflow from investments}$
+
+\subsubsubsection{3.7 Taxation Principles}
+Corporate Tax Rate is $21 \%$ in the US, firm can \textit{carry forward their loss} to off set up to $80 \%$ of future year's income.
+\textbf{Interest} is \textit{not taxable}.
+
+\subsubsubsection{3.8 Personal Income Tax}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Marginal Tax Rate:} tax individual pays on each dollar of income
+    \item \textbf{Average Tax Rate:} total tax bill divided by total income
+\end{itemize}
+
+\subsection{4. Financial Statement Analysis}
+\subsubsubsection{4.1 Market Value Metrics}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Market Capitalization}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item total market value of equity $=$ share price $\times$ no. of shares outstanding
+    \end{itemize}
+    \item \textbf{Market Value Added:} mkt cap - book value of equity $= mkt \ cap - equity$
+    \item \textbf{Market-to-Book Ratio:} $\ market / book \ value $
+    \item \textbf{Drawbacks:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item mkt value of coy's shares $\rightarrow$ investors’ expectations about future perf.
+        \item mkt values fluctuate: risks/events beyond financial manager’s control (noisy measures of management performance)
+        \item mkt values cannot be observed for privately owned companies or divisions and plants within larger corporations
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{4.2 Economic Value Added (EVA)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $EVA = net \ income - charge \ for \ cost \ of \ capital \ employed$ 
+    \item \textbf{Residual Income:} net dollar return after deducting the cost of capital.
+    \item EVA = After tax operating income - (cost of capital $\times$ total capitalization)
+    \item \textbf{Total Capitalization:} $Long\text{-}term \ Debt + Equity$
+    \item \textbf{After tax operating income:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item what firm would earn if it had no debt (100\% equity financed)
+        \item $\ \ \ \ \ = (1 - tax \ rate) \times interest \ expense + net \ income$
+        \item OR = $EBIT \times (1 - tax \ rate)$
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{4.2 Accounting Rates of Return (ROR)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Return on Capital (ROC):} after-tax operating income / total capitalization
+    \item \textbf{Return on Assets (ROA):} after-tax operating income / total assets
+    \item \textbf{Return on Equity (ROE):} net income / equity
+    \item Difference between after-tax income and net income to shareholders:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item After-tax operating income is calculated before interest expense. Net income is
+        calculated after interest expense. Financial managers usually start with net income,
+        so they add back after-tax interest to get after-tax operating income. After-tax
+        operating income measures the profitability of the firm’s investment and operations.
+        If properly calculated, it is not affected by financing.
+    \end{itemize}
+    \item Difference among ROE, ROC, ROA
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item ROE measures return to equity as net income divided by the book value of equity.
+        ROC and ROA measure the return to all investors, including interest paid as well as
+        net income to shareholders. ROC measures return versus long-term debt and
+        equity. ROA measures return vs total assets.
+    \end{itemize}
+\end{itemize}
+\textbf{Advantages of EVA}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item EVA recognizes that companies need to cover their opportunity costs before they add value.
+    \item EVA makes the cost of capital visible to operating managers. There is a clear target: Earn at least the cost of capital on assets employed.
+    \item A plant or divisional manager can improve EVA by reducing assets that aren’t making an adequate contribution to profits.
+\end{itemize}
+
+\textbf{Disadvantages of EVA}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item They show current performance and are not affected by all the other things that move stock market
+    \item We use book values.
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item For example, we ignored the fact that Home Depot has invested large sums in marketing in
+        order to establish its brand name.
+        \item  Older assets may be grossly undervalued in today’s market conditions and prices. So a high
+        return on assets indicates that the business has performed well by making profitable
+        investments in the past, but it does not necessarily mean that you could buy the same assets
+        today at their reported book values. Conversely, a low return suggests some poor decisions in
+        the past, but it does not always mean that today the assets could be employed better
+        elsewhere.
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{4.3 Measuring Efficiency}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Asset turnover ratio: $\frac{Sales}{Total \ assets \ at \ start \ of \ year}$/$\frac{Sales}{Average \ total \ assets}$
+    \item Inventory turnover ratio: $\frac{COGS}{inventory \ at \ start \ of \ year}$
+    \item Average days in inventory: $\frac{inventory \ at \ start \ of \ year}{COGS/365}$
+    \item Receivable Turnover: $\frac{sales}{receivables \ at \ start \ of \ year}$
+    \item Average collection period: $\frac{receivables \ at \ start \ of \ year}{avg \ daily \ sales}$
+\end{itemize}
+
+\subsubsubsection{4.4 DuPont System}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Profit Margin:} $\frac{net \ income}{sales}$
+    \item \textbf{Operating profit margin:} $\frac{after-tax \ operating \ income}{sales}$
+    \item \textbf{ROA:} $\frac{sales}{assets}$ (asset turnover) $\times \frac{after-tax \ op \ income}{sales}$ (op. profit margin)
+\end{itemize}
+
+\subsubsubsection{4.5 Mergers}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Firms $\uparrow$ profit margins by acquiring suppliers, (own + supplier's profits)
+    \item Without special expertise managing new business, $\uparrow$ profit margin may be offset by $\downarrow$ \textbf{asset turnover} e.g. Admiral Motors and supplier, Diana Corporation, both have a 10\% return on assets, but Admiral has a lower operating profit margin (20\% vs. 25\%).
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Admiral considers merging with Diana to capture both profit margins
+        \item After merger, while combined profits and profit margins $\uparrow$, total sales remain at \$20 million as Diana's output is used \textit{internally}
+        \item However, merger $\uparrow$ total assets, $\downarrow$ asset turnover, negating benefits of higher profit margin, \underline{leaving the return on assets unchanged}
+    \end{itemize}
+\end{itemize}
+\includegraphics*[width=8.5cm, height=2.4cm]{images/mergerstable.PNG}
+
+\subsubsubsection{4.6 Measuring Financial Leverage}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Long-term debt ratio: $\frac{long-term \ debt}{long-term \ debt + equity}$ (total capitalization)
+    \item Long-term debt-equity ratio: $\frac{long-term \ debt}{equity}$ 
+    \item Total debt ratio: $\frac{total \ liabilities}{total \ assets}$
+    \item Times interest earned: $\frac{EBIT}{interest \ payments}$
+    \item Cash coverage ratio: $\frac{EBIT + depreciation}{interest \ payments}$
+    \item ROE = $\frac{assets}{equity} \ \text{(leverage ratio)} \ \times \frac{sales}{assets} \ \text{(asset turnover)} \ \times \frac{after-tax \ operating \ income}{sales} \ \text{(operating profit margin)} \ \times \frac{net \ income}{after-tax \ operating \ income} \ \text{(debit burden)}$
+\end{itemize}
+
+\subsubsubsection{4.7 Measuing Liquidity}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Net working capital to total assets ratio: $\frac{net \ working \ capital}{total \ assets}$
+    \item Working capital: $current \ assets - liabilities$
+    \item Current ratio: $\frac{current \ assets}{current \ liabilities}$
+    \item Quick ratio: $\frac{cash + marketable \ securities + receivables}{current \ liabilities}$
+    \item Cash ratio: $\frac{cash + marketable \ securities}{current liabilities}$
+\end{itemize}
+
+\pagebreak
+
+\subsubsection{8. Time Value of Money}
+\subsubsubsection{Future Values and Compound Interest}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Future Value:} amt to which an investment will grow after earning interest
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item FV = \verb|initial investment| $\times (1 + r)^t$
+        \item calculate interest based on $t$, $t =$ monthly, $r$ should be monthly interest
+    \end{itemize}
+    \item \textbf{Compound Interest:} interest earned on \textit{interest}
+    \item \textbf{Simple Interest:} interest earned only on the original investment
+\end{itemize}
+
+\subsubsubsection{Present Value}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Present Value:} value today of a future cash flow 
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \highlight[yellow]{$PV = \frac{\text{Future value after } t \text{ periods}}{(1+r)^t}$}
+    \end{itemize}
+    \item \textbf{Discount Factor:} present value of a \$ 1 future payment
+    \item \textbf{Discount Rate:} i/r used to compute present values of future cashflows
+    \item \textbf{Discount Factor Cash Flow (DCF):} Method of calculating present value by discounting future cashflows \highlight[yellow]{$\Rightarrow$ $DF = \frac{1}{(1+r)^t}$}
+\end{itemize}
+
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Free Credit:} Interest = 0
+    \item \textbf{Cost of money:} another way to say interest
+\end{itemize}
+
+\subsubsubsection{Perpetuities and Annuitities}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Perpetuity:} stream of level cash payments that never ends
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item PV of perpetuity $PV = \frac{C}{r}$, $C = \text{Cash Payment}$, $r = \text{interest rate}$
+    \end{itemize}
+    \item \textbf{Annuity:} level stream of cash flows at regular intervals \textit{with finite maturity}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item PV of annuity \highlight[yellow]{$PV = C[\frac{1}{r} - \frac{1}{r(1+r)^t}]$}
+        \item $C = \text{Cash Payment}$, $r = \text{interest rate}$, 
+    \end{itemize}
+    \item \textbf{PV Annuity Factor (PVAF):} present value of \$1 a year for each of $t$ years when $C = 1$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \highlight[yellow]{$PVAF = [\frac{1}{r} - \frac{1}{r(1+r)^t}]$}
+        \item $t = \text{No. of years cash payment received}$, $r = \text{interest rate}$
+    \end{itemize}
+    \item \textbf{Future Value of Annuity Payment:} \highlight[yellow]{$FV = [C \times PVAF] \times (1+r)^t$}
+    \item \textbf{Annuity Due:} level stream of cash flows starting immediately
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Differ vs ordinary annuity: $\text{PV}_\text{annuity due} = \text{PV}_\text{annuity} \times (1+r)$
+        \item Future value vs ordinary annuity: $\text{FV}_\text{annuity due} = \text{FV}_\text{annuity} \times (1+r)$
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Effective Interest Rates}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Effective Annual Interest Rate:} i/r annualized with compound interest: $EAR = (1 + MR)^{12} - 1$, $MR$ is monthly interest rate
+    \item \textbf{Annual Percentage Rate:} i/r annualized using simple interest: $APR = MR \times 12$
+\end{itemize}
+
+\subsubsubsection{Inflation}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Inflation:} rate at which prices as a whole are increasing
+    \item \textbf{Nominal Interest Rates:} rate at which money invested grows
+    \item \textbf{Real Interest Rate:} rate at which purchasing power of investment increases
+    \item $1 + \text{real interest rate} = \frac{1 + \text{nominal interest rate}}{1 + \text{inflation rate}}$ 
+    \item \textbf{Approx.}: $\text{Real i/r} \approx \text{nominal i/r} - \text{inflation rate}$ (nom/inflation rate small)
+    \item Current dollar cashflows discounted by \textit{nominal interest rate}, real cashflows discounted by \textit{real interest rate}
+\end{itemize}
+
+\highlight[yellow]{$PV = PMT \times \frac{1-(1+\frac{r}{12})^{-n}}{\frac{r}{12}}$}
+
+
+\subsubsection{11. Marketing 101}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Needs:} States of felt deprivation
+    \item \textbf{Wants:} Needs that are shaped by society, culture and personality
+    \item \textbf{Demands:} Wants that are backed by buying power
+    \item \textbf{Marketing:} Delivering Value to Customers $\rightarrow$ Capturing Value from Customers
+    \item \textbf{Marketing Myopia:} Focusing on the \textit{current Wants} instead of the \textit{underlying Need}
+\end{itemize}
+
+\subsubsubsection{Production Concept}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Focus on production and distribution efficiency
+    \item Assumes consumers prefer products that are available + highly affordable
+    \item Appropriate when: Demand $>>$ Supply
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Costs are high and improve productivity will lower then
+    \end{itemize}
+    \item Impersonal, insensitive, `assembly-line' orientation
+\end{itemize}
+
+\subsubsubsection{Product Concept}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Focus on making continued product innovations
+    \item Assumes consumers prefer products with highest quality, and best features and performance
+    \item Leads to Marketing Myopia (overly-narrow definition of business)
+\end{itemize}
+
+\subsubsubsection{Selling Concept}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Concentrate on selling and promotion
+    \item Assumes consumers will not buy enough unless stimulated aggressively
+    \item Normally used for unsought goods
+    \item `Hard Sell', unscrupulous image
+\end{itemize}
+
+\subsubsubsection{Marketing Concept}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Determine needs \& wants of target markets \& delivering them more effectively \& efficiently than competitors
+    \item Create, build \& maintain beneficial exchanges with target buyers to achieve organizational objectives
+    \item Focus on Buyer's Needs vs Seller's Needs $\rightarrow$ Adapt \& anticipate changes in consumer needs \& characteristics
+    \item Recognize needs not just product-based
+    \item Stress regular consumer research \& analysis
+    \item Resources allocated to make good \& services desired by consumers
+\end{itemize}
+
+\subsubsubsection{Customer Driven vs Customer Driving}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Customer Driven $\rightarrow$ Understand customers deeply about what they want $\rightarrow$ Create product that meet current needs
+    \item Customer Driving $\rightarrow$ Understand customers needs better than customers themselves do $\rightarrow$ create products that meet needs now and future
+\end{itemize}
+
+\subsubsubsection{Customer Relationship Management (CRM)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Process of building \& maintaining profitable customer relationships by delivering: \underline{superior customer value + satisfaction}
+    \item Not everyone is a desirable customer, attra ct keep + grow profitable customers`'
+\end{itemize}
+
+\includegraphics*[width=8cm, height=4.4cm]{images/customerrelationgroup.PNG}
+
+\subsubsubsection{Marketing Management Process}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Analyze and Identify Market opportunities}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Market Research \& Information Systems
+        \item Marketing Environmental Scanning
+        \item Consumer \& Business Markets
+    \end{itemize}
+    \item \textbf{Research \& Select Target Markets}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Measuring \& Forecasting Demand
+        \item Market Segmentation, targeting \& positioning
+    \end{itemize}
+    \item \textbf{Long Tail:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item e.g. Rhapsody had demand for top 400,000 trackts at least once a month
+        \item Niche products, problems finding local audience + physical limitations
+        \item However now online world allows aggregation, no more physical limits
+    \end{itemize}
+    \item \textbf{Bottom of Pyramid}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Market are in earliest stages of economic development, growth is rapid
+        \item Competitive necessity of maintaining low cost structure in these areas, can push companies to discover creative ways to configure products finances and supply chains to enhance productivity
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{STP: Segmentation, Targeting and Positioning}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Segmentation:} Dividing a market into smaller groups with distinct needs, characteristics or behaviors who might require separate products or marketing mixes. A market segment consists of consumers who respondin a similar way to a given set of marketing efforts
+    \item \textbf{Targeting:} The process of evaluating each market segment's attractiveness and selecting one or more segments to enter
+    \item \textbf{Positioning:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Differentiation: Actually differentiating the market offering to create superior customer value
+        \item Positioning: Arranging for a product to occupy a clear, distinctive and desirable place relative to competing products in the minds of target consumers $\rightarrow$ positioning is always \underline{perception based}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Marketing Management Process}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Develop Marketing Mix (4Ps)} Marketing mix set of controllable tactical marketing tools to produce response the firm wants in the target Market (Product, Place, Promotion, Price)
+    \item \textbf{Managing Marketing Effort:} 
+    \begin{multicols}{2}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Analysis (SWOT) | Planning (Setting Objectives and Strategy)
+            \item Control (Evaluating Results and Taking Corrective Action)
+            \columnbreak
+            \item Implementation (Process of Turning Marketing Strategies into Marketing Actions)
+        \end{itemize}
+    \end{multicols}
+\end{itemize}
+
+\subsubsection*{Customer Lifetime Value}
+\subsubsubsection{Delivering Customer Value}
+Aim to be best at one, while maintaining industry standards in the other two.
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Operational Execellence:} providing customers with reliable products / services at competitive prices and delivered with minimal difficulty or inconvenience
+    \item \textbf{Customer intimacy:} segmenting and targeting markets precisely, then taking offerings to match exactly the demands of those niches
+    \item \textbf{Product Leadership:} offering customers leading-edge products and services that consistently enhance the customer's use or application or product, making rival goods obselete
+\end{itemize}
+
+\subsubsubsection{Product Centric Business Models}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Great product, and producing the same at scale!
+    \item KPIs include market share, number of new products etc.
+    \item Growth engines: new products and new markets
+    \item However
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Product life cycles have reduced
+        \item Competition has increased because of the internet and globalization
+        \item Move from selling products to solutions
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Customer Centric Business Models}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Who are our most valuable customers?
+    \item Maximize their long term value, not necessarily the additional margin of their current purchase
+    \item Build relationships and look at the future
+    \item Customer Acquisition: Who are the ideal customers to acquire and how much to spend?
+    \item Customer Retention: Do we make attempts to retain every customer?
+    \item Customer Development: Who are the best customers to be developed further
+\end{itemize}
+
+\subsubsubsection{Customer Lifetime Value (CLV)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item The Dollar value of a customer relationship, i.e. it is the net
+    present value of all future cash flows from a customer relationship
+    \item \textbf{How is it computed:} Use past data about a customer to predict the future
+    \item \textbf{Why}: How much to spend on Customer Acquisition and Retention
+\end{itemize}
+
+\textbf{CLV Model} \highlight[yellow]{$CLV = (M-R)\left(\frac{1+d}{1+d-r}\right)$}
+\begin{multicols}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \$M is the margin from every customer (where margin is the revenue minus the variable costs)
+        \item \$R is the retention spending
+        \item $r$ refers to the retention rate
+        \item $d$ refers to the discount rate \columnbreak
+        \item Survival Rate: Probability that customer has a relation in a given period $t=r^{t-1}$
+        \item $ CLV = (M-R)(1 + (\frac{r}{1+d}) + (\frac{r}{1+d})^2 + (\frac{r}{1+d})^3 + \cdots)$
+    \end{itemize}
+\end{multicols}
+
+\subsubsection{12. Pricing}
+Sum of values consumers exchange for benefits of having or using product, amount of money charged for product
+\begin{multicols}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Most tactical of 4Ps
+        \item Only P producing revenue
+        \item Inflation/Recession
+        \item Dynamic
+    \end{itemize}
+\end{multicols}
+
+\subsubsubsection{Factors Affecting Pricing}
+\includegraphics*[width=8cm, height=2cm]{images/settingprice.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Internal Factors}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{Marketing objectives}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Survival, current profit maximization
+            \item Market share leadership VS product quality leadership
+            \item Competitive entry barriers and Reseller support
+            \item Cost recovery (public/non-public firms)
+        \end{itemize}
+        \item \textit{Marketing mix strategy costs}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Product design, distribution, promotion
+            \item Price vs Non-price competition and parallel importers
+        \end{itemize}
+        \item Organization for pricing
+        \item \textit{Costs:}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \underline{Costs} $\rightarrow$ Floor Price, \underline{Demand} $\rightarrow$ Ceiling Price
+            \item Types: Fixed, Variable, Total, Average and Marginal Costs
+        \end{itemize}
+        \item \textit{Experience and Experience curves}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Experience:} Combined effects of learning, volume, investment and specialization | \textbf{Experience curve:} illustrates relationship between cumulative production per unit costs
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{External Factors}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Nature of the market and demand | Competition
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Form of competition $\rightarrow$ pure, monopolistic, oligopolistic, monopoly
+            \item Price Elasticity of Demand $\rightarrow$ elastic vs inelastic demand, or Cross-Elasticity (substitute \& complementary products) e.g. Apple
+        \end{itemize}
+        \item \textit{Consumer Perceptions:} price-quality relationships or price used in absence of other cues
+        \item \textit{Competitors:} 
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Reference point (e.g. Pepsi pricing based on Coke)
+            \item Responsiveness
+            \item Product homogeneity $\rightarrow$ more price sensitive
+        \end{itemize}
+        \item Other environmental factors (economy, resellers/distributors, government)
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{New-Product Pricing}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Price Skimming:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Set high price for new product, \textit{`skim' revenues} layer by layer from market
+        \item Company makes fewer, but more profitable sales
+        \item When to use:
+        \begin{multicols}{2}
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item Segmentation on price elasticity
+                \item Image supportive, Safety/Hedge
+                \item No immediate competition
+                \item Costs of smaller volume cannot be so high to cancel advantage of charging more
+            \end{itemize}
+        \end{multicols}
+    \end{itemize}
+    \item \textbf{Price Penetration}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Set a low initial price to \textit{`penetrate'} the market \underline{quickly and deeply}
+        \item Can attract a large number of buyers quickly and win a large market share
+        \item When to use:
+        \begin{multicols}{3}
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item Consumers price sensitive
+                \item Experience curve effects operative
+                \item Potential competition
+            \end{itemize}
+        \end{multicols}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Methods and Strategies: Cost-Oriented Strategies}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Markup Pricing based on Cost}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Predetermined percentage added to product cost
+        \item EG: $25\%$ markup on product costing $\$1.00$
+        \item Sales Price = $\$(1 \times 1.25) = \$1.25$
+        \item Simple \& easy to use, Equitable for buyer \& seller
+        \item Focuses on cost to neglect of demand
+        \item \highlight[yellow]{$\frac{\text{price} - \text{costs}}{\text{costs}} \times 100\%$}
+        \item Variation – Markup based on Sales $\Rightarrow$ \highlight[yellow]{$\frac{\text{price} - \text{costs}}{\text{price}} \times 100\%$}
+    \end{itemize}
+    \item \textbf{Target Return or Target Profit Pricing}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Predetermined return on capital used to produce \& market product
+        \item Target return based on Standard Volume: \highlight[yellow]{$P = DVC + \frac{FC}{X} + {rK}{X}$}
+        \begin{multicols}{2}
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item $P = $ price
+                \item $DVC =$ Direct Variable Cost
+                \item $FC = $ Fixed Cost
+                \item $X = $ Standard Volume
+                \item $r =$ Desired Rate of Return
+                \item $K =$ Capital used
+            \end{itemize}
+        \end{multicols}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Other Strategies:}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Demand-Oriented Pricing:} Methods based on \& used to affect consumer perceptions \& behavior
+    \item \textbf{Perceived-Value Pricing:} based on buyer's perception of value, soundest approach $\rightarrow$ consistent with marketing concept e.g. Diamond Ring
+    \item \textbf{Odd/Psychological Pricing:} Set prices below even-dollar amounts ($\$9.99$), used to connote lower price level through rounding down
+    \item \textbf{Loss Leader Pricing:} Set prices on selected products at low levels, to increase sales of others, store traffic $\Rightarrow \uparrow$ overall profits
+    \item \textbf{Optional-Product Pricing:} Sell accessory products with main product
+    \item \textbf{Captive-Product Pricing:} Products that must be used with main product, they are expensive while main product is cheap e.g. Printer catridges
+    \item \textbf{Bundled Pricing:} Several products combined and sold as bundle to reduce price, promote sales of products people may not usually buy
+    \item \textbf{Price Discrimination:} Time (Peak vs Off-Peak), Place (ERP: Downtown or outskirts), Customer (Adults vs Child vs Senior Citizens)
+\end{itemize}
+
+\subsubsection*{Example Questions}
+
+\subsubsubsection{1. Mortgages}
+Sometimes you may need to find the series of cash payments that would provide a given value today. For example, home purchasers typically borrow the bulk of the house price from a lender. The most common loan arrangement is a 30-year loan that is repaid in equal monthly installments. Suppose that a house costs \$125,000 and that the buyer puts down 20\% of the purchase price, or \$25,000, in cash, borrowing the remaining \$100,000 from a mortgage lender such as the local savings bank. What is the appropriate monthly mortgage payment?
+The borrower repays the loan by making monthly payments over the next 30 years (360 months). The savings bank needs to set these monthly payments so that they have a present value of \$100,000. Thus
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Present Value = $\text{mortgage payment} \times \text{360-month annuity factor} = \$100,000$
+    \item Mortgage payment = $\frac{\$100,000}{\text{360-month annuity factor}}$
+    \item Suppose that the interest rate is 1\% a month. Then
+    \item Mortgage payment = $\frac{\$100,000}{\frac{1}{0.01} - \frac{1}{0.01(1.01)^{360}}} = \frac{\$100,000}{97.218} = \$1,028.61$
+\end{itemize}
+
+\subsubsubsection{2. Retirement}
+You plan to retire in 30 years and want to accumulate enough by then to provide yourself with \$30,000 a year for 15 years. 
+
+\begin{enumerate}[label=(\alph*),topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item If the interest rate is 10\%, how much must you accumulate by the time you retire?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $\text{PV} = \$30,000 \times \left( \frac{1}{0.10} - \frac{1}{0.10 \times (1.10)^{15}} \right) = \$228,182.39$
+        \item The PV here refers to PV 30 years from now. This is the amount needed in that year’s dollars.
+    \end{itemize}
+    \item How much must you save each year until retirement in order to finance your retirement consumption?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $\frac{\$228,182.39}{(1.10)^{30}} = \$13,076.80$
+        \item The present value of your 30-year savings stream must equal this present value. Therefore, we need to find the payment for which:
+        \item $C \times \left( \frac{1}{0.10} - \frac{1}{0.10 \times (1.10)^{30}} \right) = \$13,076.80 \Rightarrow C = \text{PMT} = \$1,387.18$
+        \item You must save \$1,387.18 per year.
+    \end{itemize}
+    \item Now you remember that the annual inflation rate is 4\%. If a loaf of bread costs \$1 today, what will it cost by the time you retire?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $1.00 \times (1.04)^{30} = 3.24$
+    \end{itemize}
+    \item You really want to consume \$30,000 a year in real dollars during retirement and wish to save an equal real amount each year until then. What is the real amount of savings that you need to accumulate by the time you retire?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item We repeat part (a) using the real interest rate: \(\frac{1.10}{1.04} - 1 = 0.0577\), or 5.77\%.
+        \item The retirement goal in real terms is:
+        \item $\text{PV} = \$30,000 \times \left( \frac{1}{0.0577} - \frac{1}{0.0577 \times (1.0577)^{15}} \right) = \$295,796.61$
+    \end{itemize}
+    \item Calculate the required preretirement real annual savings necessary to meet your consumption goals.
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item The future value of your 30-year savings stream must equal \$295,796.61. Therefore, we solve for payment (PMT) in the following equation:
+        \item $C \times \left( \frac{1.0577^{30} - 1}{0.0577} \right) = 295,796.61 \Rightarrow C = \text{PMT} = \$3,895.66$
+        \item Therefore, we find that you must save \$3,895.66 per year in real terms. This value is much higher than the result found in part (b) because the rate at which purchasing power grows is less than the nominal interest rate, 10\%.
+    \end{itemize}
+    \item What is the nominal value of the amount you need to save during the first year? (Assume the savings are put aside at the end of each year.)
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item If the \textit{real} amount saved is \$3,895.66 and prices rise at 4\% per year, then the amount saved at the end of 1 year, in nominal terms, will be:
+        \item $3,895.66 \times 1.04 = 4,051.49$
+    \end{itemize}
+    \item What is the nominal value of amount you need to save during 30th year?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item The 30th year will require nominal savings of:
+        \item $3,895.66 \times (1.04)^{30} = 12,635.17$
+    \end{itemize}
+\end{enumerate}
+
+\subsubsubsection{3. Customer Acquisition}
+Suppose additionally, the airline observes two groups of customers. For group A, the retention rates are 45\% and the average spending is about \$120. The variable costs are at \$50. For group B, the retention rates are 90\%, with the average spending at \$600. The variable costs are at \$290.
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item CLV for group $A=70*(1.05)/(.6)=\$122.5$
+    \item CLV for group $B=310*(1.05)/(.15)=\$2170$
+\end{itemize}
+
+\subsubsubsection{Marketing Process}
+\includegraphics*[width=8cm, height=5cm]{images/marketingprocess.PNG}
+\subsubsubsection{Experience Curve Pricing}
+Experience Curve drives down the prices
+\includegraphics*[width=8cm, height=4cm]{images/experiencecurvepricing.PNG}
+
+
+
+\end{multicols*}
+
+\end{document}

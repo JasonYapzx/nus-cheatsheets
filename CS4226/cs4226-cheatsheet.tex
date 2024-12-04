@@ -1,0 +1,1304 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{listings} 
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{lmodern}
+\usepackage{soul} 
+
+\lstset{
+    tabsize=2,    
+%   rulecolor=,
+    language={java},
+        captionpos = t,
+        basicstyle = \scriptsize\ttfamily,
+        frame=lines,
+        numbersep=5pt,
+        numbers=left,
+        numberstyle=\scriptsize,
+        backgroundcolor=\color{white},
+        columns=fixed,
+        extendedchars=false,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        frame=single,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        keywordstyle=\color[rgb]{0,0,1},
+        keywordstyle=[2]\color{gray},
+        commentstyle=\color{teal},
+        stringstyle=\color{red},
+        numberstyle=\color[rgb]{0.205, 0.142, 0.73},
+}
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.20in,left=.20in,right=.20in,bottom=.20in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\newcommand{\subsubsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\scriptsize\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+
+\title{CS4226-cheatsheet}
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\scriptsize
+
+
+\begin{multicols*}{3}
+\setlength{\premulticols}{0.1pt}
+\setlength{\postmulticols}{0.1pt}
+\setlength{\multicolsep}{0.1pt}
+\setlength{\columnsep}{0.1pt}
+\begin{tiny}
+    \small{\textbf{CS4226 Cheatsheet AY24/25 || \href{https://github.com/JasonYapzx}{@JasonYapzx}}} \\
+\end{tiny}
+
+\subsection*{1. Performance}
+\subsubsection*{Network Performance Metrics}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Link Rate/Bandwidth/Capacity:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Cable - 1~100 Mbps, Fiber optics - 1~100 Gbps
+        \item Ethernet - 3 Mbps to 100 Gbps
+        \item How many bits can be `pushed' onto a link per unit time
+        \item How fast we can place bits onto the \underline{physical medium} delivering
+    \end{itemize}
+    \item \textbf{Throughput}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Throughput of a TCP/UDP flow
+        \item How many bits can be communicated per unit time
+        \item How fast the bits get delivered through the route (regardless of the medium)
+    \end{itemize}
+    \item \textbf{End-to-end delay}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Components
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Processing + Queueing Delay + Transmission + Propagation
+        \end{itemize}
+        \item Related: bandwidth, packet and queue size, distance, prop. speed
+        \item Source $\rightarrow$ Destination
+    \end{itemize}
+    \item \textbf{Response Time | Round Trip Time}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Source $\rightleftarrows$ Destination
+    \end{itemize}
+    \item \textbf{Others}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Dropping probability
+      \item Utilization (percentage of time link is busy)
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Packet Switching}
+Compared to \textit{circuit-switching}, it allows more users to use the network at once.
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Great for async bursty data
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item resource sharing | simpler, no call setup
+  \end{itemize}
+  \item \textbf{excessive congestionn:} packet delay and loss
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item protocols needed for reliable data transfer, congestion control
+  \end{itemize}
+  \item reserved resources (circuit) vs on-demand allocation (packet)
+\end{itemize}
+
+\subsubsection*{Packet-switching store-and-forward}
+Entire packet must arrive at router before it can be transmitted onto the next link
+$Delay = \frac{L}{R}$, if $L$ = packet size and link rate $R$
+
+\subsubsection*{Statistical Multiplexing}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Sequence of A \& B has no fixed timing pattern
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Bandwidth shared on demand: \textit{statistical multiplexing}
+  \end{itemize}
+  \item Time Divison M.: each host gets same slot in revolving TDM frame
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4.4cm]{images/singleserverqueueing.png}
+
+\subsubsection*{Little's Law: $L = \lambda \times W$}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Arrival rate into the system $\lambda$:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $\lambda \overset{def}{=} \lim_{t \rightarrow \infty} \frac{N(t)}{t}$
+  \end{itemize}
+  \item Average sojourn time (time $W_i$ for $i^{th}$ customer spent in) $W$:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $W \overset{def}{=} \lim_{n \rightarrow \infty} \frac{1}{n} \sum_{j=1}^{1} W_j$
+  \end{itemize}
+  \item Time average\# of customers in system $L$:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $L \overset{def}{=} \lim_{t \rightarrow \infty} \frac{1}{t} \int_{0}^{t} L(s) ds$
+  \end{itemize}
+  \item Avg \# of customers in system = arrival rate $\times$ avg. sojourn time
+\end{itemize}
+
+\subsection{2. Network Queueing Models}
+\subsubsection*{Model packet flow: Arrival Pattern}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item $T_i$ are independent and identically distributed \textbf{random variable}
+  \item Inter-arrival time: $T_i \overset{\triangle}{=} t_{i+1} - t_i$
+\end{itemize}
+
+\subsubsubsection*{Random Experiment}
+Consider a random experiment whose outcome cannot be determined in advance
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Sample space} $S$: set of all outcomes
+  \item \textbf{Event} $E$: $\subset$ of sample space, event $E$ occured if outcome $s \in E$
+  \item \textbf{Probability} function $P(E)$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \hl{$0 \leq P(E) \leq 1$, $P(S) = 1 \Longrightarrow P(\bigcup^\infty_{i=1}E_i) = \sum^\infty_{i=1} P(E_i)$}
+    \item For any sequence of events $E_1, E_2 \dots$ that are \textit{mutually exclusive}
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Random Variable}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Random variable}: function assigning real value to each outcome $s \in S$: For any set of \hl{$A \subseteq \mathbb{R}$: $P\{X \in A\} \overset{def}{=} P(X^{-1}(A))$}
+  \item \textbf{Distribution function} $F$ of r.v. $X$ is defined on any \textit{real number} $x$ by: \hl{$F(x) \overset{def}{=} P\{X \leq x\} = P(X^{-1}((-\infty, x]))$}
+  \item A random variable is \textit{continuous} if there exists a \textbf{probability density function} (pdf) $f(x)$ such that: \hl{$f(s) \overset{def}{=} \frac{d}{dx}F(x)$}
+  \item 2 random variables are \textit{independent} if realization of 1 does not affect probability distribution of other: $f_{X,Y}(x,y) = f_X(x)f_Y(x)$
+  \item \textbf{Expectation or mean} of random variable $X$: \\ \hl{$E[X] \overset{def}{=} \int_{-\infty}^{+\infty}xf(x)dx$ \textbf{\textit{or}} $E[X] \overset{def}{=} \sum_{x=-\infty}^{+\infty} xP\{X=x\}$}
+\end{itemize}
+
+\subsubsubsection{Exponential Distribution}
+Continuous random variable $T$ follows/has an \textbf{exponential distribution} with parameter $\lambda > 0$ if for $x \geq 0$, where $\frac{1}{\lambda}$ is the frequency
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \hl{$F(x) = P\{T \leq x\} = 1 - e^{-\lambda x}$ or $\overset{\_}{F}(x) = P\{T > x\} = e^{-\lambda x}$}
+  \item \hl{$f(x) = \frac{dF(x)}{dx} = \lambda e^{-\lambda x}$}
+  \item Average: $E[T] = \int_{-\infty}^{\infty} xf(x) dx = \frac{1}{\lambda}$ $\Longrightarrow$ inter-arrival rate
+  \item \textbf{Memoryless property:} $P\{T > s + t | T > s\} = P\{T > t\}$
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4.6cm]{images/poissonmerge.jpg}
+
+\subsubsection*{Model packet flow: Service Time}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Packets have varying length
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item takes different amt of time to process, same packet given different link capacity/rate
+    OR packets with different lengths under fixed links
+  \end{itemize}
+  \item Service time $S_i$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item processing time of packet $i$ under fixed link rate
+    \item follows i.i.d r.v. $S$ with mean $E[S] = \frac{1}{\mu}$
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{M/M/1 Model}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item single server with queue of $\infty$ size
+  \item poisson arrival with rate $\lambda$
+  \item exponential i.i.d service time with rate $\mu$
+  \item arrival/service times independent FIFO service discipline
+\end{itemize}
+\includegraphics*[width=7.5cm, height=1cm]{images/m1model.jpg}
+
+\subsubsection*{Result}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Utilization $\rho$: percentage of time that \textit{server} is busy OR
+  \item probability of random observation finds server busy
+  \item general result (applies but not limited to M/M/1 Model)
+  \item $\rho = \frac{\lambda}{\mu}$ need condition for $\lambda < \mu$ for system stability
+\end{itemize}
+
+\subsubsubsection{Main Result (without proof)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \hl{$\pi_i$} $ = \%$ of time exactly $i$ packets or customers in system $\rightarrow$ server + queue
+  \item $P\{L=i\}$ that random observation finds $i$ packets in the system
+  \item For M/M/1 system, we have $\pi_i = P\{L=i\} = p^i(1-p)$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \hl{$\pi_0 = \rho^0(1-\rho) \Rightarrow 1 - \rho$ $\rightarrow \%$} of time server idle/no packets in system
+    \item Discrete distribution $\rightarrow$ density function $= P\{L = i\} = \rho(1-\rho)^i$
+    \item Follows a geometric distribution
+  \end{itemize}
+\end{itemize}
+
+
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{System + Queue}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Average no. of packets in system \hl{$E[L] = \frac{\rho}{1-\rho}$}
+      \item Average sojourn time of packets \hl{$E[W] = \frac{1}{\mu - \lambda}$}
+    \end{itemize}
+  \item \textbf{Queue only}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Average no. of packets in the queue \hl{$E[Q] = \frac{\rho^2}{1-\rho}$}
+      \item Average queueing delay of packets \hl{$E[D] = E[W] - \frac{1}{\mu}$}
+    \end{itemize}
+\end{itemize}
+
+When $\lambda = \mu$ it is unstable, $E[L], E[W] \rightarrow \infty$, because of the randomness.  
+\subsubsubsection{Throughput of system}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item General system, throughput is $\min(\mu, \lambda)$
+  \item Stable system $\mu < \lambda$: accept more packets into the system then service them, thus it will be bounded by $\lambda$
+  \item Throughput \& queueing delay \textbf{positively correlated} if $\lambda$ constant
+\end{itemize}
+
+\subsubsection*{Effective Bandwidth}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Phyiscal link capacity:} theoretical processing limit of hardware
+  \item \textbf{Effective bandwidth of the link:} actual throughput that can be achieve / quality of service
+\end{itemize}
+
+\subsubsection*{Statistical Multiplexing vs TDM}
+\includegraphics*[width=8.5cm, height=1.5cm]{images/statisticalmultiplexingvstdm.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Each Poisson stream its own queue $(\frac{\lambda}{k} , \frac{\mu}{k})$ or shared queue $(\lambda, \mu)$
+  \item \hl{$\rho = \frac{\lambda}{\mu} = \frac{\lambda / k}{\mu / k}$} $\Longrightarrow$ same server utilization
+  \item \hl{$E[W] = \frac{1}{\mu} \frac{1}{1-\rho}$} $\Longrightarrow$ avg. sojourn time for each user $\uparrow$ by $\times k$ under TDM
+  \item \hl{$E[Q] = \frac{\rho^2}{1-\rho}, E[L] = \frac{\rho}{1-\rho}$} $\Longrightarrow$ avg. no. of waiting + total users are also $k$ times larger
+\end{itemize}
+
+\subsubsection*{Burke's Theorem}
+\includegraphics*[width=8.5cm, height=1cm]{images/burketheorem.png}
+If M/M/1 system with arrival rate $\lambda$ starts in steady state
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item departure process is \textit{Poisson} with rate $\lambda$
+  \item number of customers in system at any time $t$ is \textit{independent of sequence} of departure times prior to time $t$
+\end{itemize}
+
+\subsubsubsection{Tandem Queues}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Utilization of each server $i$ becomes $p_i = \frac{\rho}{\mu_i}$
+  \item By independence, joint probability: $P\{L_1=j, L_2=k\} = P\{L_1 = j\} \cdot P\{L_2 = k\} = \rho_1^j(1-\rho_1)\rho_2^k(1-\rho_2)$
+\end{itemize}
+
+\subsubsubsection{Acyclic Network with Probabilistic Routing}
+\begin{multicols*}{2}
+\includegraphics*[width=4.1cm, height=1.8cm]{images/acyclicnetworkwithprob.png}
+\columnbreak 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Diff. flows may take different paths. 
+  \item Each link shared by different flows
+\end{itemize}
+\end{multicols*}
+
+\subsubsubsection{Jackson Network (Feedback Loop)}
+\begin{multicols*}{2}
+  \includegraphics*[width=4.1cm, height=1.8cm]{images/jacksonnetwork.png}
+  \columnbreak 
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $P_{ij}$: join queue that leaves system
+    \item $P_{ik}$: Probability to join another system that will be a feedback loop to rejoin system
+  \end{itemize}
+\end{multicols*}
+
+
+\textbf{Solving the Jackson Network}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Effective arrival rate $\lambda_i$:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=-9pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item outside arrival directly to server $i$, i.e. $r_i$ + feedback arrivals (other servers)
+    \item (stable system, leaving system rate = arrival rate $\approx lambda_j$)
+    \item $\lambda_i = r_i + \sum^{n}_{j=1}\lambda_j P_{ji}$
+    \item \textbf{Matrix form:} $\lambda = r + \lambda P \Rightarrow \lambda = r(I - P)^{-1}$
+  \end{itemize}
+\end{itemize}
+
+\subsection{3. Resource Allocation}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item flow 1 rate $\lambda_1$, flow 2 $\lambda_2$, link capacity $\mu$ packets/second respectively
+  \item divide capacity into $\mu = \mu_1 + \mu_2$, serving 2 flows separately
+  \item packet flows might have different \textit{average delay}
+  \item given delay gurantee, acheived throughput: $\lambda = \mu - \frac{1}{E[W]}$
+\end{itemize}
+
+\subsubsubsection{Motivation}
+\begin{multicols*}{2}
+  \includegraphics*[width=4cm, height=2.6cm]{images/utility.png}
+  \columnbreak 
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item internet is free, suitable for elastic services: \verb|Telnet|, \verb|FTP|, \verb|DNS|m \verb|SMTP|
+    \item not suitable for real-time applications: VoIP, Skype, Zoom
+    \item allocate different amt of resources to different application flows
+    \item $U_i$ (user's happiness) as a function of performance metrics 
+  \end{itemize}
+\end{multicols*}
+
+\subsubsubsection{Fairness}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item equal share of resources: split allocation equally based on available resources
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Equal share amongst all:
+    Demand $\boldsymbol{d} = (d_1, d_2, d_3, d_4) = (3, 4, 5, 6)$ \\
+    Allocate $\boldsymbol{x} = (x_1, x_2, x_3, x_4) = (2.5, 2.5, 2.5, 2.5)$
+    \item \textbf{\textit{Fulfill small demands completely (equal share higher demands):}}
+    Demand $d = (1, 4, 5, 6)$ Allocate $x = (1, 3, 3, 3)$ ($d_1$ fulfilled)
+  \end{itemize}
+  \item \textbf{feasible solution}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item for links with capacity $C_1, C_2, C_3$, and allocation $x = (x_1, x_2, x_3)$
+    \item $0 \leq x_i \leq d_i$ for all $i$, where flow demand = $d_i$
+    \item $x_1 + x_2 \leq C_1$; etc. (the flows which go through the links should have their total allocation less than link capacity)
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Max-Min Fairness}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item feasible allocation is max-min fair \textit{iff.} increase of any rate within feasible domain \textbf{must be at a cost} of decrease of an already smaller/equal rate
+  \item $\boldsymbol{x}$ is max-min fair if for any feasible $\boldsymbol{y}$, if $y_i > x_i$ then $\exists j$ s.t. $y_i < x_j \leq x_i$
+  \item \textbf{\underline{always exists}} a max-min fair solution, and \textbf{\underline{always unique}}
+\end{itemize}
+
+\subsubsubsection{Max-min fair example}
+\begin{multicols*}{2}
+\includegraphics*[width=4.1cm, height=1.2cm]{images/max-min.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item $C = (3,6,7)$ $d = (2,4,4)$
+  \item Resource $C_3$ not bottleneck
+  \item $C_2$ Fairshare: $x_1 = x_2 = x_3 = 2$
+  \item $C_1$ Fairshare: $x_1 = x_2 = 1.5$
+  \item $x_1 = x_2 = 1.5$ 
+  \item $x_3 = C_2 - x_1 - x_2 = 3$
+\end{itemize}
+\end{multicols*}
+
+\subsubsubsection{Bottleneck Resource}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Assume allocation $\boldsymbol{x}$, in network case, resource $\boldsymbol{r}$ is bottleneck for flow $\boldsymbol{i}$ \textit{iff.}
+  \item resource $r$ is \textit{saturated} (fully allocated to all flows)
+  \item flow $i$ has the \textit{maximum} rate amongst all flows using resource $r$
+  \item flow $i$ CANNOT get more resources from link $r$ if allocation is fair (otherwise hurts flows with lower rates)
+\end{itemize}
+
+\framebox{\parbox{\dimexpr\linewidth-1\fboxsep-2\fboxrule}{% 
+  $\star$ Theorem: when each flow has $\infty$ demand in a network system, a flow allocation is max-min fair \textit{iff} every flow has a bottleneck resource
+}}
+
+\subsubsubsection{Waterfilling Algorithm} 
+1. List demands as empty buckets $\rightarrow$ Fill in water until one hits bottleneck
+\includegraphics*[width=8cm, height=1.2cm]{images/waterfilling.png}
+
+\subsubsubsection{Weighted Max-Min Fair Share}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Extension weight vector: $\boldsymbol{\phi} = (\phi_1, \phi_2 \ldots)$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item no customer receives more than demanded
+    \item unsatisfied demand split resource proportional to their weights
+  \end{itemize}
+  \item $C = 16, \boldsymbol{d} = (4,2,10,4) \phi =(2.5,4,0.5,1)$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item fair share $x_i = \frac{\phi_i}{\Sigma_i \phi_j} C \Rightarrow \boldsymbol{x} = (5, 8, 1, 2)$
+    \item given the upper bound on demand $\Rightarrow x_1 = 4, x_2 = 2$, distribute the rest $10$ proportionally $(3.33, 6.66) \Rightarrow x_4 = 4, x_3 = 6$ 
+  \end{itemize}
+\end{itemize} 
+
+\begin{multicols*}{2}
+  \includegraphics*[width=4.1cm, height=1.2cm]{images/waterfillingweighted.png}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item buckets has a width of $\phi_i$ and volume of $d_i$
+    \item Max-min solution (same example as before) for $\phi = (1,1,1)$ 
+  \end{itemize}
+\end{multicols*}
+
+\subsection{4. Software Defined Networking}
+Implement and manage networks based on new fundemental principles
+
+\subsubsubsection{Networks vs Other Systems}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item computation and storage have been virtualized $\rightarrow$ flexible + managable infra
+  \item networks still hard to manage $\rightarrow$ heavily rely on network admins
+  \item hard to evolve due to new innovations in systems software $\rightarrow$ OS, languages
+  \item routing algorithms change very slowly, network mgmt extremely primitive
+\end{itemize}
+
+\subsubsubsection{Network Control Problem}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Compute the configuration of each phyiscal device
+  \item Operate w/o communication gurantees \& network-level protocol (\verb|RIP|, \verb|OSPF|)
+\end{itemize}
+
+\subsubsection{Router/Switch at the Core}
+\begin{multicols*}{2}
+  \includegraphics*[width=4.1cm, height=1.7cm]{images/routingvsforwarding.png}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item run \textit{routing algorithm} protocols (RIP, OSPF, BGP)
+    \item \textit{forwarding datagrams} from incoming to outgoing link
+  \end{itemize}
+\end{multicols*}
+
+\subsubsubsection{Control Plane vs Data Plane}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Control:} establish router state
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item determine how/where packets are forwarded
+    \item routing, traffic engineering, firewall
+    \item slow time-scales (per control event)
+  \end{itemize}
+  \item \textbf{Data:} process/deliver packets
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item based on state in routers and endpoints
+    \item e.g. IP, TCP, Ethernet etc
+    \item fast timescales (per packet)
+  \end{itemize}
+  \item \textbf{Control Plane:} Routing Table (RIB) $\rightarrow$ \textbf{Data Plane:} Forwarding Table (FIB)
+\end{itemize}
+
+\subsubsubsection{Principle 1: Disaagregation}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Separation of Control/Data plane $\rightarrow$ should be codified in an open interface \\ 
+  \includegraphics*[width=7cm, height=3cm]{images/controldataplane.png}
+  \item \textbf{Implications}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Network operators able to purchase control/data planes from vendors X/Y
+    \item Data plane consists of cheaper commodity forwarding devices (bare-metal switches) BUT Needs to define a \textcolor{red}{forwarding abstraction}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item general purpose way for control plane to tell data plane to forward pkts in particular way $\rightarrow$ eg. OpenFlow's Flow rules 
+      \item Flow rule is \underline{match-action} pair, any packet matched have the \textit{associated action} applied to it
+    \end{itemize}
+  \end{itemize}
+  \item \textbf{Benefits}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item New market landscape and value shift $\rightarrow$ shift control from vendors to operators that build networks to satisfy users' needs
+    \item Opportunities for fast innovations $\rightarrow$ independent evoluation/developmenet, software control of network can evolve independently of hardware
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Control vs Configuration}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Control:} making real-time decisions about how to respond to link/switch failures. Learn about failure and provide remedy in ms.
+  \item \textbf{Configuration:} Operators need ot configure switches and routers, using CLI to update RIB. Interface is capable of installing new routes, which on surface seems equivalent to isntalling new flow rule.
+  \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item run software that implements control plane \textit{on-switch}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item implies switches operate autonomously, communicate with peer switches throughout network to construct local routing tables
+    \end{itemize}
+    \item make control plane physically decoupled from data plane
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item implies control plane implemented \textit{off-switch}, possible to make it logically centralised
+    \end{itemize}
+  \end{enumerate}
+\end{itemize}
+
+\subsubsubsection{Principle 2: Centralised Control}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Centralised decisions easier to make
+  \item From FIB to Forwarding pipeline
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item each table focuses on subset of header fields(may be involved in flow rule)
+    \item pkt processed by mulitple tables sequentially, determine how its forwarded
+    \includegraphics*[width=8cm, height=1.5cm]{images/openflowswitch.png}
+  \end{itemize}
+  \item How to implement data plane?
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item fixed-function data plane
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item as header fields are well-known + easy to compute offsets in every pkt
+      \item inital idea was purposely data plane agnostic-SDN, focused on opening control plane to \textit{\textbf{programmability}}
+    \end{itemize}
+    \item programmable data plane
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item performance optimisation, potential changes to protocols
+      \item \textbf{Easy network management:} management goals as policies, debug/check behaviour easily
+      \item \textbf{Rapid innovation and fast evolution:} enable new services and better performance, detailed configurations are done by the controller
+      \item \textbf{Control shift:} vendor $\rightarrow$ operators $\rightarrow$ users
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Three layers of abstractions}
+\includegraphics*[width=8cm, height=3.5cm]{images/sdnabstractions.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Specification abstraction (northbound API)} $\rightarrow$ Allow control app to express desired network behaviour without implementation
+  \item \textbf{Distribution abstraction} (internal to control plane) $\rightarrow$ shield SDN apps from distributed states, making distributed control logically centralized
+  \item \textbf{Forwarding abstraction} (southbound to open interface) $\rightarrow$ Allow any forwarding behaviour desired by apps + hiding details of underlying hardware
+\end{itemize}
+
+\subsubsubsection{Networking Operating System (NOS)}
+\includegraphics*[width=8cm, height=2.5cm]{images/osvsnos.PNG}
+OS provides high-level abstractions that make it easier to write applications, an NOS makes it easier to implement control functionality 
+
+\includegraphics*[width=8cm, height=3.3cm]{images/sdnlayers.PNG}
+
+
+\subsection{5. Use Cases, OpenFlow and ONOS}
+Users of SDN:
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Cloud Providers: Google, Facebook, Microsoft, Opensource Components
+  \item Network Operatros: Comcast, AT\&T, NTT
+  \item Enterprises: universities/private companies $\rightarrow$ managed edge services/SDN
+\end{enumerate}
+
+\subsubsubsection{Case 1: Network Virtulization}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Exisiting virtualization solutions
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item compute virtualization: VMs, containers | networks: VPNs/VLANs
+    \item limted scope: virtualizing the address space
+  \end{itemize}
+  \item Insight: need for modern cloud: networks to be programmatically created/managed  (\textit{without manual configuration})
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Disagregation: single API entry point to create/modify/delete VNs
+    \item Virtual Networks (VNs) has its own private address spaces
+  \end{itemize}
+\end{itemize}
+\includegraphics*[width=8.5cm, height=2.5cm]{images/networkvirtualization.PNG}
+
+\subsubsubsection{Case 2: Switching Fabrics}
+\begin{multicols}{2}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Cloud Datacenters:} lower costs, newer features
+    \item \textbf{Leaf-spine topology:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item 2-hop multi-path for rack to rack
+      \item 2-hop for intra-rack server-to-server path
+      \item 4-hop for inter-rack server-to-server path
+    \end{itemize}
+  \end{itemize}
+  \columnbreak
+  \includegraphics*[width=4.2cm, height=2.5cm]{images/switchingfabrics.PNG}
+\end{multicols}
+
+\subsubsubsection{Case 3: Traffic Engineering}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item For wide-area links between datacenters
+  \includegraphics*[width=8.2cm, height=1.5cm]{images/trafficengineering.PNG}
+  \item Traffic classes with priorities $\rightarrow$ delay tolerance vs availability requirements
+\end{itemize}
+
+\subsubsubsection{Case 4: Software-Defined WANs}
+\includegraphics*[width=8.5cm, height=4.5cm]{images/softwaredefinedwan.PNG}
+
+\subsubsubsection{Use Cases}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Killer applications: network virtualization, datacenter/cloud computing
+  \item More applications like: (1) last-mile access networks, (2) software-defined internet exchange (SDX), (3) mobility and wireless, (4) security, measurement and monitoring
+\end{itemize}
+
+\subsubsection{OpenFlow Protocol and Switch}
+\includegraphics*[width=8.5cm, height=6.5cm]{images/openflowprotocol.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{OF protocol:} Open southbound API, \textbf{OF Switch:} forwarding abstraction
+\end{itemize}
+\includegraphics*[width=8.5cm, height=5.5cm]{images/openflowpipeline.PNG}
+
+\subsubsubsection{Terminology for each packet from packet flow}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Header and header field}
+  \item \textbf{Pipeline fields:} values attached to packet during pipeline processing $\rightarrow$ e.g. ingress port and metadata
+  \item \textbf{Action:} operation that acts on packet: drop/forward to port/modify TTL
+  \item \textbf{Action set:} acumulated while processed by flow tables, executed at the end of the pipeline processing
+\end{itemize}
+
+
+\subsubsubsection{OpenFlow flow entry}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Flow entry in flow table looks like:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \texttt{Match Fields $|$ Priority $|$ Counters $|$ Instructions $|$ Timeouts}
+  \end{itemize}
+  \item Match field: packets are matched against
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Header fields and pipeline fields, may be wildcarded (any) or bitmasked (subset of bits)
+  \end{itemize}
+  \item Priority: used to choose from multiple matches
+  \item Instruction Set
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item contains list of actions to apply immediately, and a set of actions to add to the action set
+    \item Modify pipeline processing (go to another flow table)
+  \end{itemize}
+  \item Default entry: table-miss flow entry $\rightarrow$ send packet to control plane OR drop the packet
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=9.5cm]{images/ingressegress.PNG}
+
+
+\subsubsubsection{Matching and instruction execution}
+\includegraphics*[width=8.5cm, height=4.3cm]{images/matchinginstruction.PNG}
+
+\subsubsubsection{Operation of SDN (controller-switch)}
+Reactive paradigm: relying on dataplane $\rightarrow$ control plane
+\includegraphics*[width=8.5cm, height=4.5cm]{images/operationofsdn.PNG}
+
+\subsubsubsection{Interfaces of an SDN}
+\includegraphics*[width=8.5cm, height=4cm]{images/interfacesofsdn.PNG}
+
+\subsubsubsection{ONOS Control Plane}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item ONOS model: Open Northbound API, specification abstraction
+  \item ONOS system: Distribution abstraction
+  \item ONOS abstractions:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Intent:} high-level intents, network-wide, topology-independent programming constructs $\rightarrow$ e.g. intent to custom IP reach target IP
+    \item \textbf{Flow Objective:} finer-grained control, device-centric, programming constructs and also \textit{pipeline-independent}
+    \item \textbf{Flow Rule:} use to control various pipelines, fix-function/programmable
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Network Operating System (NOS)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Like any other horizontally scalable cloud application
+  \item Consists of a set of loosely coupled subsytems
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Each for an aspect e.g. topology, host tracking
+    \item maintains its own service abstraction
+  \end{itemize}
+  \item often associated with a micro-service architecture
+  \item includes a scalable and highly available key/value store
+\end{itemize}
+
+\subsubsubsection{Architecture of ONOS}
+\includegraphics*[width=8.5cm, height=4.5cm]{images/opennetworkoperatingsystem.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Northbound Interfaces(NBI)}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item apps use to stay informed about \textit{network state} (topology, intercept packets) AND to \textit{control network} data plane
+  \end{itemize}
+  \item \textbf{Distributed Core}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item responsible for managing network state, notifying apps about state changes
+    \item internal: scalable key/value store (Atomix)
+  \end{itemize}
+  \item \textbf{Southbound Interface (SBI)}: constructed from a set of plugins including shared protocol libs/device-specific drivers
+\end{itemize}
+
+\subsection{6. P4 SDN}
+\subsubsubsection{Issues with OpenFlow}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Data-plane protocol evolution requires frequent changes to standards ($12 \rightarrow 40$ OpenFlow match fields now)
+  \item Limited interoperability between vendors (OpenFlow / netconf / JSON / XML variants) \& Limited programmability
+\end{itemize}
+
+\subsubsubsection{Software Stack of an SDN + Bare-metal switches}
+Bottom is a bare-metal switch, with Switch OS on top of the Merchant Silicon
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Each packet is processed by the NPU through:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Multi-stage Forwarding pipeline, stages are fixed-function/programmable
+  \end{itemize}
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4cm]{images/baremetalswitch.PNG}
+\includegraphics*[width=8.5cm, height=4cm]{images/softwarestackofsdn.PNG}
+
+\subsubsection{P4}
+\includegraphics*[width=8.5cm, height=3.1cm]{images/p4.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Domain-specific language} to formally defined dataplane pipeline
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Describe protocol headers, lookup tables actions, counters 
+    \item Can describe fast (e.g. ASIC, FPGA) / slow pipelines (SW switch)
+  \end{itemize}
+  \item \textbf{Good for programmable switches/fixed-function ones}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Defines `contract' between control plane/dataplane for runtime control
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Protocol Independent Switch Architecture}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Parser:} declare headers that should be recognized + their order in the packet
+  \item \textbf{Match-Action Pipeline:} define tables and the exact processing algorithm
+  \item \textbf{Deparser:} declare how output packet will look on the wire
+  \item Process:
+  \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Packet parsed into individual headers (parsed representation)
+    \item Headers and intermediate results can be used for matching/actions, can be modified, added or removed
+    \item Packet is deparsed (serialized) after the pipeline
+  \end{enumerate}
+\end{itemize}
+\includegraphics*[width=8.5cm, height=4.5cm]{images/pisalogicalpipeline.PNG}
+
+\subsubsubsection{From logical to physical}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item P4 needs to account for different chips with different physical pipelines
+  \item If only one logical pipeline, P4 compiler's job is easy, but marketplace not converged, many vendors for high-speed NPUs
+  \item Allow vendor specific logical pipeline, through different architectures (\verb|arch.p4| provided by vendors) $P4_{14} \rightarrow P4_{16}$ 
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4.5cm]{images/p416languageelements.PNG}
+
+\subsubsection{P4\_16 approach}
+\includegraphics*[width=8.5cm, height=4cm]{images/programmingp4target.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{P4 Target:} An embodiment of a specific hardware implementation
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item specific device/platformn (sw/hw), refers to actual entity processing network packets according to P4 code
+    \item \textit{purpose:} provides concrete execution env where P4 program deployed
+    \item \textit{characteristics:} has own hw capabilities, vendor-specific optimization/constraints affect how P4 code is mapped/executed
+  \end{itemize}
+  \item \textbf{P4 Architecture}: Provides an interface to program a target via some set of P4-programmable components, externs, fixed components
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item high-level abstraction define how packets flow through programmable pipeline, describes logical pipeline as \underline{general strucure and processing behaviour of P4 programs}
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Behavioral Model (bmv2)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \verb|bmv2| allows developers implement their own P4-programmable architecture as a software switch
+  \item think of \verb|bmv2| as the hardware of the switch, \verb|psa_switch| target supports PSA architecture, \verb|simple_switch| supports V1Model
+  \item \textbf{simple\_router.p4}
+  \begin{multicols}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item \textit{Data plane program (P4):} Defines match-action tables, performs lookup and executes chosen runtime
+      \item \textit{Control plane (runtime):} Populates table entries with specific information, based on config, automatic discovery and protocol calculations
+    \end{itemize}
+    \columnbreak
+    \includegraphics*[width=4cm, height=3cm]{images/simple_router.PNG}
+  \end{multicols}
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4.5cm]{images/tablematchaction.PNG}
+
+\subsection{7. Internet Interconnection}
+\subsubsection{Autonomous System}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Network of interconnected routers, identified by unique AS number (ASN)
+  \item Control by a single administrative domain (company can have multiple ASN)
+  \item Use common routing protocol and policies
+  \item \textit{How to obtain AS number?}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item IANA: Internet Assigned Numbers Authority $\rightarrow$ consists of 5 regional internet registries OR AS Databases
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Internet structure: Network of Networks}
+\includegraphics*[width=8.5cm, height=3.5cm]{images/internetstructure.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item at center: small \# of well-connected large networks
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textcolor{red}{tier-1 commercial ISPs:} (e.g., Level 3, Sprint, AT\&T, NTT), national \& international coverage
+    \item \textcolor{red}{content provider:} (e.g., Google): private network that connects it data centers to Internet, often bypassing tier-1, regional ISPs
+  \end{itemize}
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4.5cm]{images/asgraphs.PNG}
+
+\subsubsection{Internet Peering | How are they connected?}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textit{peering:} voluntary interconnection of separate internet networks: purpose of exchanging traffic between `down-stream' users of each network
+  \item bilateral agreement between neighbor ASes
+  \item depends on business relationships: (1) customer-provider r/s or (2) peer-to-peer (settlement-free peering) r/s
+\end{itemize}
+
+\subsubsubsection{Customer and Providers}
+\begin{multicols}{2}
+  \includegraphics*[width=4cm, height=2cm]{images/customerprovider.png}
+  \columnbreak
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Customer pays provider for access to internet, reachable from anyone
+    \item Provider provides \underline{\textit{transit service}} for the customer
+  \end{itemize}
+\end{multicols}
+
+\subsubsubsection{Nontransit vs Transit ASes}
+\begin{multicols}{2}
+  \includegraphics*[width=4cm, height=2cm]{images/nontransitvstransit.png}
+  \columnbreak
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item customer does not allow traffic to go through it
+    \item NET A has 2 providers: \textbf{multi-honing}
+    \item traffic should NEVER flow from P1 through NET A to P2
+    \item non-transit AS might be a corporate/campus network/`content provider'
+  \end{itemize}
+\end{multicols}
+
+\subsubsubsection{Selective Transit}
+\begin{multicols}{2}
+  \includegraphics*[width=4cm, height=2cm]{images/selectivetransit.png}
+  \columnbreak
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item NET A provides transit between B \& C and C \& D
+    \item Net A \underline{DOES NOT} provide transit between D \& B
+    \item Most transit networks transit in a selective manner
+  \end{itemize}
+\end{multicols}
+
+\subsubsubsection{Customers do not always need AS\#}
+\begin{multicols}{2}
+\includegraphics*[width=4cm, height=2cm]{images/customeras.png}
+\columnbreak
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Static routing is the most common way of connecting autonomous routing domain to the internet.
+  \item If not helping other networks exchange traffic $\rightarrow$ not needed to have any AS\#
+\end{itemize}
+\end{multicols}
+
+\subsubsubsection{Customer-Provider Hiearachy}
+\includegraphics*[width=8.5cm, height=4cm]{images/customerhiearchy.png}
+
+\subsubsubsection{Peer-to-peer Relationship}
+\includegraphics*[width=8.5cm, height=4cm]{images/peertopeer.png}
+
+\subsubsubsection{Peering Provides Shortcuts}
+\includegraphics*[width=8.5cm, height=3.5cm]{images/peeringshortcuts.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item At top there are Tier 1 ASP
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item These AS does not have any upstream providers, do not pay other ASP for transit services $\rightarrow$ any pair of them must have a peering connection
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Peering Dilemma}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{To Peer}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Reduce upstream transit costs, improve end-to-end performance
+    \item Be the only way to connect sutomers to some part of internet (tier-1)
+  \end{itemize}
+  \item \textbf{Not Peer}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Rather have customers than peers, usually peers are competition
+    \item Peering relationships may require periodic renegotiation
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Tier 1 ASes/ISPs}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Have access to entire Internet through settlement-free peering links
+  \item Top of customer-provider hierarchy, typically large (inter)national backbones
+  \item Have no upstream provider, peer with one another to form a full-mesh ($\approx 10-12$ ASes $\rightarrow$ AT\&T, Sprint, Level3)
+\end{itemize}
+
+\subsubsubsection{Other ASes}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Lower layer providers (tier-2)
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item provide transit to downstream customers, need $\geq 1$ provider of their own
+    \item typically have national or regional scope $\rightarrow$ include $1000+$ ASes
+  \end{itemize}
+  \item Stub ASes:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Do not provide transit service, but connect to upstream provider(s)
+    \item Most ASes are like these ($\approx 85-90\%$) e.g. NUS
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Valley-free Property}
+\begin{multicols}{2}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Valid AS paths (from routing tables)}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item single peak (uphill + downhill)
+      \item single flat top (uphill + 1 peering + downhill)
+      \item any sub-paths of above are valid
+    \end{itemize}
+    \item \textbf{Invalid patterns}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item provider $\rightarrow$ customer $\rightarrow$ peering
+      \item provider $\rightarrow$ customer $\rightarrow$ provider
+      \item peering $\rightarrow$ peering
+      \item peering $\rightarrow$ provider
+    \end{itemize}
+  \end{itemize}
+\end{multicols}
+
+\subsection{8. Inter-Domain Routing and Policy}
+\subsubsubsection{Challenges for Inter-domain Routing}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Scale}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item millions of routers, $200,000+$ prefixes
+    \item $35K+$ self-operated networks, $50K+$ ASes
+  \end{itemize}
+  \item \textbf{Privacy:} ASes don't want to expose internal topologies/business relationships with neighbours
+  \item \textbf{Policy}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item No Internet-wide notion of a link cost metricc
+    \item Each AS needs to control over where it sends traffic and who can send traffic through it
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Routing Algorithms}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Link state algorithm:} all routers have complete topology, link cost info
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Global/centralized: Dijsktra's | Open Shortest Path First (OSPF)
+    \item Limitation:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Topology information flooded $\rightarrow$ high bandwidth/storage overhead, nodes divulge sensitive information
+      \item Entire path computed locally per node $\rightarrow$ high processing overhead
+      \item Minimize notion of total distance $\rightarrow$ only if policy shared/uniform
+    \end{itemize}
+  \end{itemize}
+  \item \textbf{Distance vector algorithm:} router knows connected neighbours' link costs
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Decentralized algorithm: Bellman-Ford, iterative process of computation, exchange info with neighbours | Routing Information Protocol (RIP)
+    \item Advantages: hide details of network topology, next hop determined/node
+    \item Disadvantages: minimize some notion of total distance, slow convergence
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Path-Vector Routing}
+\includegraphics*[width=8.5cm, height=1.5cm]{images/pathvectorrouting.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Extension of distance-vector routing, support flexible routing policies
+  \item advertise entire path, \textit{DV} send distance metric per destination $d$
+  \item \textit{PV} send entire path for each destination $d$
+  \item Faster loop detection:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Node can easily detect loops, check if itself is in path
+    \item Node can then discard paths with loops
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Border Gateway Protocol (BGP)}
+\includegraphics*[width=8.5cm, height=4.4cm]{images/bgpoperations.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Allows subnet to advertise its existence to rest of internet: \verb|`I am here'|
+  \item Allows ASes to determine good routes from other networks based on reachability info/policy
+\end{itemize}
+
+\subsubsubsection{BGP/IGP model used in ISPs}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{eBGP:} exchange reachability info from neighbor ASes
+  \includegraphics*[width=8cm, height=2cm]{images/ebgp.png}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item exterior BGP peering (eBGP), between BGP speakers in different ASes $\rightarrow$ should be directly connected, no intermediate hop
+    \item AS3 advertises an IP prefix to AS1:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item AS3 promises it will forward packets towards that prefix
+      \item AS3 can aggregate prefixes in its advertisement
+    \end{itemize}
+  \end{itemize}
+  \item \textbf{iBGP:} propagate reachability info across backbone; carry ISP’s own customer prefixes
+  \includegraphics*[width=8cm, height=2cm]{images/ibgp.png}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item peers within an AS; not required to be directly connected $\Rightarrow$ IGP (RIP or OSPF) takes care of inter-BGP speaker connectivity
+    \item iBGP peers must be (logically) fully meshed
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item used to originate connected local networks
+      \item used to pass on prefixes learned from outside the AS
+      \item do not pass on prefixes learned form other iBGP speakers
+    \end{itemize}
+    \item 1c can use iBGP to distribute prefix info to all routers in AS1; 1b can re-advertise info to AS2 over eBGP
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{BGP Messages}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \verb|OPEN|: opens TCP connection to peer and authenticates sender
+  \item \verb|UPDATE|: advertises new paths (or withdraws old paths)
+  \item \verb|KEEPALIVE|: keeps conn. alive in absence of \verb|UPDATES|/ACKs OPEN req
+  \item \verb|NOTIFICATION|: reports err. in previous mssages/used to close conn
+\end{itemize}
+
+\subsubsubsection{UPDATE Message Format}
+\includegraphics*[width=8cm, height=1.5cm]{images/updatemessageformat.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Withdrawn Routes: IP prefixes for the routes withdrawn
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Can withdraw multiple routes in an UPDATE message
+    \item Network Layer Reachability Information (NLRI): IP
+  \end{itemize}
+  \item prefixes that can be reached from the advertised route
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Can only advertise one feasible route for the NLRI
+    \item IP prefixes are coded more compactly (refer to RFC)
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Withdrawn Routes}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item No expiration timer for the routes like RIP
+  \item Invalid routes are actively withdrawn by the original advertiser
+  \item Or use UPDATE message to replace the existing routes
+  \item All routes from a peer become invalid when the peer goes down
+\end{itemize}
+
+\subsubsubsection{BGP Path Attributes}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item well-known mandatory: every single route update MUST HAVE
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \verb|ORIGIN|: conveys the origin of the prefix, learned from
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item i (IGP): an interior gateway protocol such as RIP/OSPF
+      \item ? (INCOMPLETE): unknown source
+      \item e (EGP): an exterior gateway protocol $\rightarrow$ BGP (used to be EGP)
+    \end{itemize}
+    \item \verb|AS_PATH|: 
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item contains ASes through which NLRI has passed
+      \item expressed as a sequence e.g. AS 79, AS 11 or a set
+    \end{itemize}
+    \item \verb|NEXT_HOP|: indicates IP address of the router in the next-hop AS
+  \end{itemize}
+  \item well-known discretionary
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \verb|LOCAL_PREF|, \verb|ATOMIC_AGGREGATE|
+  \end{itemize}
+  \item optional transitive: have to be propagated along routing path
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \verb|AGGREGATOR|, \verb|COMMUNITY|
+  \end{itemize}
+  \item optional non-transitive
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \verb|MULTI_EXIT_DISC (MED)|
+  \end{itemize}
+  \item Some implementation rules:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item must recognize all well-known attributes
+    \item mandatory attributes must be included in \verb|UPDATE| msg that contain NLRI
+    \item once a BGP peer updates well-known attributes, it must pass to its peers
+  \end{itemize}
+\end{enumerate}
+
+\subsubsubsection{How do entries get in forwarding table}
+Ties together hierarchical routing with BGP/OSPF, provides overview of BGP
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Router becomes aware of IP prefix
+  \includegraphics*[width=8.2cm, height=2.4cm]{images/prefix1.png}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item BGP message contains “routes”
+    \item route = prefix + attributes: AS-PATH, NEXT-HOP,… Example: route:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item \verb|Prefix|: 138.16.64.29/22; \verb|AS-PATH|: AS3 AS131;
+      \item \verb|NEXT-HOP|: 201.44.13.125
+    \end{itemize}
+    \includegraphics*[width=8.2cm, height=2.4cm]{images/prefix2.png}
+    \item Router may receive multiple routes for the \underline{same} destination prefix
+    \item Router has to select \textbf{one} route
+  \end{itemize}
+  \item Router determines output port for IP prefix
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Select best BGP route to prefix: based on \underline{shortest AS-PATH}
+    \item Use selected route's \verb|NEXT-HOP| attribute
+    \includegraphics*[width=8.2cm, height=2.4cm]{images/prefix3.png}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Route's \verb|NEXT-HOP| attribute is the IP address of router interface that begins the \verb|AS PATH|
+      \item e.g. \verb|AS-PATH|: AS2 $\cdots$ AS98; \verb|NEXT-HOP|: 111.99.86.55
+      \item Router uses OSPF to find shortest path from 1c to 111.99.86.55
+    \end{itemize}
+  \end{itemize}
+  \item Router enteres the prefix-port in forwarding table
+  \includegraphics*[width=8.2cm, height=2.4cm]{images/prefix4.png}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Identifies port along the OSPF shortest path
+    \item Adds prefix-port entry to its forwarding table $\rightarrow$ (138.16.64/22, port 4)
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Hot Potato Routing}
+\includegraphics*[width=8.2cm, height=2.4cm]{images/prefix5.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item If exists multiple best inter-domain routes
+  \item Then choose route with closest NEXT-HOP
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item use OSPF to determine which gateway is closest (as interdomain routing highest cost)
+    \item Q: From 1c, chose AS3 $\cdots$ AS98 or AS2 $\cdots$ AS98?
+    \item A: route AS3 $\cdots$ AS98 since it is closer 
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{BGP Routing Information Bases}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Route = prefix + attributes = NLRI + path attributes
+  \item All routes in a BGP speaker:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Routing information Bases (RIBs)
+    \item RIBs = Adj-RIBs-In + Loc-RIB + Adj-RIBs-Out
+    \item \textbf{Adj-RIBs-In:} unprocessed routes from peers via inbound UPDATE; input for decision making
+    \item \textbf{Loc-RIB:} selected local routes used by the router
+    \item \textbf{Adj-RIBs-Out:} selected for advertisement to peers
+  \end{itemize}
+\end{itemize}
+\includegraphics*[width=8.2cm, height=4.2cm]{images/bgpdecisionprocessoverview.png}
+
+\subsubsubsection{BGP applying policy to routes}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Import policy:}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item filter unwanted routes from neighbor $\rightarrow$ prefix your customer doesnt own
+    \item used to rank customer routes over peer routes
+    \item manipulate attributes to influence path selection $\rightarrow$ assign local preference to favored routes
+  \end{itemize}
+  \item \textbf{Export policy:}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item filter routes you don’t want to tell your neighbor $\rightarrow$ export only customer routes to peers \& providers
+    \item manipulate attribute to control what they see $\rightarrow$ make paths look artificially longer (AS prepending)
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{BGP how is policy used}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Objectives: used by commercial ISPs to
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item fulfill bilateral agreements with other ISPs, minimize monetary costs (or maximize revenue) AND ensure good performance for customers
+  \end{itemize}
+  \item Bilateral agreement between neighbor ISPs
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item defines who will provide transit for what
+    \item depends on business relationships: Customer-provider/Peer-to-Peer r/s
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Business Relationships}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Customer-Provider:} Customer pays provider for access to Internet
+  \includegraphics*[width=8.2cm, height=3.2cm]{images/customerprovider.PNG}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item provider exports customer’s routes to everybody
+    \item customer exports provider’s routes to customers
+  \end{itemize}
+  \item \textbf{Peer-to-Peer:} Peers exchange traffic between customers
+  \includegraphics*[width=8.2cm, height=3.2cm]{images/peertopeer.PNG}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item AS exports only customer routes to a peer
+    \item AS exports a peer’s routes only to its customers
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{\texttt{LOCAL\_PREP} attribute}
+\includegraphics*[width=8.2cm, height=3cm]{images/localpref.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item 4-byte unsigned integer (default value 100)
+  \item for a BGP speaker to inform its other internal peers of its degree of preference for a route
+  \item should include in UPDATE messages that are sent to internal peers; should not send to external peers
+  \item used to coordinate within its \textit{OWN} AS, not transitive, larger value, more this route is preferred
+\end{itemize}
+
+\subsubsubsection{\texttt{MULTI\_EXIT\_DISC} attribute}
+\includegraphics*[width=8.2cm, height=2cm]{images/multiexecdisc.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item 4-byte unsigned integer (default value 0)
+  \item for a BGP speaker to discriminate among multiple entry points to a neighboring AS to control inbound traffic
+  \item if received over eBGP, may be propagated over iBGP, but must not be further propagated to neighboring ASes
+\end{itemize}
+
+\subsubsubsection{\texttt{COMMUNITY} attribute}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Described in RFC 1997 $\rightarrow$ 4-byte integer value
+  \item Used to group destinations $\rightarrow$ each destination could be member of multiple communities
+  \item Very useful in applying policies within and between ASes
+  \item import and export policies based on the \verb|COMMUNITY| attributes
+\end{itemize}
+
+\subsubsubsection{BGP Best Route selection}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Calculation of degree of preference
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item If the route is learned from an internal peer, use \verb|LOCAL_PREF| attribute or preconfigured policy
+    \item Otherwise, use preconfigured policy
+  \end{itemize}
+  \item Route selection (recommended process)
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Highest degree of \verb|LOCAL_PREF| (or the only route to the destination), and then tie breaking conditions on:
+    \item Smallest number of AS numbers in \verb|AS_PATH| attribute
+    \item Lowest origin number in \verb|ORIGIN| attribute
+    \item Most preferred \verb|MULTI_EXIT_DISC| attribute
+    \item Routes from eBGP are preferred (over iBGP)
+    \item Lowest interior cost based on \verb|NEXT_HOP| attribute
+  \end{itemize}
+\end{enumerate}
+
+\subsubsubsection{BGP Prefix Hijacking}
+\includegraphics*[width=8.2cm, height=2.8cm]{images/bgpprefix.PNG}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Blackhole: data traffic is discarded
+  \item Snooping: data traffic is inspected, and then redirected
+  \item Impersonation: data traffic is sent to bogus destinations
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{SubPrefix Hijacking} Originating a more-specific prefix
+    \includegraphics*[width=8cm, height=2.8cm]{images/bgpsubprefix.PNG}
+    \item Every AS picks the bogus route for that prefix
+    \item Traffic follows the longest matching prefix
+  \end{itemize}
+  \item \textbf{Preventing SubPrefix Hijacking}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Best common practice for route filtering
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item each AS filters routes announced by customers
+      \item e.g., based on the prefixes the customer owns
+    \end{itemize}
+    \item But not everyone applies these practices
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item hard to filter routes initiated from far away
+      \item so, BGP remains very vulnerable to hijacks
+    \end{itemize}
+    \item Industrial trends
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Route Origin Authorisation (ROA)
+      \item Resource Public Key Infrastructure (RPKI)
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+% \pagebreak
+
+% \subsection{A. Miscellaneous}
+% \subsubsection{Probability Laws}
+% \subsubsubsection{Law of total probability}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item \textbf{Discrete distributions:}
+%   \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item Mutually exclusive events: $E_1, E_2, \ldots , E_n \rightarrow \Sigma_{i=1}^{n} P(E_i) = 1$
+%     \item Then $P(E) = \Sigma_{i=1}^{n} P(E | E_i) P (E_i)$
+%   \end{itemize}
+%   \item \textbf{Continuous distributions:}
+%   \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item For a random variable $Y \in [0, \infty]$
+%     \item Then $P\{X\} = \int_{0}^{\infty} P\{X | Y = y\} f_Y(y)dy$
+%   \end{itemize}
+% \end{itemize}
+
+% \subsubsubsection{Probability that one event happens before the other}
+% Let \textcolor{blue}{$X$} and \textcolor{red}{$Y$} be 2 independent exponential random variables with parameters $\textcolor{blue}{\lambda_x}$ and $\textcolor{red}{\lambda_y}$. What is the probability that $P\{\textcolor{blue}{X} > \textcolor{red}{Y}\}$
+% \[
+%   \begin{aligned}
+%     P\{\textcolor{blue}{X} > \textcolor{red}{Y}\} &= \int_{0}^{\infty} P\{\textcolor{blue}{X} > \textcolor{red}{Y} | \textcolor{red}{Y} = y\} = f_{\textcolor{red}{Y}}(y)dy \\ 
+%     &= \int_{0}^{\infty} P\{X > y\}(\textcolor{red}{\lambda_y} e^{-\textcolor{red}{\lambda_y} y})dy = \int_{0}^{\infty}e^{\textcolor{blue}{\lambda_x} y} (\textcolor{red}{\lambda_y} e^{-\textcolor{red}{\lambda_y} y})dy \\ 
+%     &= \textcolor{red}{\lambda_y} \int_{0}^{\infty}e^{-(\textcolor{blue}{\lambda_x} + \textcolor{red}{\lambda_y})y}dy = \textcolor{red}{\lambda_y} (-\frac{1}{\textcolor{blue}{\lambda_x} + \textcolor{red}{\lambda_y}} e^{-(\textcolor{blue}{\lambda_x} + \textcolor{red}{\lambda_y})y} |^{\infty}_0) \\ 
+%     &= \frac{\textcolor{red}{\lambda_y}}{\textcolor{blue}{\lambda_x} + \textcolor{red}{\lambda_y}}
+%   \end{aligned}
+% \]
+
+% \subsubsection*{Summations}
+% \subsubsubsection{Geometric Series}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item $S_n = \frac{a(1-r^n)}{1-r}$ | $S_\infty = \frac{a}{1-r}$
+%   \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item where $a$ is the first term, $r$ is the common ratio, $n$ is number of terms
+%   \end{itemize}
+% \end{itemize}
+% \subsubsubsection{Arithmetic Series}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item $S_n = n (\frac{a_1 + a_n}{2})$, $n$ is number of terms, $a_1$ is first term, $a_n$ is $n^{th}$ term
+% \end{itemize}
+
+
+\end{multicols*}
+
+\end{document}

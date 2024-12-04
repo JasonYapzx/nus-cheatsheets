@@ -1,0 +1,1274 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{listings} 
+\usepackage[landscape,]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{dsfont}
+\usepackage{lmodern}
+\usepackage{soul} 
+\usepackage{pifont}
+\usepackage{bm}
+\usepackage{pgfpages}
+\pgfpagesuselayout{2 on 1}[a4paper]
+
+\lstset{
+    tabsize=1,    
+%   rulecolor=,
+    language={python},
+        captionpos = t,
+        basicstyle = \tiny\ttfamily,
+        frame=lines,
+        numbersep=4pt,
+        numbers=left,
+        numberstyle=\tiny,
+        backgroundcolor=\color{white},
+        columns=fixed,
+        extendedchars=false,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        frame=single,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        keywordstyle=\color[rgb]{0,0,1},
+        keywordstyle=[2]\color[rgb]{0,0.7,0},
+        commentstyle=\color{teal},
+        stringstyle=\color{red},
+        numberstyle=\color[rgb]{0.205, 0.142, 0.73},
+}
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.12in,left=-.15in,right=-.15in,bottom=.12in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\newcommand{\subsubsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\scriptsize\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+
+\title{CS2109S-cheatsheet}
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\scriptsize
+
+\begin{multicols*}{3}
+\setlength{\premulticols}{0.1pt}
+\setlength{\postmulticols}{0.1pt}
+\setlength{\multicolsep}{0.1pt}
+\setlength{\columnsep}{0.1pt}
+\begin{tiny}
+    \small{\textbf{CS2109S Cheatsheet AY24/25 || \href{https://github.com/JasonYapzx}{@JasonYapzx}}} \\
+\end{tiny}
+
+\subsection*{1. Intelligent Agents | PEAS}
+% \framebox{\parbox{\dimexpr\linewidth-1\fboxsep-2\fboxrule}{% 
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item Agent \textit{function} maps from percept histories to actions
+%     \item Agent program runs on physical architecture to produce \textit{function $f$}
+%     \item \begin{center}
+%       $[[f: P^{\star} \rightarrow A]$
+%     \end{center}
+% \end{itemize}
+% }}
+
+% \subsubsection*{PEAS}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Performance Measure:} Optimizing for whom, the intended effect/cost
+  \item \textbf{Environment}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\labelsep\relax]
+    \item \underline{Observable:} Complete environment state accessible at each point of time
+    \item \underline{Deterministic vs Stochastic:} Deterministic (next state predictable) vs Stochastic (randomness involved, e.g., other agents' actions)
+    \item \underline{Episodic vs Sequential:} independent actions vs actions depend on past
+    \item \underline{Static vs Dynamic:} Static (environment unchanged during deliberation) vs Dynamic (environment changes with time, agent's performance changes)
+    \item \underline{Discrete vs Continuous:} Discrete (finite actions/percepts) vs Continuous (infinitely many possibilities)
+    \item \underline{Single vs Multi-agent:} Single-agent (operates alone) vs Multi-agent (interacts with other agents)
+  \end{itemize}
+  \item \textbf{Actuators:} Components that perform actions
+  \item \textbf{Sensors:} Components that perceive the environment's inputs (percepts)
+\end{itemize}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item \textbf{Performance Measure:} Best for whom? What are we optimizing? What information available? Intended effects / Costs?
+%   \item \textbf{Environment}
+%   \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\labelsep\relax]
+%     \item \underline{Observable:} sensors give access to complete  env. state at each pt of time
+%     \item \underline{Deterministic vs Stochastic:} 
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%       \item Next state of env. determined by current state and action executed by agent vs Element of randomness
+%       \item Env. is deterministic except other agents' actions: \textbf{strategic}
+%     \end{itemize}
+%     \item \underline{Episodic vs Sequential:} 
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%       \item \textbf{Episodic} - Agent experience divided into atomic episodes
+%       \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item (episode consist of agent perceive $\rightarrow$ perform 1 action)
+%         \item Choice of action in each episode depends on itself
+%       \end{itemize}
+%     \end{itemize}
+%     \item \underline{Static vs Dynamic:} 
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%       \item \textbf{Static} - Env. unchangedwhile agent deliberates
+%       \item Env. no change w time, agent perf score does: \textbf{semi-dynamic}
+%     \end{itemize}
+%     \item \underline{Discrete vs Continuous:} 
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%       \item \textbf{Discrete} - Limited no., distinct, defined percepts/actions
+%     \end{itemize}
+%     \item \underline{Single vs Multi-agent:} 
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%       \item Agent operates by itself in env. vs with other agents in env.
+%     \end{itemize}
+%   \end{itemize}
+%   \item \textbf{Actuators:} Thing that \underline{performs} the actions
+%   \item \textbf{Sensors:} Thing that \underline{perceives} the inputs (percepts)
+% \end{itemize}
+
+\subsubsection*{Structure of Agents}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Simple Reflex:} If up empty $\rightarrow$ go up, down empty go down (acts on reflex)
+  \item \textbf{Model-based:} If goal, pick the action, else if not die, pick the action
+  \item \textbf{Goal-based:} Maps all possible states, picks one that reaches eventual goal:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Done by mapping out all states, then backtracking, on top of model-based
+  \end{itemize}
+  \item \textbf{Utility-based:} Maximizes utility on top of \underline{goal-based} agent
+  \item \textbf{Learning:} Uses a \textit{performance element} to select external actions. %A critic to give feedback on how the
+  %agent is doing and how the performance element can be
+  %improved, a learning element responsible for making improvements, and a problem generator that suggests actions that will lead to new and informative experiences
+\end{itemize}
+
+% \subsubsubsection{Exploitation vs Exploration}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item \textbf{Exploit:} Maximize expected utility according to its current knowledge
+%   \item \textbf{Explore:} Learn more about the world
+% \end{itemize}
+
+
+% \subsubsection*{Designing an agent}
+% \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item \textbf{State:} how it perceives its environment, possible states it may take
+%   \item \textbf{Initial State:} establish where the agent begins and 
+%   \item \textbf{Goal state(s)/test:} end state (e.g. sudoku's end state is a test for its constraints not a \textit{particular} state)
+%   \item \textbf{Actions:} set of possible operations or moves the agent can perform to transition from one state to another
+%   \item \textbf{Transition Model:} consequences of the actions
+%   \item \textbf{Action cost function:} numerical cost of each action
+% \end{enumerate}
+
+\subsection*{2. Search Algorithms}
+Complete: \underline{always return} solution if exists, Optimal: always find \underline{least-cost} solution. $b$ branching factor, $d$ depth, $m$ max depth
+% Search problem input, returns a \textit{solution / failure}, defined by \textbf{order of node expansion}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item \textbf{Time complexity:} no. of nodes generated or expanded
+%   \item \textbf{Space complexity:} maximum no. of nodes in memory
+%   \item \textbf{Completeness:} Does it return a solution if exists?
+%   \item \textbf{Optimality:} Does it always find least-cost solution?
+%   \item Measured by branching factor ($b$), depth($d$), max. depth ($m$)
+% \end{itemize}
+
+\textbf{Tree vs Graph Search} \textbf{low} to \textbf{moderate} state space, \textbf{optimal} solution or \underline{nothing}
+
+\begin{multicols*}{2}
+\begin{lstlisting}
+create frontier
+
+insert init state to frontier
+while frontier is not empty:
+state = frontier.pop()
+if state is goal: return solution
+for action in state.actions():
+next = transition(state, action)
+frontier.add(next.state)
+return failure
+\end{lstlisting}
+\columnbreak
+\begin{lstlisting}
+create frontier, create visited
+
+insert init state to frontier
+while frontier is not empty:
+state = frontier.pop()
+if state is goal: return solution
+if state is visited: continue
+visited.add(state)
+for action in state.actions():
+  next = transition(state, action)
+  frontier.add(next.state)
+return failure
+\end{lstlisting}
+\end{multicols*}
+\vspace{-0.5cm}
+
+\subsubsection*{Uninformed Search Algorithms}
+% \framebox{\parbox{\dimexpr\linewidth-1\fboxsep-2\fboxrule}{% 
+% \underline{Choosing depends on the following:}
+% \begin{multicols*}{2}
+% \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item Number of goal states
+%   \item Distri. of goal states in search Tree
+%   \item In/Finite branching factor/depth
+%   \item Repeated states
+%   \item Need for optimality
+%   \item Need to know if there is no solution
+% \end{enumerate}
+% \end{multicols*}
+% }}
+
+\begin{multicols*}{2}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{BFS} Tree-Search with \verb|queue|
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{Time/Space:} $O(b^d)$, expand to last child in branching (space)
+    \item \textit{Complete:} Yes if \hl{finite graph}
+    \item \textit{Optimal:} Yes if \hl{same cost everywhere}
+  \end{itemize}
+  \item \textbf{UCS} Tree-Search with \verb|priority queue|, min \textbf{PATH COST}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{Time/Space:} $O(b^\frac{C^{\star}}{\epsilon})$
+    \item \textit{Complete:} Yes if \hl{$\epsilon > 0$ \\ and $C^{\star}$ is finite}
+    \item \textit{Optimal:} Yes if \hl{$\epsilon > 0$}
+    \item $\epsilon = 0$ may cause zero cost cycle, where $C^{\star}$ is cost of optimal solution and $\epsilon$ is min edge cost
+    \item Estimate Depth $= \frac{\text{optimal path cost}}{\min(\text{edge cost} \epsilon)}$
+    \item Akin to BFS with same path cost for all nodes
+  \end{itemize}
+  \item \textbf{DFS} Tree-Search with \verb|stack|
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{Time:} $O(b^m)$, \textit{Space:} $O(bm)$
+    \item \textit{Complete:} No when depth is \hl{$\infty$ or can go back and forth} (loop)
+    \item \textit{Optimal:} No
+    \item where $m$ is the max. depth
+  \end{itemize}
+  \columnbreak
+  \item \textbf{Depth-limited Search} 
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Limit the search to depth $l$, \hl{backtrack when limit is hit}
+    \item \textbf{Adv:} avoid getting into cycle, saves memory by going into a max depth || \textbf{Dis-adv:} Sub-optimal if used with DFS
+    \item Number of nodes generated $N(DLS) = b^0 + b^1 + \cdots + b^d$
+  \end{itemize}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{Time:} $O(b^l)$
+    \item \textit{Space:} $O(bl)$ if used with DFS
+    \item \textit{Complete:} No
+    \item \textit{Optimal:} No if used with DFS
+  \end{itemize}
+  \item \textbf{Iterative Deepening Search} 
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Search with \hl{depth limit 0 $\rightarrow$ 1 $\rightarrow$ 2 \ldots $\rightarrow \infty$}
+    \item \textbf{Adv:} avoid sub-optimality of normal DLS
+  \end{itemize}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{Time (no. of nodes generated):} $b^0 + (b^0 + b^1) + \cdots + b^d \approx O(b^d)$
+    \item \textit{Space:} $O(b^d)$ 
+    \item \textit{Complete:} Yes
+    \item \textit{Optimal:} Yes if step cost is the same everywhere
+  \end{itemize}
+\end{itemize}
+\end{multicols*}
+
+\subsubsection*{Informed Search Algorithms}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Best-first Search:} \verb|p-queue| with eval $f(n)$, estimates how good a state is
+  \item \textbf{\textit{Greedy} Best-first Search:} \verb|priority queue| with eval $h(n)$, heuristic: estimates costs from $n$ to goal 
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{Time:} $O(b^m)$, \hl{good heuristic gives improvement} | \textit{Space:} $O(b^m)$
+    \item \textit{Complete:} No || \textit{Optimal:} No
+    \item Wrong heuristic $f(n)$ lead to loops / sub-optimal solutions
+  \end{itemize}
+  \item \textbf{A* Search:} \verb|priority queue| with eval $f(n)$, comprised of the following
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $g(n)$: Cost to reach $n$ + $h(n)$: heuristic: estimates costs from $n$ to goal 
+  \end{itemize}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{Time:} $O(b^m)$, \hl{good heuristic gives improvement}  | \textit{Space:} $O(b^m)$
+    \item \textit{Complete:} Yes || \textit{Optimal:} \textit{Depends} on heuristic
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection*{Heuristics}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Admissible:} If every node $n$, $h(n) \leq h^{\star}(n)$ where $h^{\star}(n)$ is \textbf{true cost} to reach goal state
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Never \textbf{over-estimates} cost to reach goal, conservative
+    \item If $h(n)$ is admissible, $A^{\star}$ using \textbf{tree search} is optimal
+  \end{itemize}
+  \item \textbf{Consistent:} If every node $n$, every successor of $n^{'}$ of $n$ generated by any action $a$, $h(n) \leq c(n,a,n^{'}) + h(n^{'})$ and $h(G) = 0$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item If $h$ is consistent, $A \rightarrow C$ (direct distance) $\leq$ $A \rightarrow B \rightarrow C$ (distance to goal when going to a different point first)
+    \item If $h(n)$ is consistent, $A^{\star}$ using \textbf{graph search} is optimal
+  \end{itemize}
+  \item \textbf{Dominance:} If $h_2(n) \geq h_1(n)$ for all $n$, then $h_2$ dominates $h_1$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $h_2$ better for search \textbf{if admissible}
+    \item e.g. for misplaced tiles if $h_1$ is number of misplaced tiles, $h_2$ is Manhattan distance, then $h_2$ dominates $h_1$
+    \item If each tile is at most one distance away from goal, then $h_2 = h_1$, otherwise $h_2 > h_1$ 
+  \end{itemize}
+  \item \hl{A \textit{consistent} heuristic is \textit{admissible} but not the other way round.}
+\end{enumerate}
+
+\framebox{\parbox{\dimexpr\linewidth-1\fboxsep-2\fboxrule}{% 
+\textbf{\underline{Relaxed Problem:}} A problem with \textbf{fewer restrictions} on actions. Cost of \textit{optimal solution} to relaxed problem is an \textbf{admissible heuristic} for the original problem.
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item Original: tile can move to adj blank
+%   \item Relaxations:
+%   \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item Tile can move anywhere $\rightarrow h_1$ number of misplaced tiles
+%     \item Tile can move to any adj square $\rightarrow h_2$ total Manhattan distance
+%   \end{itemize}
+% \end{itemize}
+}}
+
+\subsection*{3. Local Search \texorpdfstring{\scriptsize{$\rightarrow$ state is solution}}{}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{very large} state space, \textbf{good enough} solution preferred over \underline{no solution}
+\end{itemize}
+\begin{multicols*}{2}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item States, Initial State
+  \item Goal Test (optional)
+  \item Successtor function $\rightarrow$ possible states from state
+  \columnbreak
+  \item Evaluation function
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item outputs goodness of a state, \textbf{objective functions} (N-Queens)
+  \end{itemize}
+\end{enumerate}
+\end{multicols*}
+
+\subsubsubsection*{Hill Climbing Algorithm}
+\begin{multicols}{2}[\setlength{\columnsep}{-2.8cm}]
+  \begin{lstlisting}
+current = initial state
+while True:
+  neighbour = a highest-val successor of current
+  if value(neighbour) <= value(current):
+    return current
+  current = neighbour
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,left=64pt]
+  \item[] \includegraphics*[width=3cm, height=1.8cm]{images/nqueens.PNG}
+\end{itemize}
+\end{multicols}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Could lead to reaching local maximum
+  \item \textbf{Escape techniques:} Tabu Search, Random Restarts, Random Walk
+\end{itemize}
+
+\textbf{Simulated Annealing} | allow bad moves from time to time
+\begin{multicols}{2}[\setlength{\columnsep}{-2.4cm}]
+  \begin{lstlisting}[
+    frame=single,         
+    xleftmargin=0pt,      
+    xrightmargin=0pt,     
+    aboveskip=0pt,        
+    belowskip=0pt,       
+    framesep=1pt,          
+    linewidth=1\linewidth
+]
+current = initial state
+T = large positive value
+while T > 0:
+  next = randomly selected successor of current
+  if value(neighbour) > value(current):
+    current = next
+  else with probability P(current,next, T):
+    current = next
+  decrease T
+return current
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,left=64pt]
+  \item $P(\textcolor{red}{current}, \textcolor{blue}{next}, \textcolor{orange}{T}) = e^{\frac{\textcolor{teal}{value}(\textcolor{blue}{next}) - \textcolor{teal}{value}(\textcolor{red}{current})}{\textcolor{orange}{T}}}$
+  \item \textbf{Theorem:} If $T$ decreases slowly enough, simulated annealing will find a global optimum with high probability
+\end{itemize}
+\end{multicols}
+
+\subsubsection*{Adversarial Search}
+For games of the following characteristics, we \textit{do not do normal searches} $\rightarrow$ \hl{lack of information} of what \textbf{other} agent does
+\begin{multicols*}{3}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Fully observable 
+  \item Deterministic \columnbreak
+  \item Discrete
+  \item 2 player zero-sum \columnbreak
+  \item Turn-taking
+  \item Terminal states exist %(no $\infty$ runs)
+\end{itemize}
+\end{multicols*}
+
+\subsubsubsection{Components of Adversarial Search}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item States, Initial States, Actions, Transitions
+  \item \textbf{Terminal States}: when game ends | \textbf{Utility Function}: output value of state
+\end{itemize}
+
+\subsubsection*{Minimax}
+% \begin{lstlisting}[basicstyle = \scriptsize\ttfamily]
+% def minimax(state):
+%   v = max_value(state)
+%   return action in successors(state) with value v
+
+% def max_value(state):
+%   if is_terminal(state): return utility(state)
+%   v = -float('inf')
+%   for action, next_state in successors(state):
+%     v = max(v, min_value(next_state))
+%   return v
+  
+% # assume opponent plays optimally to min player value
+% def min_value(state):
+%   if is_terminal(state): return utility(state)
+%   v = float('inf')
+%   for action, next_state in successors(state):
+%     v = min(v, max_value(next_state))
+%   return v
+% \end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textit{Time:} $O(b^m)$ || \textit{Space:} $O(bm)$, with depth first exploration
+  \item \textit{Complete:} Yes if \hl{tree is finite} || \textit{Optimal:} Yes against \textbf{optimal opponent}
+\end{itemize}
+
+\textbf{Minimax \hl{with Cutoff}} | Replace \verb|if is_terminal(state)| with the following:
+\begin{lstlisting}[basicstyle = \scriptsize\ttfamily]
+  if is_cutoff(state): return eval(state)
+\end{lstlisting}
+
+e.g. for Nim Minimax with Cutoff
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Cutoff}: Terminal OR Depth $\geq$ 2
+  \item \textbf{Evaluation function}:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Terminal: utility(state) e.g. Number of sticks $> 1 $: $+1$ Else: $-1$
+    \item Create based on Expert Knowledge/Learn from data
+    \item e.g. \textbf{heuristic functions} estimates how `good' a state is
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Alpha-beta Pruning}
+Evaluating a node is sometimes not useful, as it does not change decision, $\alpha$ \textbf{highest value} for MAX, $\beta$ \textbf{smallest value} for MAX
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Pruning does not affect final result
+  \item Good move ordering improves effectiveness of pruning
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Perfect Ordering: $O(b^{\frac{m}{2}})$
+  \end{itemize}
+\end{itemize}
+\begin{lstlisting}[basicstyle = \scriptsize\ttfamily]
+def alpha_beta_search(state):
+  v = max_value(state, -inf, inf)
+  return action in successors(state) with value v
+def max_value(state, alpha, beta):
+  if is_terminal(state): return utility(state)
+  v = -float('inf')
+  for action, next_state in successors(state):
+    v = max(v, min_value(next_state))
+    alpha = max(alpha, v)
+    if v >= beta: return v
+  return v
+def min_value(state, alpha, beta):
+  if is_terminal(state): return utility(state)
+  v = float('inf')
+  for action, next_state in successors(state):
+    v = min(v, max_value(next_state))
+    beta = min(beta, v)
+    if v <= alpha: return v
+  return v
+\end{lstlisting}
+
+\subsubsubsection{Local Beam Search}
+Pick $k$ random initial states and generate their successors. If goal is found, terminate, else, pick the $k$ best
+successors and continue. \underline{Stochastic} Beam search by choosing sucessors with probability proportional to value
+
+\subsection*{4. Intro to Machine Learning and Decision Trees}
+
+\subsubsection*{Supervised Learning}
+Learns from being given the \textbf{right answers} $X \rightarrow Y$
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Regression:} predict \underline{continuous} output (e.g. temp = 0.567)
+  \item \textbf{Classification:} predict \underline{discrete}  output (e.g. animal = cat vs dog)
+\end{itemize}
+
+\subsubsubsection{Formalism}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item we assume that $y$ generated by a \textbf{true mapping function:} $f: x \rightarrow y$
+  \item want to find \textbf{hypothesis} $h: x \rightarrow \hat{y}$ (from \textbf{hypothesis class $H$}) s.t. $h \approx f$ given a \textbf{training set} $\{((x_1, f(x_1), \ldots (x_N, f(x_N))\}$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Find this hypothesis using a \textbf{learning algorithm}
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{Performance Measure}
+% How to know if hypothesis is good? Use \textbf{theorems} from statistical learning theory OR:
+% \textbf{Try} hypothesis on new set of examples (\textbf{test set})
+
+% \subsubsection*{Types of performance measures:}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Regression: Error}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item If \hl{output of hypothesis is \textbf{continuous}}, then we can measure its \textbf{error} For an input $x$ with true output $y$, we can compute:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Absolute Err $= |\hat{y} - y|$ | Squared Err $= (\hat{y} - y)^2$, where $\hat{y} = h(x)$
+    \end{itemize}
+  \end{itemize}
+  \item \textbf{Mean Squared Error}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item For set of $N$ examples $\{(x_1, y_1), \ldots, (x_N, y_N)\}$ we can compute the \textcolor{red}{average (mean) squared error:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item $MSE = \frac{1}{N} \sum^N_{i=1}(\hat{y_i} - y_i)^2$, where $\hat{y_i} = h(x_i)$ and $y_i = f(x_i)$
+    \end{itemize}
+  \end{itemize}
+  \item \textbf{Mean Absolute Error}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item For set of $N$ examples $\{(x_1, y_1), \ldots, (x_N, y_N)\}$ we can compute the \textcolor{red}{average (mean) absolute error:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item $MAE = \frac{1}{N} \sum^N_{i=1}|\hat{y_i} - y_i|$, where $\hat{y_i} = h(x_i)$ and $y_i = f(x_i)$
+    \end{itemize}
+  \end{itemize}
+  \item \textbf{Classification: Correctness \& Accuracy}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Classification is correct when prediction $\hat{y} = y$ (true label)
+    \item For set $N$ examples $\{(x_1, y_1), \ldots, (x_N, y_N)\}$ we can compute the average \textbf{correctness} (\textcolor{red}{accuracy}):
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item $Accuracy = \frac{1}{N}\sum^N_{i=1} \mathds{1}_{\hat{y_i}=y_i}$, where $\hat{y_i} = h(x_i)$ and $y_i = f(x_i)$
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+\textbf{Classification: Confusion Matrix}
+\includegraphics*[width=8.5cm, height=5.8cm]{images/confusionmatrix.png}
+
+\subsubsection*{Decision Trees}
+\subsubsubsection{Expressiveness}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Decision tress can express \textbf{any function} of the input attributes
+  \item e.g. Boolean functions, each row $\rightarrow$ path from root to leaf
+  \item Trivially there is a \textit{consistent} decision tree for \underline{any} training set, but it may not \textbf{generalize to new examples}
+\end{itemize}
+\subsubsubsection{Size of hypothesis class}
+Distinct decision tress with $n$ boolean attributes = number of Boolean functions = number of distinct truth tables with $2^n$ rows = $2^{2^n}$ \\ 
+\textbf{Decision Tree Learning} | We need to define \verb|choose_attribute|
+\begin{lstlisting}[basicstyle = \scriptsize\ttfamily]
+def DTL(examples, attributes, default):
+  if examples is empty: return default
+  if examples have same classification:
+    return classification
+  if attributes is empty: return mode(examples)
+  best = choose_attribute(attributes, example)
+  tree = new decision tree with root best
+  for value v_i in best:
+    examples_i = {rows in examples with best = v_i}
+    subtree = DTL(examples_i, attributes - best, mode(examples))
+    add a branch to tree with label v_i and subtree 
+\end{lstlisting}
+\subsubsubsection{Choosing attributes}
+Ideally, want to select attribute that splits examples into \underline{all positive/negative}
+\subsubsubsection*{Entropy}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Measure of pure randomness: $I(P(v_1),\ldots,P(v_n)) = -\sum_{i=1}{n}P(v_i)\log_2P(v_i)$
+  \item For data set containing \textcolor{red}{$p$ positive} and \textcolor{blue}{$n$ negative} examples: $I(\frac{p}{p+n}, \frac{n}{p+n}) = -\frac{p}{p+n}\log_2\frac{p}{p+n} - \frac{n}{p+n}\log_2\frac{n}{p+n}$
+\end{itemize}
+
+\subsubsubsection{Information Gain}
+\textcolor{red}{Entropy of this node} - \textcolor{blue}{Total entropy of children nodes}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item chosen attribute $A$ divides training set $E$ into subsets $E_1,\ldots, E_V$ according to values for $A$, where $A$ has $v$ distinct values
+  $remainder(A) = \sum_{i=1}^v\frac{p_i+n_i}{p+n}I(\frac{p_i}{p_i + n_i}, \frac{n_i}{p_i+n_i})$
+  \item Information Gain (IG) or reduction in entropy
+  $IG(A) = \textcolor{red}{(\frac{p_i}{p_i + n_i}, \frac{n_i}{p_i+n_i})} - \textcolor{blue}{remainder(A)}$
+\end{itemize}
+
+% \subsubsubsection{Data Cleaning}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item Dealing with Continous-valued Attributes: 
+%   \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%       \item Defined a discrete-valued input attribute to \textbf{partition values into discrete set of intervals}
+%       \item e.g. estimated waiting times(min): 0-10, 10-30, 30-60, $>$60
+%       \item becomes categorical compared to continuous
+%   \end{itemize}
+%   \item Dealing with Missing values
+%   \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item Assign most common value to attributes
+%     \item Assign most common value of attribute with same output
+%     \item Assign probabiltiy to each possible value and sample
+%     \item Drop attributes, or drop rows etc.
+%   \end{itemize}
+%   \item Overfitting
+%   \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item DT performance is \underline{perfect on training data} worse on test data
+%     \item captures the input data perfectly, \textbf{including the noise}
+%   \end{itemize}
+% \end{itemize}
+
+\subsubsubsection{Occam's Razor}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Short/simple hypothesis, favouring:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Short/simple} hypothesis fits data is \textbf{unlikely coincidental}
+    \item \textbf{Long/complex} hypothesis that fits data \textbf{may be coincidence}
+  \end{itemize}
+  \item Against:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Many ways to define small sets of hypothesis $\rightarrow$ trees with prime number of nodes that uses attribute beginning with "Z"
+    \item Different hypotheses representations may be used instead
+  \end{itemize}
+\end{itemize}
+
+% \includegraphics*[width=8.5cm, height=8.5cm]{images/decisiontreelearning.PNG}
+
+
+\subsubsubsection{Pruning in DT}
+Prevent nodes from being split even when if fails to cleanly separate examples. e..g if does not meet min sample (T: 1, F:2, Total: 5), combine both nodes into 1 take majoirty (F).
+% \includegraphics*[width=8.5cm, height=4cm]{images/dtpruning.PNG}
+
+\subsection*{5. Linear Regression}
+For a set of $m$ examples $\{(x^{(1)}, y^{(1)}), \ldots, (x^{(m)}, y^{(m)}) \}$ \\  \textbf{MSE}:
+\noindent\fbox{{\textwidth-0pt}$J_{MSE}(\textcolor{red}{w}) = \frac{1}{2m}\sum_{i=1}^{m} (h_{\textcolor{red}{w}} (x^{(i)}) - y^{(i)})^2$} 
+\vspace*{0.3cm}
+\begin{multicols*}{2}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $J_{MSE}(\textcolor{red}{w})$ | Loss function
+    \item $\frac{1}{2m}$ | mathematical convenience
+    \item $(x^{(i)})$ | a.k.a $\hat{y}^{(i)}$
+    \item want to minimize the loss/error
+  \end{itemize}
+\end{multicols*}
+\vspace*{0.1cm}
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+  if we fix $w_0 = 0$ for easier visualization: \\
+  $\star$ Loss Function: $J_{MSE}(\textcolor{red}{w}) = \frac{1}{2m}\sum_{i=1}^{m} (\textcolor{red}{w_1} (x^{(i)}) - y^{(i)})^2$ \\
+  $\star -\frac{\delta J_{MSE}(\textcolor{red}{w})}{\delta \textcolor{red}{w_1}} = -\frac{1}{m} \sum_{i=1}^{m} (\textcolor{red}{w_1} (x^{(i)}) - y^{(i)})(x^{(i)})$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item partial derivative to find the minimum point (smallest slope) in loss function
+  \end{itemize}
+}}
+
+\subsubsection*{Linear Regression \& ML}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Vector:} $w_0, w_1, \ldots, w_n$, column $w = \begin{bmatrix} w_0\\ \ldots \\ w_n \end{bmatrix}$  row $w^T = \begin{bmatrix} w_0 \ldots  w_n \end{bmatrix}$ 
+  \item \textbf{Dot product:} $u^T v = w^T = \begin{bmatrix} w_0  w_1  \ldots  w_n \end{bmatrix} \begin{bmatrix} w_0\\ \ldots \\ w_n \end{bmatrix} = \sum_{j=0}^{n} u_j v_k$  
+  \item \textbf{Partial derivative:} $\frac{\delta J(w)}{\delta w_1}$ e.g. $J(w) = -w_0^2 - w_1^2 = \frac{\delta J(w)}{\delta w_1} = -2w_1$
+  \item \textbf{Gradient:} $\begin{bmatrix} \frac{\delta J(w)}{\delta w_0}\\ \frac{\delta J(w)}{\delta w_1} \\ \ldots \\ \end{bmatrix}$
+\end{itemize}
+
+
+\subsubsection*{Gradient Descent}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Start at some $\textcolor{red}{w}$ $\rightarrow$ pick nearby $\textcolor{red}{w}$ that $\downarrow J(\textcolor{red}{w})$
+  \item $w_j \leftarrow \textcolor{red}{w_j} - \gamma \frac{\delta J(\textcolor{red}{w_0}, \textcolor{red}{w_1}, \ldots)}{\delta \textcolor{red}{w_j}}$, repeat until minimum reached
+  \item \textbf{Learning Rate: $\gamma$}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item small $\gamma \rightarrow$ model takes long time to run, may not find minimum
+    \item large $\gamma \rightarrow$ model might overshot minimum
+    \item Each variable in the linear equation should have its own $\gamma$
+    \item MSE loss function is \textbf{\underline{convex}} for linear regression (1 global minimum)
+  \end{itemize}
+\end{enumerate}
+% \includegraphics*[width=8.5cm, height=3.5cm]{images/gradientdescentlossfunction.PNG}
+
+\subsubsubsection{Variants of Gradient Descent}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{(Batch) Gradient Descent:} consider \underline{all} training examples
+  \item \textbf{Mini-batch Gradient Descent:}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \underline{subset} of training examples at a time
+    \item cheaper, faster per iteration. | random, may escape local minima
+  \end{itemize}
+  \item \textbf{Stochastic Gradient Descent (SGD):}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item select \underline{one random} data point at a time
+    \item cheapest, fastest per iteration. | more random, may escape local minima
+  \end{itemize}
+  \item To speed up we can:
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Perform feature scaling/mean normalization, apply PCA but keep variance
+    \item Use \textbf{larger/adaptive} learning rate to speed convergence/use variants above
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Linear Regression with Many Attributes}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Hypothesis} $h_{\textcolor{red}{w}}(x) = \textcolor{red}{w_0}\textcolor{blue}{x_0} + \textcolor{red}{w_1}x_1 + \textcolor{red}{w_2}x_2 + \textcolor{red}{w_3}x_3 + \textcolor{red}{w_4}x_4$
+  \item \textbf{Hypothesis | for $n$ features}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $h_{\textcolor{red}{w}}(x) = \sum_{j=0}^{n}\textcolor{red}{w_j}x_j =  \begin{bmatrix} w_0 \\ w_1 \\ \ldots \\ w_n \end{bmatrix}^T \begin{bmatrix} x_0 \\ x_1 \\ \ldots \\ x_n \end{bmatrix} = w^Tx$
+  \end{itemize}
+  \item \textbf{Weight Update | for $n$ features}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $w_j \leftarrow \textcolor{red}{w_j} - \gamma \frac{\delta J(\textcolor{red}{w_0}, \textcolor{red}{w_1}, \ldots)}{\delta \textcolor{red}{w_j}}$
+    \item $w_j \leftarrow \textcolor{red}{w_j} - \gamma \frac{1}{m} \sum_{i=1}^{m} (h_{\textcolor{red}{w}}(x^{(i)}) - y^{(i)}) \cdot x_j^{(i)}$
+  \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Features with different scales}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Use standardization e.g. mean normalization, min-max scaling, robust scaling etc.
+  \item \textbf{Mean normalization:} $x_j = \frac{x_j - \mu_j}{\sigma_j}$, where $\sigma_j$ = std. dev.
+\end{itemize}
+
+\subsubsubsection{Non-Linear Relationships}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item We need to scale the polynomial regressions e.g.:
+  \item $h_{\textcolor{red}{w}} = \textcolor{red}{w_0} + \textcolor{red}{w_1}x + \textcolor{red}{w_2}x^2$ (polynomial regression)
+  \item transform $f_1 = x, f_2 = x^2$, we can get $h_{\textcolor{red}{w}} = \textcolor{red}{w_0} + \textcolor{red}{w_1}f_1 + \textcolor{red}{w_2}f_2$
+\end{itemize}
+
+\subsection*{6. Logistic Regression}
+Decision Trees works with discrete/categorical inputs, not with many options.
+\subsubsubsection{Logistic Function (Sigmoid)}
+$\sigma(z) = \frac{1}{1 + e^{-z}}$ || $h_w(x) = \sigma(w_0 + w_1 x)$
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Output of sigmoid is in $[0, 1]$, treat each output as \textbf{probability}
+  \item $h_w(x) = P(x = \text{mal}) \rightarrow P(x = \text{mal}) > \alpha$ e.g. $0.5$ then malignant
+  \item Consider it a \underline{decision boundary}, for continous variables
+\end{itemize}
+
+\subsubsubsection{Logistic Regression N-D case}
+$h_w(x) = \sigma(w_0 + w_1 x_1 + w_2 x_2 + \cdots + w_n x_n)$ | 
+For a set of $m$ examples $\{(x^{(1)}, y^{(1)}), \ldots , (x^{(m)}, y^{(m)})\}$, where fn is non-linear $\rightarrow$ non-convex:
+\[
+  \begin{aligned}
+    J_{MSE}(\textcolor{red}{w}) &= \frac{1}{2m} \Sigma_{i=1}^m(h_{\textcolor{red}{w}}(x^{(i)}) - y^{(i)})^2 \\ 
+    &= \frac{1}{2m} \Sigma_{i=1}^m(\frac{1}{1 + e^{-(\textcolor{red}{w_0} + \textcolor{red}{w_1} x_1 + \textcolor{red}{w_2} x_2 + \cdots + \textcolor{red}{w_n} x_n)}} - y^{(i)})^2 \\
+  \end{aligned}
+\]
+% \includegraphics*[width=8.2cm, height=4cm]{images/convexnonconvex.PNG}
+
+\subsubsubsection{Measuring Closeness Between Prob Distribution}
+\textbf{Cross-entropy for $C$ classes:} $CE(\textcolor{teal}{y}, \textcolor{purple}{\hat{y}}) = \sum_{i=1}^{C} - \textcolor{teal}{y_i}\log(\textcolor{purple}{\hat{y_i}})$
+
+\textbf{Binary cross-entropy:} $BCE(\textcolor{teal}{y}, \textcolor{purple}{\hat{y}}) = - \textcolor{teal}{y}\log(\textcolor{purple}{\hat{y}}) - \textcolor{teal}{(1 - y)}\log(\textcolor{purple}{1 - \hat{y}})$
+
+
+\subsubsubsection{Logistic Regression with Cross-Entropy Loss}
+For a set of $m$ examples $\{(x^{(1)}, y^{(1)}), \ldots , (x^{(m)}, y^{(m)})\}$, we can compute the \textcolor{red}{binary cross entropy \underline{loss}} $\rightarrow$ convex for logistic regression:
+\[
+  \begin{aligned}
+    J_{BCE}(\textcolor{red}{w}) &= \frac{1}{m} \Sigma_{i=1}^m BCE(y^{(i)}, h_{\textcolor{red}{w}}(x^{(i)})) \\ 
+    & \quad h_{\textcolor{red}{w}}(x) = \sigma(\textcolor{red}{w_0} + \textcolor{red}{w_1}x_1 + \textcolor{red}{w_2}x_2 + \cdots + \textcolor{red}{w_n}x_n)  & & \textsf{(prob. output)}
+  \end{aligned}
+\]
+
+\subsubsubsection{Logistic Regression with Gradient Descent}
+\textbf{Weight Update:} $\textcolor{red}{w_j} \leftarrow \textcolor{red}{w_j} - \gamma \frac{\partial J_{\textcolor{blue}{BCE}}(\textcolor{red}{w_0}, \textcolor{red}{w_1}, \ldots)}{\partial \textcolor{red}{w_j}}$, same as linear regression:
+\begin{align*}
+  \frac{\partial J_{BCE}(\textcolor{red}{w})}{\partial \textcolor{red}{w_j}} &= \frac{\partial}{\partial \textcolor{red}{w_j}} \frac{1}{m} \sum_{i=1}^m BCE(y^{(i)}, h_{\textcolor{red}{w}}(x^{(i)})) \\
+  \frac{\partial J_{BCE}(\textcolor{red}{w})}{\partial \textcolor{red}{w_0}} &= \frac{1}{m} \sum_{i=1}^m (h_{\textcolor{red}{w}}(x^{(i)}) - y^{(i)}) \\
+  &\vdots \\ 
+  \frac{\partial J_{BCE}(\textcolor{red}{w})}{\partial \textcolor{red}{w_j}} &= \frac{1}{m} \sum_{i=1}^m (h_{\textcolor{red}{w}}(x^{(i)}) - y^{(i)}) x_{\colorbox{yellow}{j}}^{(i)}
+\end{align*}
+
+\subsubsubsection{Multi-class Classification}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{One vs All}: 1 classifier/class, fit against \textbf{all other} classes, pick \textbf{highest prob.}
+  \item \textbf{One vs One}: 1 classifier/class \colorbox{yellow}{pair}, pick \textbf{most wins}
+\end{itemize}
+
+% \subsubsection{Performance Measure}
+% \subsubsubsection{True Positive Rate \& False Positive Rate}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%   \item $TP = \#$ of True Positive: positive examples that are classified as positive
+%   \item $FN = \#$ of False Negative: positive examples that are classified as negative
+%   \item $TN = \#$ of True Negative: negative examples that are classified as negative
+%   \item $FP = \#$ of False Positive: negative examples that are classified as positive
+% \end{itemize}
+
+\subsubsubsection{Receiver Operator Characteristic (ROC) Curve}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Model is more accurate than random chance if \textbf{\textcolor{cyan}{ROC curve}} is above the diagonal \textbf{\textcolor{teal}{random}} line
+  \item Graphical plot that illustrates the performance of a binary classifier.
+\end{itemize}
+
+% \includegraphics*[width=8cm, height=3cm]{images/roccurve.PNG}
+
+\subsubsubsection{Area Under Curve (AUC) of ROC}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item AUC is \textcolor{cyan}{concise} \textbf{metric} instead of a full figure
+  \item Concise metrics enable clearer comparisons
+  \item AUC $> 0.5$ means the model is better than chance
+  \item AUC $\approx 1$ means model is very accurate
+  \item Usually plot as TPR (sensitivity) against FPR (1 - specificity)
+\end{itemize}
+
+% \includegraphics*[width=8cm, height=4cm]{images/aucroc.PNG}
+
+
+\subsubsection{Model Evaluation \& Selection}
+Given dataset $\textcolor{cyan}{D}$, error function $\textcolor{red}{error}$, expected error of a model/hypothesis $\textcolor{purple}{h}$:
+$J_{\textcolor{cyan}{D}}(h) = \frac{1}{N} \sum_{i=1}^{N} \textcolor{red}{error} (h (x^{(i)}), y^{(i)}), \textsf{where} (x^{(i)}), y^{(i)}) \in \textcolor{cyan}{D}$
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Split data into $\textcolor{cyan}{D_{train}}, \textcolor{cyan}{D_{val}}, \textcolor{cyan}{D_{test}}$
+  \item Train with $\textcolor{cyan}{D_{train}}$, minimizing $J$ to obtain model
+  \item Choose \textcolor{purple}{model} with the minimum $J_{\textcolor{cyan}{D_{val}}}$
+  \item Once picked ideal \textcolor{purple}{model}, test it against test set $\textcolor{cyan}{D_{test}}$ by computing $J_{\textcolor{cyan}{D_{val}}}$
+\end{enumerate}
+
+\subsubsubsection{Diagnosing Bias and Variance}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item $J_{D_{val}}(w) \approx J_{D_{train}} \text{(high)}$, meaning model is underfit, has high bias
+  \item $J_{D_{val}}(w) >> J_{D_{train}} \text{(low)}$, meaning model is overfit, has high variance
+\end{itemize}
+% \includegraphics*[width=8.3cm, height=3.2cm]{images/diagnosebiasandvariance.png}
+
+\subsubsubsection{Hyperparameter Tuning}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Pick hyperparameters: e.g. deg. of polynomials, learning rate
+  \item Train model with hyperparameters, $\rightarrow$ Evaluate model
+\end{itemize}
+\subsubsubsection{Tuning Methods}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Grid search (exhaustive search):} Try all possible hyperparameters
+  \item \textbf{Random search:} Randomly select hyperparameters
+  \item \textbf{Successive halving:} Use all possible hyperparameters but with $\downarrow$ resources. successively increase the resources with smaller set of hyperparameters
+  \item \textbf{Bayesian optimization:} Use Bayesian methods to estimate the optimization space of the hyperparameters
+  \item \textbf{Evolutionary algorithms:} Use evolutionary algorithms (e.g., genetic algo) to select a population of hyperparameters
+\end{itemize}
+
+\subsection{7. Support Vector Machines}
+\subsubsection{Regularization } 
+Ways to address over fitting: (1) reduce number of features, (2) reduce magnitude of weights (regularization)
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Ridge Regression:} $J(w) = \frac{1}{2m}[\Sigma_{i-1}^{m}(h_{\textcolor{red}{w}}(x^{(i)}) - y^{(i)})^2 +$ \hl{$\lambda$} $\Sigma_{j=1}^{n}\textcolor{red}{w_j}^2]$
+  \item update function (\textbf{gradient descent}): 
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $w_n = (1 - \frac{\alpha\lambda}{m}w_n) - \alpha\frac{1}{m}\Sigma_{i=1}^{m} (h_{\textcolor{red}{w}}(x^{(i)}) - y^{(i)}) \cdot x^{(i)}_n$
+  \end{itemize}
+  \[
+    w = ( X^T X + \lambda \begin{bmatrix}
+    0 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & \ddots & 0 \\
+    0 & 0 & 0 & 1
+    \end{bmatrix} )^{-1} X^T Y
+  \]
+  \item This works even if $ X^T X$ is non-invertible is $\lambda > 0$
+  \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Too large $\lambda$ can cause your model to underfit. 
+    \item Regularization assure that your model performs better on unseen data, sacrificing performance on training data. (higher bias but low variance)
+    \item Ridge penalizes larger parameters, attempting to pull all parameters towards small values.
+  \end{enumerate}
+\end{itemize}
+
+\subsubsection{Support Vector Machines}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item In a hyperplane in $N-$dimensional space that distinctly classifies data points
+  \item Want to \hl{maximize margin distance} to provide reinforcement to future data points to be classified with more confidence. To \textit{maximize margin}:
+  \item Penalize \textit{minority class more} otherwise model naturally bias to majority
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Decision Rule:} $\textcolor{red}{w} \cdot x + \textcolor{red}{b} \geq 0$ then \verb|+| else \verb|-|
+    \item \textbf{Equation} for \textcolor{orange}{margin}: $\text{margin} = \frac{2}{||\textcolor{red}{w}||}$
+    \item \textbf{Constrained optimization problem:} 
+    \noindent\fbox{{$\max_{\textcolor{red}{w}}\frac{2}{||\textcolor{red}{w}||} \rightarrow s.t. \ \ y^{(i)}(\textcolor{red}{w} \cdot x^{(i)} + \textcolor{red}{b}) + 1 \geq 0$}}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item \textbf{Primal:}
+      \hl{$ \min_{w} \frac{1}{2} \| w \|^2, \quad \text{s.t.} \quad y^{(i)} \left( w \cdot x^{(i)} + b \right) - 1 \geq 0$}
+      
+      \item \textbf{Dual:} \hl{$\max_{\alpha \geq 0} \sum_i \alpha^{(i)} - \frac{1}{2} \sum_{i,j} \alpha^{(i)} \alpha^{(j)} y^{(i)} y^{(j)} x^{(i)} \cdot x^{(j)}$}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+% \includegraphics*[width=8.5cm, height=4.2cm]{images/svm.PNG}
+
+$J(w) = C \sum_{i=1}^{m} \left( y^{(i)} c_1 + (1 - y^{(i)}) c_0 \right) + \frac{1}{2} \sum_{i=1}^{n} w_i^2$
+where
+$c_1 = -\log \left( \frac{1}{1 + e^{-w^T x}} \right), \quad c_0 = -\log \left( 1 - \frac{1}{1 + e^{-w^T x}} \right)$
+This is a constrained optimization problem to minimize the number of misclassifications and maximize correct classifications (”soft” margin) \\ 
+\textbf{Properties:}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item SVM is robust to outliers (increase regularization)
+  \item support Vectors influence the position and orientation of the hyperplane
+  \item binary classifier, $n$-class problems, $n$ models required to correctly classify
+  \item $\uparrow$ C | $\downarrow$ effect of regularization, allowing the data to fit more (lower bias)
+\end{enumerate}
+
+\subsubsection{Kernels}
+Bijective function mapping data points to a \textit{higher-dimensional} plane so that data is linearly separable. Allows us to operate in the original feature space without computing coordinates of data in higher dimensional space (costly).
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textcolor{teal}{Polynomial degree d ($n^d$ terms)} \textcolor{purple}{$K(u,v)$} $ = \phi(u) \cdot \phi(v) = (u\cdot v)^d$
+  \item \textbf{Guassian kernel:} $K(x, l^(i)) = e^{-\frac{||x-l^{(i)}||^2}{2\sigma^2}}$
+  \item Kernel trick ensures that \underline{no need} to compute transformed features \textbf{explicitly}
+  \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Given a data point x, compute new features based on the proximity to landmarks. Features $f_1, f_2, \ldots , f_n$ will be $\approx 1$ if $x$ is close, else $\approx 0$. Replace all $x_i$’s with $f_i$’s.
+    \item Apply feature scaling.
+    \item Some kernels may not converge. Need to satisfy Mercer’s theorem.
+    \item ($n >> m$) SVM with no kernel, ($n < m$) SVM with guassian kernel, ($m >> n$) SVM with no kernel
+  \end{enumerate}
+\end{itemize}
+
+\subsubsubsection{Bias and Variance Tradeoff}
+A model with a \textbf{high bias} \hl{makes more assumptions}, and
+unable to capture the important features of our dataset. A
+high bias model \underline{cannot perform well on} \underline{new data}. To
+reduce, (1) increase the input features (2) decrease
+regularization term (3) use more complex models.
+A model that shows \textbf{high variance} \hl{learns a lot and perform
+well} with the \textit{training dataset}, but does not \underline{generalize well}
+with the unseen dataset. To reduce, (1) decrease the input
+features (2) do not use more complex model (3) increase
+training data (4) increase regularization term.
+
+\subsection{8. Intro to Neural Networks}
+% \includegraphics*[width=8.3cm, height=3.4cm]{images/perceptronexample.png}
+\textbf{Perceptron, Linear classifier:} algorithm predicts labels via $\hat{y} = \sigma(w^T x)$
+\subsubsubsection{Perceptron Learning Algorithm}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Initialize weights, wi (can be zero or random small values).
+  \item Loop (\textit{until convergence or max steps reached})
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item For each instance $(x^{(i)}, y^{(i)})$, classify $\hat{y}^{(i)} = h_{\textcolor{red}{w}}x^{(i)}$
+    \item Select \textcolor{red}{\underline{misclassified}} instance $(x^{(i)}, y^{(i)})$
+    \item Update weights $\textcolor{red}{w} \leftarrow \textcolor{red}{w}+ \gamma (y^{(i)} - \hat{y}^{(i)})x^{(j)}$
+  \end{itemize}
+\end{enumerate}
+% \includegraphics*[width=8.3cm, height=3.6cm]{images/perceptronexample1.png}
+\subsubsubsection{Perceptron properties}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Not robust: can select any model to linear, \textbf{not deterministic}
+  \item Cannot converge on non-linearly separable data
+\end{itemize}
+
+\subsubsection*{Single-layer Neural Networks}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Single forward pass $\rightarrow$ back propagate to update weights for model to learn
+  \item In single-layer perceptron, weight updates as follows:
+  \item $\textcolor{red}{w_i} \leftarrow \textcolor{red}{w_i} - \gamma \frac{d\epsilon}{d w_i} = \textcolor{red}{w_i}+ \gamma (y- \hat{y})g^{'}(f)x_i$
+\end{itemize}
+
+\subsubsubsection{Multi-layer Perceptron}
+A multi layer perceptron is formed by combining many single layer perceptrons. This allows the model to learn more complex function
+% \includegraphics*[width=8.3cm, height=3cm]{images/neuralnetworkandmatrixmultiplication.png}
+
+\subsection{9. Neural Networks +}
+\subsubsection{Forward Propagation}
+Propagate the sum of all node * weight in the target node, applying this notation recusively from the input layer:
+\noindent\fbox{{\textwidth-300pt}$a^{[l]} = g^{[l]}(W^{[l]} a^{[l-1]})$} 
+
+e.g. $a_1 = w_{11} x_1 + w_{21}x_2 + w_{31}x_3, a_2 = w_{12} x_1 + w_{22}x_2 + w_{32}x_3 \cdots$
+\textbf{Chain Rule} $a=f(x) z=g(a) \Rightarrow \triangle x \rightarrow \triangle a \rightarrow \triangle z \Rightarrow \frac{dz}{dx} = \frac{dz}{d\textcolor{red}{a}} \frac{d\textcolor{red}{a}}{dx}$
+
+\subsubsection{Backward Propagation}
+First compute the values of the nodes in \textcolor{orange}{orange} ($v_i \xrightarrow{w_i} u_i$)
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Convert non-linear activation function to $g'(x)$
+  \item All values in \textcolor{orange}{orange} computed in one forward pass $v_i$
+  \item Next we compute the values in \textcolor{blue}{blue} with one backward pass $\frac{\delta L}{\delta u_i}$
+  \item When implementing custom function/layers, ensure they are \textbf{differentiable}
+  \item \noindent\fbox{{\textwidth-300pt}$\delta^{[l]} = g'(f^{[l]}) \cdot W^{[l+1]}\delta^{[l+1]}$} 
+
+\end{itemize}
+\includegraphics*[width=8.3cm, height=3.8cm]{images/backpropagation.png}
+
+\subsubsection{Convolutional Neural Network}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Leverage on \textbf{spatial context} to extract local features
+  \item Enjoy \textbf{translation invariance}, features can be recognized elsewhere
+  \item \textbf{Fewer parameters:} kernels share weights $\rightarrow$ faster training
+  \item number of params in convolutional layer (with \textbf{bias}): $\#params = ((kernel\_size \times |input\_channels|) + 1) \times |output\_channels|$
+\end{itemize}
+
+\textbf{Layers in CNN} | (\underline{\hl{s}}ize, \underline{\hl{p}}adding, \underline{\hl{k}}ernel size, \underline{\hl{s}}tride) \\ 
+Recusively do \textit{input $\rightarrow$ convolution + relu $\rightarrow$ pooling $\rightarrow$ convolution + relu $\cdots$} for \underline{feature learning}, \textit{flattening $\rightarrow$ fully connected, $\rightarrow$ softmax} for \underline{predicting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Convolutional}: Element-wise multiply-sum operation between an image section (dependent on the stride and padding) and the kernel. 
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Dimensions of the output for one kernel is given \noindent\fbox{{\textwidth-300pt}$\lfloor \frac{n+2p-K}{s} \rfloor + 1$}
+    \item Add \textit{padding} in order to keep size of output feature map
+  \end{itemize}
+  \item \textbf{Pooling Layer}: Extract the most relevant features, and reduce dimensionality, parameters, and noise from previous convolutional layer
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Max-pool, Average-pool, sum-pool
+  \end{itemize}
+  \item \textbf{Fully Connected}: There can be multiple fully connected layers. An activation function is used in each fully connected layer
+  \item \textbf{Softmax Layer}: Use for classification tasks, by normalizing results to follow a probability distribution, allows us to avoid binary classification, accomodate as many classes as needed
+\end{itemize}
+
+\subsection{10. Neural Networks on Sequential Data}
+\subsubsection{Recurrent Neural Networks (RNN)}
+\begin{multicols}{2}
+  \includegraphics*[width=4.2cm, height=2.5cm]{images/rnn.png}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Takes information from prior inputs to influence current input \& output
+    \item Same weights applied at each step, handles sentences of varying length
+  \end{itemize}
+\end{multicols}
+
+
+\subsubsubsection{Other RNN}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Deep RNN:} Chain $h_i$ up to $N$ layers, before output $\hat{y}_{i}$
+  \item \textbf{Bidirectional RNN:} Capture information for content before $x_t$ and process as $\hat{y}_{t-1}$, then contact the result of capturing information for content after $x_t$ (the opposite direction)
+  \item \textbf{Types of RNN:}
+  \includegraphics*[width=8.3cm, height=1.5cm]{images/typesofrnn.png}
+  \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{one-to-one:} Each I/O is independent. Not RNN
+    \item \textit{one-to-many:} Image captioning, text generation (decoders)
+    \item \textit{many-to-one:} Text classification, sentiment recognition (encoders)
+    \item \textit{many-to-many:} Language translation, music generation
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item Process all inputs first, and then predict later OR Process 1 at a time
+    \end{itemize}    
+  \end{enumerate}
+  \item \textbf{Applications of RNN:} sentiment analysis, speech/video activity recognition
+\end{itemize}
+
+\subsubsubsection{Long Short-Term Memory (LSTM)}
+\includegraphics*[width=8.3cm, height=3.5cm]{images/lstm.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Recurrent neural network with gating:
+  \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{4 inputs:} 3 controls (input $z$, signal control input gate $z_i$, signal control forget gate $z_f$, signal control output gate $z_o$), \textbf{1 output:} $h$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item For the gates the signal control $z_i$/$z_o$/$z_f$ goes through a sigmoid function: ranges from $0$ (\textit{closing the gate}) to $1$ (\textit{opening the gate})
+      \item \textbf{Input gate:} $\textcolor{cyan}{a} = \textcolor{red}{g^{[1]}(z_i)} \times \textcolor{blue}{g^{[2]}(z)}$, produces $\textcolor{cyan}{a}$ which goes into $C$
+      \item \textbf{Forget gate:} $\textcolor{purple}{b} = \textcolor{orange}{c} \times \textcolor{red}{g^{[1]}(z_f)}$, producinges $\textcolor{purple}{b}$ which goes into $C$
+      \item \textbf{Output gate:} $h = \textcolor{red}{g^{[1]}(z_o)} \times \textcolor{blue}{g^{[2]}(c)}$, produces $h$ output
+    \end{itemize}
+    \item \textbf{Memory $C$:} can be referred to as the state: $\textcolor{orange}{c} \leftarrow \textcolor{cyan}{a} + \textcolor{purple}{b}$
+  \end{enumerate}
+\end{itemize}
+
+\subsubsection{Self-Attention and Transformer}
+\subsubsubsection{Problems with RNN}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item $\checkmark$ Able to capture context info from previous time steps
+  \item $\xmark$ Output at time step $t$ must wait for all steps $< t$ to complete $\rightarrow$ this is not parallelism-friendly
+\end{itemize}
+
+\subsubsubsection{Self-Attention}
+\includegraphics*[width=8.2cm, height=3.7cm]{images/selfattention.png}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{\textcolor{blue}{Query}} represents info we want to focus on.
+    \item \textbf{\textcolor{orange}{Key}} represents info associated with each input that can be compared to query
+    \item \textbf{\textcolor{pink}{Value}} contains actual info retrieved based on the attention scores
+  \end{itemize}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item $\alpha'_{1j} = \frac{\text{exp}(\alpha_{1j})}{\Sigma_j \text{exp}(\alpha_{1j})}$, $\alpha'_{11} + \alpha'_{12} + \alpha'_{13} + \alpha'_{14} = 1$
+  \item \textbf{query} $q_1 = \textcolor{red}{W^q}{x_1}$ | \textbf{key} $k_i = \textcolor{red}{W^i}{x_i}$ | \textbf{value} $v_i = \textcolor{red}{W^v}{x_i}$
+  \item All $q$, $k$ and $v$ can be computed together with matrix multiplication
+\end{itemize}
+
+
+\subsubsubsection{Transformer}
+\begin{multicols}{2}
+\includegraphics*[width=4.2cm, height=0.7cm]{images/transformer.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Deep neural net based on the attention mechanism.
+  \item Input a sequence, output a sequence
+  \item \textbf{Enconder-Decoder Attention:}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Query:} generated based on previous \textcolor{red}{decoder block's output}
+    \item \textbf{Key, Value:} generated based on \textcolor{red}{encoder's output}
+    \item Enable decoder to utilize the rich \textit{contextual info provided by encoder}
+  \end{itemize}
+\end{itemize}
+\end{multicols}
+
+
+\begin{multicols}{2}
+\subsubsection{Issues with Deep Learning}
+  \subsubsubsection{Overfitting $\rightarrow$ Regularization}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Dropout:} during training, \textit{randomly} set some activations to 0
+    \item \textbf{Early stopping:}
+  \end{itemize}
+  \includegraphics*[width=4.2cm, height=1.8cm]{images/earlystopping.png}
+\end{multicols}
+
+\subsubsubsection{Gradient Vanishing/Exploding}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Vanishing gradient:} \textit{small} gradients multiplied repeatedly $\rightarrow$ almost $0$
+  \item \textbf{Exploding gradient:} \textit{large} gradients multiplied repeatedly $\rightarrow$ overflows
+  \item \textbf{Mitigation:} Using non-saturaing activation functions e.g. ReLU or Gradient clipping (clip with range $[\min, \max]$)
+\end{itemize}
+
+\subsection{10. Unsupervised Learning}
+No labels, use learning by experiencing raw data, obtaining as obtaining labels can be expensive. Given a set of $m$ data points ${x^{(1)}, \ldots, x^{(m)}}$, learn patterns
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Clustering:} identify clusters in the data
+  \item \textbf{Dimensionality reduction:} find a lower-dimensional representation of data
+\end{itemize}
+
+\subsubsection{K-Means Clustering}
+\begin{multicols}{2}
+  Let points $x^{(i)}$ for $i=1, \ldots , m_1$ be assigned to cluster 1. For these points, cluster centroid is defined as $u_1 = \frac{1}{m} \sum_{i=1}^{m_1} x^{(i)}$
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Randomly initialize $K$ centroids: $\mu_1, \ldots , \mu_K$
+    \item Repeat until convergence
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+      \item For $i = 1, \ldots, m$:
+      \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $c^{(i)} \leftarrow$ index of cluster centroid $(\mu_1, \ldots, \mu_K)$ closest to $x^{(i)}$
+      \end{itemize}
+      \item For $k = 1, \ldots, K$:
+      \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $\mu_k \leftarrow$ centroid of data points $x^{(i)}$ assigned to cluster $k$
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+
+  \includegraphics*[width=4cm, height=3.5cm]{images/kmeansclustering.png}
+\end{multicols}
+
+\subsubsubsection{K-Means: Measuring}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item The algorithm could possibly get stuck on a local optima, where outcome is a stable configuration as centroids do not move
+  \item \textbf{Measuring the Goodness:} we use \textit{Loss/Distortion} which is the average distance of each sample to its centroid
+  \item $J(c^{(1)}), c^{(2)}, \ldots , c^{(m)}, \mu_1, \mu_2, \ldots, \mu_K) = \frac{1}{m}\sum_{i=1}^{m} || x^{(i)} - \mu_{c^{(i)}}||^2$
+\end{itemize}
+
+\subsubsubsection{K-Means: Picking the number of clusters}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Elbow Method:} seeing when $J()$ against $K$ samples reaches an eblow, but heuristic method, data may not have an elbow/has multiple elbows
+  \item \textbf{Application dependent:} if we have 5 sizes, then we will pick $k = 5$
+\end{itemize}
+% \includegraphics*[width=8cm, height=3.2cm]{images/numberofclusters.png}
+
+\subsubsubsection{K-Means: Variants}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Pick $K$ initial centroids randomly from points in the data
+  \item K-Medoids: pick data points that are closests to the centroids, use them as centroids $\rightarrow$ `snap' centroids to the nearest data points
+\end{itemize}
+
+\subsubsubsection{K-Means: Bad Performance}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Large dataset, many features $\rightarrow$ curse of dimensionality, run PCA to reduce number of dimensions OR Poor init of clusters/bad $k$ choice/noisy data
+  \item Features at different scales, affect clustering (normalize data to solve)
+\end{itemize}
+
+
+\subsubsection{Hiearchical Clustering}
+\includegraphics*[width=8.5cm, height=1.8cm]{images/clustering.png}
+\begin{multicols}{2}
+If we cannot decide on fixed number of clusters, want a hiearchy of clusters:
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item Every data point is a cluster
+  \item Loop (until all points are in one cluster)
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Find a pair of cluster that is `nearest', merge them together
+    \item e.g. $N=2^n$ data points, no. of clusters in sequence: $N, N-1, \ldots, 1$
+  \end{itemize}
+  \item Many options to compute the distance between clusters
+  \item High space and time complexity: impractical for larger datasets
+\end{itemize}
+\includegraphics*[width=4.2cm, height=4cm]{images/computingdistance.png}
+\end{multicols}
+
+
+\subsubsubsection{Hiearchical Cluster: Applications}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Customer Segmentation:} Utilizing hierarchical clustering enables the segmentation of customers according to their purchasing behavior, preferences, or demographic data.
+  \item \textbf{Gene Expression Analysis:} The application of hierarchical clustering can aid in the analysis of gene expression data, revealing patterns or clusters of genes exhibiting similar expression profiles.
+  \item \textbf{Recommender Systems:} Hierarchical clustering serves as a valuable tool in constructing recommender systems, grouping similar users or items based on their preferences or behavior.
+  \item \textbf{Social Network Analysis:} The implementation of hierarchical clustering is beneficial for analyzing social networks, uncovering communities or groups of individuals sharing similar social connections or interests.
+\end{itemize}
+
+\subsubsection{Dimensionality Reduction}
+Many machine learning systems have data with \textbf{high-dimensional features}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textcolor{red}{Curse of dimensionality:} number of samples to learn a hypothesis class increases exponentially with the number of features
+  \item Want to reduce and remove feature that captures the \textit{least variations in data} $\Rightarrow$ identifying the `most important' concepts
+\end{itemize}
+
+\subsubsection{Singular Value Decomposition (SVD)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item $X = U\Sigma V^T$
+  \item Intuition: Action of any matrix on a vector is (rotate) $\times$ (stretch) $\times$ (rotate)
+  \item where $X$ is an $n \times m$ matrix and $m$ is the \# of samples
+  \item \textbf{Fact:} Take without loss of generality $n > m$. For any $n \times m$ rectangular real-valued matrix $X$, there exists a factorization $X = U\Sigma V^T$ called SVD
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $U$ is $n \times m$ and has $m$ \textcolor{orange}{orthonormal} columns (left singular vectors)
+    \item $\Sigma$ is $n \times m$ and has $m$ $\sigma_j \geq 0$ (singular values)
+    \item $V$ is $m \times m$ and has $m$ \textcolor{orange}{orthonormal} columns and rows (right singular vectors)
+  \end{itemize}
+  \item Always possible to order the $\sigma_j \geq 0$ from largest to smallest, which gives ordering of the corresponding singular vectors. \textbf{`Ordered by importance'}
+\end{itemize}
+\includegraphics*[width=8.5cm, height=3.5cm]{images/dimensionalityreductionviasvd.png}
+
+\subsubsubsection{Encoder-Decoder view of SVG}
+\begin{multicols}{2}
+  \includegraphics*[width=4.2cm, height=2cm]{images/encoderdecodersvd.png}
+
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item In this manner, the \textcolor{red}{r}-SVD defines an encoder-decoder structure for reduction and reconstruction of high-dimensional data
+  \item Equivalent ideas appear also in auto-encoder (AE), variational auto-encoder (VAE).
+\end{itemize}
+\end{multicols}
+
+\subsubsection{Principal Component Analysis (PCA)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item $Var(x) = E[(x - \hat{x})^2]$, $Cov(x,y) = E[(x-\hat{x})(y-\hat{y})]$
+  \item \textbf{Statistical Application} of SVD, capture components that maximize the \textit{statistical variations} of data
+  \item \textbf{Sample covariance matrix:} Given data matrix $X = (x^{(1)}, \ldots, x^{(m)})$
+  \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Compute mean over samples: $ \bar{\bm{x}} = \frac{1}{m} \sum_{i=1}^{m} \bm{x}^{(i)} $
+    \item Compute mean-centered data: $ \hat{\bm{x}}^{(i)} = \bm{x}^{(i)} - \bar{\bm{x}} $
+    \item Define data matrix $ \hat{\bm{X}} = \left( \hat{\bm{x}}^{(1)}, \dots, \hat{\bm{x}}^{(m)} \right) $
+    \item Create the covariance matrix of the data: $ \text{Cov}(\bm{X}) = \frac{1}{m} \hat{\bm{X}} \hat{\bm{X}}^\top $
+  \end{enumerate}
+  \item \textbf{Steps:}
+  \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Create the covariance matrix of the data: $Cov(\bm{X}) = \frac{1}{m} \bm{\hat{X}\hat{X}^T}$
+    \item Compute SVD on $Cov(\bm{X})$ to obtain the $U$ matrix (new basis)
+    \item Reduce to $r$ components to obtain $\hat{U}$
+  \end{enumerate}
+\end{itemize}
+
+\subsubsubsection{PCA Picking Number of Components | Retain $\geq 99\%$ of variance in data}
+\includegraphics*[width=8.5cm, height=1.5cm]{images/pickingnumberofcomponents.png}
+\framebox{\parbox{\dimexpr\linewidth-1\fboxsep-2\fboxrule}{% 
+  Solution: choose minimum \textcolor{red}{$r$} s.t. $\frac{\Sigma_{i=1}^{\textcolor{red}{r}} \sigma_i^2}{\Sigma_{i=1}^{m} \sigma_i^2} \geq 0.99$.
+  It takes a few steps to show a bound for the `closeness' of original and reconstructed data points:
+  \hl{$\frac{\Sigma_{i=1}^{m} || \hat{x}^{(i)} - \tilde{x_i}||^2}{\Sigma_{i=1}^{m} || \tilde{x}^{(i)}|| ^2} \leq 0.01$}, being $r$ most random variables with largest variance
+}}
+
+
+\subsubsubsection{PCA Drawbacks}
+Lossy compression as we do not regain 100\% of the variance (no redundancy). For data with less redundancy, the value of $k$ might be too large such that we would actually end requiring more space since decompression matrix $U_{red}$, $Z_{(i)}$ and the row means needs to be stored as wel
+
+\subsection{12. AI \& Ethics}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+  \item \textbf{Privacy and Surveillance}, \textbf{Manipulation of Behavior}, \textbf{Opacity of AI Systems}, \textbf{Bias in detection Systems}, \textbf{Automation and Automous Systems:}
+  \item \textbf{Machine Ethics:} Machine ethics is concerned with ensuring that the behavior of machines toward human users, and perhaps other machines as well, is ethically acceptable. (Anderson and Anderson 2007: 15)
+  \item \textbf{3 Laws of Robotics:}
+  \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{First Law:} A robot may not injure a human being or, through inaction, allow a human being to come to harm.
+    \item \textit{Second Law:} A robot must obey the orders given it by human beings except where such orders would conflict with the \textit{First Law}.
+    \item \textit{Third Law:} A robot must protect its own existence as long as such protection does not conflict with the \textit{First or Second Laws}.
+  \end{itemize}
+\end{itemize}
+
+
+\end{multicols*}
+\end{document}

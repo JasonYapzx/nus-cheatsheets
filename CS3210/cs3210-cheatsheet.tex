@@ -1,0 +1,3540 @@
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{listings} 
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{lmodern}
+
+\lstset{
+    tabsize=2,    
+%   rulecolor=,
+    language={c++},
+        captionpos = t,
+        basicstyle = \scriptsize\ttfamily,
+        frame=lines,
+        numbersep=5pt,
+        numbers=left,
+        numberstyle=\scriptsize,
+        backgroundcolor=\color{white},
+        columns=fixed,
+        extendedchars=false,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        frame=single,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        keywordstyle=\color[rgb]{0,0,1},
+        keywordstyle=[2]\color{gray},
+        commentstyle=\color{teal},
+        stringstyle=\color{red},
+        numberstyle=\color[rgb]{0.205, 0.142, 0.73},
+}
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.20in,left=.20in,right=.20in,bottom=.20in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+\newcommand{\subsubsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\scriptsize\bfseries}}
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand\rmdefault{\sfdefault}
+\definecolor{mathblue}{cmyk}{1,.72,0,.38}
+\everymath\expandafter{\the\everymath \color{mathblue}}
+
+\title{CS3210-cheatsheet}
+% -----------------------------------------------------------------------
+
+\begin{document}
+
+\raggedright
+\scriptsize
+
+
+\begin{multicols*}{3}
+\setlength{\premulticols}{0.1pt}
+\setlength{\postmulticols}{0.1pt}
+\setlength{\multicolsep}{0.1pt}
+\setlength{\columnsep}{0.1pt}
+\begin{tiny}
+    \small{\textbf{CS3210 Cheatsheet AY24/25 || \href{https://github.com/JasonYapzx}{@JasonYapzx}}} \\
+\end{tiny}
+
+
+\subsection{\underline{1. Parallel Computing}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Simultaneous use} of \textbf{multiple processing units} to solve problem fast / larger problem
+    \item \textbf{Processing units:}
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Single processor with multi-core
+        \item Single computer with multi-processors
+        \item Number of computers connected by a network
+        \item Combinations of above
+    \end{enumerate}
+    \item \textbf{von Neumann Model}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Processor} performs instructions
+        \item \textbf{Memory} stores instructions and data in cells/addresses
+        \item \textbf{Control Scheme} fetch instructions from memory, shuttles data btw memory/processor
+        \item \textbf{Memory Wall} disparity between processor ($< 1\times 10^{-9}$(nano) sec) vs memory speed ($100-1,000$ nano seconds) 
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{How}
+\begin{multicols*}{1}
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Problem divided into $m$ discrete parts (tasks) solved concurrently
+        \item Each part further broken down to a series of instructions ($i$)
+        \item Instructions from each part execute in parallel on different processing units ($p$)
+    \end{enumerate}
+    \columnbreak
+    \includegraphics*[width=2.8cm, height=2.8cm]{images/basicsofparallelcomputing.png}
+\end{multicols*}
+
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Decomposition:} Potential parallelism of app $\rightarrow$ \textit{how it should be split} into tasks | Size of tasks is called \textit{granularity} 
+    \item \textbf{Scheduling}: Assignment of tasks to processes or threads
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Manaully defined? Static? Dynamic? Execution Order?
+    \end{itemize}
+    \item \textbf{Mapping}: Assignment of processes/threads to physical cores/processors for execution
+    \item Tasks may depend on each other resulting in \textit{data} or \textit{control dependencies} $\rightarrow$ \textbf{impose execution order} of parallel tasks
+\end{itemize}
+
+\subsubsubsection{Dependences and Coordination}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Dependences among tasks impose constraints on scheduling
+    \item Correctness: processes/threads need \textit{synchronization}/\textit{coordination}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item depends on information exchanges between processes and threads $\rightarrow$ depends on the hardware memory organization
+    \end{itemize}
+    \item Memory organizations: shared-memory (threads) and distributed-memory (processes)
+\end{itemize}
+
+\subsubsection*{Concurrency vs Parallelism}
+\begin{multicols*}{2}
+    \textbf{Concurrency}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $> 1$ tasks start/run/complete in overlapping time period
+        \item Might not be running (exec on CPU) \textbf{at the same instant}
+        \item $> 1$ excution flows make progress by \textbf{interleaving} executions/exec instructions
+    \end{itemize}
+    \textbf{Parallelism}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $> 1$ tasks can run (execute) simultaneously \textbf{at the same time}
+        \item Tasks \underline{NOT ONLY} makes progress \textbf{\underline{AND}} execute simultaneously
+    \end{itemize}
+\end{multicols*}
+
+\subsubsection*{Parallel Performance}
+\textbf{Execution Time} vs \textbf{Throughput} 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Throughput:} (amt of computation observed in a specific amt time)
+    \item Parallel Exec Time = Computation Time + Parallization Overheads
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Overheads: 
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item forking to distribute tasks/joining to combine results
+            \item information exchange or synchronization OR idle time
+        \end{itemize}
+        \item If computation is tiny, overhead $>>$ performance optimization
+        \item Helpful only for \textbf{LONG} and \textbf{CONSISTENT} computations
+    \end{itemize}
+\end{itemize}
+
+\subsection*{\underline{2. Processes and Threads}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item A \textbf{Process} is an instance of a program in execution, identified by a \textbf{Process ID (PID)}.
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Includes: executable program, global data, stack, heap, and OS resources like open files and network connections.
+        \item Own address space, providing exclusive access to its data.
+        \item Communication between processes requires explicit mechanisms.
+    \end{itemize}
+    \item A \textbf{Thread} is an extension of the process model:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Process consist of multiple independent control flows (threads)
+        \item Threads share the address space of the process, allowing shared-memory architecture.
+        \item Each thread has its own \textbf{Thread ID}, Program Counter (PC), Stack Pointer (SP), and register values.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Process Interaction with OS}
+\begin{multicols*}{2}
+    \textbf{Exceptions}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Executing a machine level instruction can cause exception
+        \item For example: Overflow, Underflow, Division by Zero, Illegal memory address, Mis-aligned memory access
+        \item Synchronous: due to program exec, \textbf{exception handler}
+    \end{itemize}
+    \textbf{Interrupts}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item External events can interrupt the execution of a program
+        \item Usually hardware related: Timer, Mouse Movement, Keyboard Pressed etc
+        \item Asynchronous: occurs independetly of program exec, \textbf{interrupt handler}
+    \end{itemize}
+\end{multicols*}
+
+\subsubsubsection*{User Thread}
+Thread is implemented as a \textbf{user library}. Kernel is \textbf{NOT AWARE} of the threads in a process. \\
+ADVANTAGES: Fast Context Switching \\ 
+DISADVANTAGES:
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item OS unaware of threads, scheduling performed at process level
+    \item One thread blocked $\rightarrow$ Process blocked $\rightarrow$ all threads blocked, cannot exploit multiple CPU
+\end{itemize}
+
+\subsubsubsection*{Kernel Thread}
+Thread implemented in OS, thread operations handled as system calls. \\
+
+ADVANTAGES
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Kernel can schedule on thread levels: More than 1 thread in the same process can run simultaneously on multiple CPUs
+\end{itemize}
+
+DISADVANTAGES
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Thread operations are now a syscall: slower, more resource intensive. Less flexible: Used by all multi-threaded processes
+\end{itemize}
+
+\subsubsubsection*{Mapping Strategies}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Many-to-One:} All user-level threads $\rightarrow$ one process, \underline{thread library responible for scheduling} user-level threads (executed by same kernel thread)
+    \item \textbf{One-to-One:} User-level thread $\rightarrow$ exactly 1 kernel thread, no library scheduler. OS responsible for scheduling and mapping kernel threads (p-threads)
+    \item \textbf{Many-to-Many:} Library scheduler assigns user-level threads $\rightarrow$ given set of kernel threads. Kernel scheduler maps kernel threads to available execution resource, at different points, user thread $\rightarrow$ different kernel thread
+\end{itemize}
+
+\subsubsection{\underline{2.1 Synchronisation}}
+\subsubsubsection{Race Condition}
+Multiple execution paths finish in different order than expected, \textbf{critical} race conditions cause invalid execution $\rightarrow$ happens when processes/threads depend on shared state
+\subsubsubsection{Critical Section}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Protect parts of program where shared resource is accessed to avoid concurrent access.
+    \item Cannot be entered by $> 1$ process/thread at a time
+    \item Others are suspending until first leaves the section
+\end{itemize}
+\subsubsubsection{Data Race}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item 2 concurrent processes/threads access \textit{shared resource(mem location)} without any \textbf{protection}
+    \item AND at least 1 thread modifies the shared resource
+\end{itemize}
+
+\subsubsection*{Mechanisms}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Locks:} \verb|acquire()|, \verb|release()|
+    \item \textbf{Semaphores:} Integers that support \verb|Semaphore::Wait()|, \verb|Semaphore::Signal()| to decrement and increment respectively $\rightarrow$ value will always be $\geq 0$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Mutex} semaphore: binary, single access to resource \verb|N = 1|
+        \item \textbf{Counting} semaphore: multiple threads can pass based on count
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Deadlock}
+Deadlock exists among a set of processes if every process is waiting for an event that can be caused only by another process in the set. Conditions for deadlock (must hold simultaneously):
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Mutex: $\geq 1$ resource held in non-sharable mode
+    \item Hold and wait: one process holding 1 resource, waiting for another
+    \item No pre-emption: Resources cannot be pre-empted (critical sections aborted externally)
+    \item Circular wait: Processes \verb|P1, P2 P3|, \verb|P1| waiting for \verb|P2|, \verb|P2| $\rightarrow$ \verb|P3| ...
+\end{itemize}
+
+\subsubsection*{Starvation}
+Starvation is a situation where a process is prevented from making \textit{progress} because some other process has the resource it requires
+
+\subsubsection*{Livelock}
+The states of the processes involved in the livelock constantly change with regard to one another, none progressing
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Special case of resource starvation, specific thread not progressing
+\end{itemize}
+
+\subsubsubsection*{Classic Synchronization Problems}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Producer-Consumer Problem:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Infinite Buffer:} The producer can always add items to the buffer without concern for capacity.
+        \item \textbf{Finite Buffer:} The producer must wait if the buffer is full, and the consumer must wait if the buffer is empty.
+        \item \textbf{Solution:} Use semaphores to manage buffer availability and ensure mutual exclusion between producer and consumer operations.
+    \end{itemize}
+    \item \textbf{Readers-Writers Problem:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Multiple readers can access shared data simultaneously, but writers require exclusive access to modify the data.
+        \item \textbf{Solution:} Implement a turnstile mechanism using semaphores to prioritize writer access when necessary, while still allowing concurrent reader access.
+    \end{itemize}
+    \item \textbf{Dining Philosophers Problem:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Philosophers must alternately think and eat. Each philosopher needs two forks to eat, but there are fewer forks than philosophers, leading to potential deadlock or starvation.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{\underline{3. Parallel Computing Architectures}}
+\subsubsection*{Bit Level Parallelism}
+Increasing word size, size of architecture $\rightarrow$ process more bits at the same time
+\begin{multicols*}{2}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Unit of transfer between processor, memory
+    \item Memory address space capacity
+    \item Integer size
+    \item Single precision floating point number size
+\end{itemize}
+\end{multicols*}
+
+\subsubsection*{Instruction Level Parallelism}
+\subsubsubsection{Pipelining}
+\begin{multicols*}{2}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Split instruction execution into multiple stages: 
+    \item Allow multiple instructions to occupy different stages in same clock cycle
+    \item Number of pipeline stages == Maximum achievable speedup
+    \item \textbf{Disadvantages}:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Independence, Bubbling, Hazards: data dependencies/control flow
+        \item How to solve? Speculation, Out-of-order execution (read-after-write)
+    \end{itemize}
+\end{itemize}
+\end{multicols*}
+
+\subsubsubsection{Superscalar}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Duplicate pipelines allow multiple instr. to pass through same stage
+    \item Scheduling is challenging (decide which instructions executed tgt)
+    \item Dynamic (hardware decision) vs Static (compiler decision)
+    \item \textbf{Disadvantages}: Structural hazards
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item How to solve? Convert cycles-per-instructions (CPI) to instructions-per-cycle (IPC)
+    \end{itemize}
+\end{itemize}
+
+\includegraphics*[width=4.2cm, height=2cm]{images/pipelining.PNG}
+\includegraphics*[width=4.2cm, height=2cm]{images/superscalar.PNG}
+
+\subsubsubsection{Pipelined \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space Superscalar}
+\begin{multicols*}{2}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Determine instr. to run next
+    \item Execution unit: performs operation described by instr.
+    \item Registers: store val of variables used as I/Oputs to operations
+\end{enumerate}
+
+\columnbreak
+
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Processor automatically finds independent instr. in instr. seq. and execute them in parallel on execution units
+    \item \textbf{Instructions come from same execution flow} (thread)
+\end{enumerate}
+\end{multicols*}
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{% 
+    $\star$ Instructions came from same execution flow, more instr. ran in parallel, requires \textbf{larger data cache}. \\
+    $\star$ \textbf{Out-of-order control} logic unit extract instr. that can be ran tgt \\
+    $\star$ \textbf{Fancy branch predictor} to guess which branch to exec. \\
+    $\star$ \textbf{Memory pre-fetcher} brings data from memory into caches early to reduce overall execution time
+}}
+
+\includegraphics*[width=8.5cm, height=3cm]{images/pipeliningvssuperscalar.PNG}
+
+\subsubsubsection{SIMD | Single Instruction, Multiple data}
+Add more ALUs to increase compute capabilitys. Same instruction broadcasted to and executed by ALL \textbf{ALUs}.
+\vspace{-1.2\baselineskip}
+\begin{tabular}{@{}p{0.55\linewidth}@{} p{0.3\linewidth}@{}}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Suitable for processing sets of data for the same instruction.
+        \item Better than superscalar as there might not be enough Instruction Level Parallelism, but math operations are long (compute heavy).
+        \item Same instructions processes multiple times with \textbf{different data}
+        \item Singular execution Context (registers/program counter/stack ptrs)
+    \end{itemize}
+    &
+    \begin{itemize}[topsep=-20pt,noitemsep,wide=0pt,leftmargin=12pt]
+        \item \includegraphics*[width=2.3cm, height=2.8cm]{images/simd.PNG}
+    \end{itemize}
+\end{tabular}
+
+\subsubsection*{Thread Level Parallelism}
+Limited ILP as typical programs only 2-3 instr. executed in parallel due to data/control dependencies.
+We want processor to \textbf{execute threads in parallel}
+
+\subsubsubsection{SMT | Simultaneous Multi-Threading}
+Provide hardware support for multiple `thread contexts'
+\vspace{-1.2\baselineskip}
+\begin{tabular}{@{}p{0.5\linewidth}@{} p{0.4\linewidth}@{}}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Run one scalr instruction per clock from one of the hardware threads
+        \item 2 Logical cores $\rightarrow 2$ execution contexts, stores PC, Register info
+        \item Unlike \textit{superscalar}, only store value of variables used for I/O from a \textbf{singular execution flow}
+        \item a.k.a \textbf{hyper-threading} in Intel Processors
+    \end{itemize}
+    &
+    \begin{itemize}[topsep=-20pt,noitemsep,wide=0pt,leftmargin=-24pt]
+        \item \includegraphics*[width=3cm, height=2.8cm]{images/smt.PNG}
+    \end{itemize}
+\end{tabular}
+
+\subsubsection*{Processor Level Parallelism (Multiprocessing)}
+Add more cores to processor, application should have \textbf{multiple execution flows}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Each processor/thread has independent context, can be mapped to multiple processor cores
+\end{itemize}
+
+\subsubsection*{Flynn's Parallel Architecture Taxonomy}
+Commonly used taxonomy of parallel architecture
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Instruction Stream}: single exec. flow, e.g. Program Counter
+    \item \textbf{Data Stream}: data being manipulated by instruction stream
+\end{itemize}
+
+\subsubsubsection*{Single Instruction Single Data (SISD)}
+Single instruction stream executed, each instruction work on single data $\rightarrow$ most uniprocessors fall into this category
+
+\subsubsubsection*{Single Instruction Multiple Data (SIMD)}
+Each instruction works on multiple data from a singular stream of instructions (e.g. 1 PC)
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Popular model for supercomputer during 1980s, exploiting \textbf{data parallelism}, commonly known as vector processor
+    \item Not good for divergent executions
+    \item Data Parallel Architectures: ACX instructions, GPGPUs
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{AVX:} Intrinsic functions operates on vectors of 4 64-bit values (e.g. vector of 4 doubles)
+    \end{itemize}
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=2.5cm]{images/sisdsimd.PNG}
+
+\subsubsubsection{Original Program $\rightarrow$ Vector Program using AVX intrinsics}
+\textbf{Original}: processes 1 array element using scalr instr. on scalar registers (e.g. 32 bit floats)\\ 
+\textbf{Vector Program}:
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Intrinsic functions operate on vectors of 8 32-bit values (vector of floats)
+    \item Proceses eight array elements simultaneously using vector instructions on 256-bit vector registers
+\end{itemize}
+\includegraphics*[width=8.5cm, height=4cm]{images/originvectorintrinsic.PNG}
+\includegraphics*[width=8.5cm, height=4cm]{images/originalvectorintrinsic2.PNG}
+
+\subsubsubsection*{Multiple Instruction Single Data (MISD)}
+Multiple instr. streams, all instructions work on same data at any time $\rightarrow$ \textbf{NO} actual implementation
+
+\subsubsubsection*{Multiple Instruction Multiple Data (MIMD)}
+Each PU fetch its own instruction, and operates its own data
+
+\includegraphics*[width=8.5cm, height=2.5cm]{images/misdmimd.PNG}
+
+\subsubsubsection*{Variant | SIMD + MIMD (NVDIA GPUs)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Set of threads executing the same code (effectively SIMD)
+    \item Multiple set of threads executing in parallel (effectively MIMD)
+\end{itemize}
+
+\subsubsection*{\underline{3.1 Multicore Architecture}}
+\subsubsubsection{Hierarchical Design}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Multiple cores share multiple cache, cache size $\uparrow$ from leaves to root
+    \item Each core can have separate L1 cache and share their L2 cache
+    \item All cores share common external memory
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4cm]{images/hierarchalarchitecture.PNG}
+
+\subsubsubsection{Pipeline Design}
+\begin{tabular}{@{}p{0.64\linewidth}@{} p{0.27\linewidth}@{}}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Elements processed by multiple execution cores in \textbf{pipelined way}
+        \item Useful if same computation steps have to be applied to a long sequence of data elements
+        \item e.g. processors used in routers / graphics processors
+    \end{itemize}
+    &
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt,leftmargin=0pt]
+        \item \includegraphics*[width=2cm, height=2cm]{images/pipelinedarchitecture.PNG}
+    \end{itemize}
+\end{tabular}
+
+\vspace{-1.4\baselineskip}
+\subsubsubsection{Network-Based Design}
+Cores, local caches/memories connected by \textbf{interconnection network}
+
+\includegraphics*[width=8.5cm, height=2.7cm]{images/networkbasedarchitecture.PNG}
+
+\subsubsubsection{Future Trends}
+Efficient on-chip interconnection, Network on Chip (NoC)
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Enough bandwidth for data transfers between cores
+    \item Scalable and Robust to tolerate failures
+    \item Efficient energy management
+    \item Reduce memory access time
+\end{itemize}
+
+\subsubsection*{\underline{3.2 Memory Organization}}
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{% 
+    $\star$ $\downarrow$ memory fetches and reuse data previously loaded by same thread\\
+    $\star$ Favor performing additional compute instead of storing / reload values $\rightarrow$ \textbf{Programs must access memory infrequently to utilize modern processors efficiently} \\ 
+    \includegraphics*[width=8.5cm, height=3cm]{images/memoryorg.PNG}
+}}
+
+Components in a uniprocessor: Core $\rightarrow \geq 1$ or more levels of caches $\rightarrow$ Memory module $\rightarrow$ Other (e.g. I/O) 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Memory Latency}: Amt of time for memory request (\verb|load|, \verb|store|) from processor to be serviced by memory system
+    \item \textbf{Memory Bandwidth}: Rate at which memory system can provide data to processor
+\end{itemize}
+
+\subsubsubsection{Distributed Memory}
+\begin{multicols*}{2}
+    Each node is an \textit{independent unit}, with processor, memory etc. 
+    \vspace*{0.2cm}    
+
+    Physically distribute memory module, memory in a node is private. Requires explicit communication between 2 nodes to `share memory'
+
+    \columnbreak
+    \includegraphics*[width=4.2cm, height=2.5cm]{images/distributedmemory.PNG}
+\end{multicols*}
+
+\subsubsubsection{Shared Memory System}
+\vspace{-1.2\baselineskip}
+\begin{tabular}{@{}@{}p{0.45\linewidth}@{} p{0.4\linewidth}@{}}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Parallel programs / threads access memory through shared memory provider
+        \item Program unaware of actual hardware memory architecture
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Cache coherence \& memory consistency
+        \end{itemize}
+    \end{itemize}
+    &
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt,leftmargin=0pt]
+        \item \includegraphics*[width=3cm, height=2.5cm]{images/sharememorysystem.PNG}
+    \end{itemize}
+\end{tabular}
+
+\subsubsubsection{Cache Coherence}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Multiple choices of same data exists on different caches
+    \item Local update by processing unit $\rightarrow$ Other PUs \textbf{should not see unchanged data}
+\end{itemize}
+
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Factors to differentiate \textbf{shared memory systems}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Processor to Memory Delay (UMA / NUMA)
+        \item Delay to memory is uniform
+    \end{itemize}
+    \item Presence of local cache with cache coherence protocol (CC / NCC)
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Same shared variables may exist in multiple caches
+        \item Hardware ensures correctness via cache coherence protocol
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Uniform Memory Access (Time) UMA}
+\begin{multicols*}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Latency of accessing main memory same for every processor
+        \item Suitable for \textbf{small number} of PU due to \textit{contention}
+    \end{itemize}
+    \columnbreak
+    \includegraphics*[width=4cm, height=1.5cm]{images/uma.PNG}
+\end{multicols*}
+
+
+\subsubsubsection{Non-Uniform Memory Access NUMA}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Physically distributed memory of all processing units combined to form a global shared-memory address space: \textbf{distributed memory}
+    \item Access local memory faster than remote memory for PU
+\end{itemize}
+\includegraphics*[width=8.5cm, height=2cm]{images/numa.PNG}
+
+\subsubsubsection{ccNUMA}
+\begin{multicols*}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Cache Coherent Non-Uniform Memory Access
+        \item Each node has cache memory to reduce \textit{contention}
+    \end{itemize}
+    \columnbreak
+    \includegraphics*[width=4cm, height=1.5cm]{images/ccnuma.PNG}
+\end{multicols*}
+
+\subsubsubsection{COMA | Cache Only Memory Architecture}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Each memory block works as cache memory
+    \item Data migrates dynamically and continuously according to the cache coherence scheme
+\end{itemize}
+
+\subsubsubsection{ADVANTAGES \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space \space DISADVANTAGES}
+\begin{multicols*}{2}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item No need to partition code/data
+    \item No need to physically move data among processors $\rightarrow$ efficient communication
+\end{enumerate}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Special synchronization constructs required
+    \item Lack of scalability due to \textit{contention}
+\end{enumerate}
+\end{multicols*}
+
+\subsection*{\underline{4. Parallel Programming Models}}
+\subsubsection*{Types of Parallelism}
+\subsubsubsection{Data Parallelism}
+\textbf{Partition data} used to solve problem amongst PU, each PU carries out \textit{similar operations} on its part of data
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textcolor{teal}{Same operation} applied to \textcolor{red}{different elements}
+    \item If operations independent, elements can be distributed among cores for parallel execution (Loop Parallelism)
+    \item Executed in arbitrary order and parallel in different cores
+\end{itemize}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Parallel For in \textcolor{red}{OpenMP}: OpenMP API, multi-platform shared-memory multi-processing programming
+        \includegraphics*[width=8cm, height=2.3cm]{images/openmp.PNG}
+    \item Data Parallelism on MIMD: \textcolor{red}{SPMD} (Single Program Multi Data)
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+\item One parallel program executed by all cores in parallel (shared / distrbuted address space) e.g. Scalar prroduct of  $x \cdot y$ on $p$ PU
+\begin{lstlisting}[basicstyle = \scriptsize\ttfamily]
+local_size = size/p;
+local_lower = me * local_size; // me = PU Index 
+local_upper = (me+1) * local_size - 1;
+local_sum = 0.0
+for (i=local_lower; i<local_upper; i++) {
+    local_sum += x[i] * y[i];
+}
+Reduce(&local_sum, &global_sum, 0, SUM);
+\end{lstlisting}
+    \end{itemize}
+\end{enumerate}
+
+
+\subsubsubsection{Task (Functional) Parallelism} 
+\textbf{Partition tasks} in solving problem amongst PU (singular/series of statements, loops or funcction calls)
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Further Decomposition:} \textcolor{teal}{single task} executed sequentially by 1 PU, or in parallel by multiple PU
+    \item \textbf{Task Dependence Graph:} visualize/evaluate decomp. strategy
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Directed Acyclic Graph}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Node:} Task, node value is expected execution time
+            \item \textbf{Edge:} \textit{control dependency} between tasks
+        \end{itemize}
+        \item Properties:
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Critical path length: Maximum (slowest) completion time
+            \item Degree of concurrency: $\frac{Total \ Work}{Critical \ Path \ length}$
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item Indication of amount of work that can be done concurrently
+            \end{itemize}
+            \includegraphics*[width=7.4cm, height=2.5cm]{images/criticalpathlength.PNG}
+        \end{itemize}
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Models of Coordination}
+Any type of coordination can be implemented in any hardware, even those that do not match the architecture
+\subsubsubsection{Shared Address Space}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Communication Abstraction
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Tasks communicate by read/write to/from shared variables
+        \item Ensure mutual exclusion via locks, logical extension of uniprocessor programming
+    \end{itemize}
+    \item Requires hardware support to implement efficiently
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Any processor can load store from any address | contention
+        \item Even with NUMA costly to scale
+    \end{itemize}
+    \item Matches shared memory systems | UMA, NUMA
+\end{itemize}
+
+\subsubsubsection{Data Parallel}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item SIMD, Vector processors $\rightarrow$ same operation on each element of array
+    \item Basic Structure: \textcolor{red}{map function onto large collection of data}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Functional: size-effect-free execution
+        \item \textbf{No communication} among distinct function invocations
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Allows invocations to be scheduled in parallel
+        \end{itemize}
+        \item Stream programming model
+    \end{itemize}
+    \item Modern performance-oriented data-parallel languages do not enforce this structure anymore
+\end{itemize}
+
+\subsubsubsection{Message Passing}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Tasks operate within own private address space, communicate by \textcolor{red}{explicitly sending/receiving messages}
+    \item e.g. Message Passing Interface (MPI)
+    \item Hardware does not implement system-wide loads/stores
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item No shared memory within this entire system
+        \item Connect commodity systems tgt to form large parallel machine
+    \end{itemize}
+    \item Matches distributed memory system $\rightarrow$ clusters/supercomputers etc.
+\end{itemize}
+
+\subsubsubsection{Correspondence with Hardward Implementations}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Message-passing abstractions in shared memory system
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Send Message $\rightarrow$ copy data into message library buffers
+        \item Receive Message $\rightarrow$ copying data from this library buffers
+    \end{itemize}
+    \item Possible to implement shared address space abstractions that do not support the hardware
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Less efficient, modify shared variable: send message to invalidate all pages (memory)
+        \item Reading shared variable: page-fault handler to issue appropriate network requests (messages)
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Program Parallization}
+Granularity of computation (from Fine-Grain $\rightarrow$ Coarse-Grain)
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item sequence of \textcolor{purple}{instructions}
+    \item sequence of \textcolor{purple}{statements} where each statement consists of several instructions
+    \item \textcolor{purple}{function / method} which consists of several statements
+\end{enumerate}
+
+\subsubsection*{Foster's Design Methodology}
+\subsubsubsection{1. Partitioning}
+Divide \textcolor{red}{computation} \& \textbf{data} into independent pieces to $\uparrow$ parallelism
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Data Centeric | Domain Decomposition}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Divide data into pieces of approximately equal size
+        \item Determine how to associate computations with data
+    \end{itemize}
+    \item \textbf{Computation Centric | Functional Decomposition}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Divide computation into pieces (tasks)
+        \item Determine how to associate data with computations
+    \end{itemize}
+    \item \textbf{Partitioning Rules of Thumb}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $10$x more primitive tasks than cores in target computer
+        \item Minimize redudant computations and redundant data store
+        \item Primitive tasks roughly same size (keep tasks finishing tgt)
+        \item Number of tasks an increasing function of problem size
+    \end{itemize}
+\end{enumerate}
+
+\subsubsubsection{2. Communication (Coordination)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Usually intended to execute in parallel, but not executed independently $\rightarrow$ determine data passed among tasks
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Local communication}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Tasks needs data from small number of other tasks (neighbours)
+            \item Create channels illustrating data flow
+            \item e.g. 2D grid, require 5 values from neighbour to update each element
+        \end{itemize}
+        \item \textbf{Global communication}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Significant number of tasks contribute data to perform computation
+            \item Do not create channels for them early in design
+            \item e.g. Unoptimized sum $N$ numbers distributed amongst $N$ tasks (centralised - no distribution of computation/communication and sequential - no overlap)
+        \end{itemize}
+        \item Ideally, distribute and overlap computation and communication
+        \item \textbf{Communication Rules of Thumb}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Operations balanced among tasks
+            \item Each tasks communicates with only small group of neighbours
+            \item Tasks can perform communication in parallel
+            \item Overlap computation with computation
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{3. Agglomeration}
+Combine tasks into larger tasks $\rightarrow$ Number of tasks $\geq$ number of cores
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Goals:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Improve performance (cost of task creation + communication)
+        \item Maintain scalability of program
+        \item Simplify programming
+    \end{itemize}
+    \item Motivation:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Eliminate communication between primitive tasks agglomerated into consolidated tasks
+        \item e.g. combined groups of sending/receiving tasks
+    \end{itemize}
+    \item \textbf{Agglomeration Rules of Thumb}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Locality of parallel program increased
+        \item Number of tasks increases with problem size
+        \item Number of tasks suitable for likely larger systems
+        \item Tradeoff between agglomeration and code modification costs is reasonable
+    \end{itemize}
+    \includegraphics*[width=7.4cm, height=2.5cm]{images/agglomeration.PNG}
+\end{itemize}
+
+\subsubsubsection{4. Mapping}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Assignment of tasks to execution units
+    \item Conflicting Goals
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Maximize processor utilization:} place tasks on different PU to $\uparrow$ parallelism
+        \item \textbf{Minimize inter-processor communication:} place tasks that communicate frequently on same PU to $uparrow$ locality
+    \end{itemize}
+    \item Performed by: OS for centralized multiprocessor, or user for distrbuted memory systems
+    \item \textbf{Mapping Rules of Thumb}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Finding optimal mapping is NP hard (heuristic needed)
+        \item Consider design based on 1 task/core and multiple tasks/core
+        \item Evaluate static/dynamic task allocation
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Dynamic tasks allocation chosen, task allocator should not be bottleneck to performance
+            \item Static tasks allocation chosen ratio of tasks to cores is $\geq 10:1$
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Automatic Parallization}
+Parallizing compilers perform decomposition + scheduling, drawbacks:
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Dependence analysis difficult for pointer-based computations / indirect addressing
+    \item Execution time of function calls/loops with unknown bounds is difficult to predict at compile time
+\end{itemize}
+
+\subsubsubsection{Functional Programming Languages}
+Describe computations of program as evaluation of mathematical functions without side-effects
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textcolor{teal}{Advantages}: new langugage constructs not necessary to enable parallel execution
+    \item \textcolor{red}{Challenges}: Extract parallelism at right level of recursion
+\end{itemize}
+
+\subsection*{Parallel Programming Patterns}
+| design patterns in SWE, not mutually exclusive $\rightarrow$ best match
+
+\subsubsection*{Fork-Join}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Task $T$ creates child tasks
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Children runs in parallel, independent of one another
+        \item Children execute at same time / different program part / different function
+        \item Children might join parent at different time
+    \end{itemize}
+    \item \textbf{Implementation:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Processes, threads and any parallel paradigm using this concepts
+        \item Independent \textbf{execution flows}
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Parbegin-Parend}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Programmer specifies sequence of statements (fn calls) to be executed by set of cores in parallel
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Executing thread a \textbf{parbegin-parend construct}, a \textcolor{red}{set} of threads created
+        \item Statement of construct assigned to these threads for execution
+    \end{itemize}
+    \item Statement following \textbf{parbegin-parend construct} only executed after \textit{all} these threads finished their work
+    \item Like fork-join but \textbf{\underline{all forks and joins}} are done at same time
+    \item \textbf{Implementation:} 
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item language construct like OpenMP/compiler directives
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{SIMD | Pattern}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Single \textcolor{red}{instructions}} executed \textcolor{red}{synchronously} diff threads, diff data
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Similar to parbegin-parend but threads execute synchronously
+    \end{itemize}
+    \item \textbf{Implementation:} AVX/SSE instruction on Intel processor
+\end{itemize}
+
+\subsubsection*{SPMD}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Same \textcolor{red}{program}} executed on different cores, operate on diff data
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Different threads execute different parts of parallel program
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Differnet speeds of executing coress / Control statements of program (\verb|if| statements)
+        \end{itemize}
+        \item Similar to parbegin-parend, SPMD preferred name when we do not follow the pattern
+    \end{itemize}
+    \item No implicit synchronization, can be acheived by using explicit synchronization operations
+    \item \textbf{Implementation:} Programs running on GPGPU
+\end{itemize}
+
+\subsubsection*{Master-Work (previously Master-Slave)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Single program (master) controls execution of program
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Master executes main function, assigns work to worker threads
+    \end{itemize}
+    \item \textbf{\textcolor{red}{Master Task:}} generally responsible for coordination and performs initializations, timings and outputs operations
+    \item \textbf{Worker task:} wait from instructions from master tasks
+\end{itemize}
+
+\subsubsection*{Task (Work) Pools}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Common data structure, threads can access to retrieve tasks for execution
+    \item Number of threads is fixed
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Threads created statically by main thread
+        \item Tasks finished, worker thread retrieves another task from pool
+        \item Work not pre-allocated to the worker threads; instead new task is retrieved from pool by worker
+    \end{itemize}
+    \item During processing of task, thread can generate new tasks and insert them into the pool
+    \item Access to task pool must be \textbf{synchronised} to avoid race conditions
+    \item Execution of parallel programs completed when
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Task pool empty \& each thread terminated processing of last task
+        \item For uneven tasks, to ensure (fairly) even distribution from tasks
+    \end{itemize}
+    \item \textcolor{teal}{Advantages:} 
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Useful for adaptive/irregular applications, generate tasks dynamically
+        \item Overhead for thread creation independent of problem size/number of tasks
+    \end{itemize}
+    \item \textcolor{red}{Disadvantages:} Fine-grained tasks, overhead of retrievaland insertion of tasks becomes important
+\end{itemize}
+
+\subsubsection*{Producer-Consumer}
+Producer threads produce data $\rightarrow$ used as inputs by consumer threads
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Synchronisation has to be used to ensure correct coordination between producer and consumer threads
+\end{itemize}
+
+\subsubsection*{Pipelining}
+Data in application partitioned into stream of data elements, flow into pipeline stages sequentially $\rightarrow$ \textbf{perform different processing steps}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Form of functional parallism: \textbf{Stream paralleism}
+\end{itemize}
+
+\subsection*{\underline{5. Performance of Parallel Systems}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Users:} reduced response time (between start and termination of program)
+    \item \textbf{Computer managers:} high \textit{throughput}, avg number of work units/unit time
+\end{itemize}
+
+\subsubsection*{Sequential Programs}
+\subsubsubsection{Response times in \textcolor{red}{Sequential Programs}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{wall-clock time} | includes the following:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{\textcolor{teal}{User CPU}}: Time CPU spends executing program
+        \item \textit{\textcolor{teal}{System CPU}}: time CPU spends executing OS routines
+        \item \textit{\textcolor{red}{Waiting}}: I/O waiting time, execution of other programs (time sharing)
+        \item \textit{Considerations:}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item waiting time | depends on load of computer system
+            \item system CPU time | depends on the OS implementation
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\textbf{\textcolor{teal}{5.1 User CPU}}: Time CPU spends executing program
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item translation of program statements by compiler into instructions + execution time
+    $\Rightarrow$ \noindent\fbox{{\textwidth-0pt}$Time_{user}(A) = N_{cycle}(A) \times Time_{cycle}$}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $Time_{user}(A)$ | User CPU time of program A
+        \item $N_{cycle}(A)$ | Total no. of CPU cycles needed for all instructions
+        \item $Time_{cycle}$ | Cycle time of CPU (clock cycle $= \frac{1}{clock \ rate})$
+    \end{itemize}
+    \item instructions may have \textcolor{purple}{different execution times}, instructions $l_1, \ldots , l_n$ $\Rightarrow$ \noindent\fbox{{\textwidth-0pt}$N_{cycle}(A) = \Sigma_{i=1}^{n} n_i(A) \times CPI_i$}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $n_i(A)$ | number of instructions of type $I_i$
+        \item $CPI_i$ | avg. no. of CPU cycles needed for instructions of type $I_i$
+    \end{itemize}
+    \item $\Rightarrow$ \noindent\fbox{{\textwidth-0pt}$Time_{user}(A) = N_{instr}(A) \times CPI(A) \times Time_{cycle}$}
+    \begin{itemize}
+        \item $CPI(A)$ | depend on \textcolor{red}{internal org. of CPU, memory, compiler}
+        \item $N_{instr}(A)$ | total no. instr exec, depend on \textcolor{red}{architecture/compiler}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{5.1.1. Refinement with Memory Access Time}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Include memory access time to user time $\Rightarrow$ \noindent\fbox{{\textwidth-0pt}$Time_{user}(A) = (N_{cycle}(A) + \textcolor{red}{N_{mm\_cycle}(A)}) \times Time_{cycle}$}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $N_{mm\_cycle}(A)$ | no. of additional clock cycles due to memory access
+        \item One level-cache: $N_{mm\_cycle}(A) = N_{read\_cycle}(A) + N_{write\_cycle}(A)$
+        \item $N_{read\_cycle}(A) = N_{read\_op}(A) \times R_{read\_miss}(A) \times N_{miss\_cycles}(A)$
+    \end{itemize}
+    \framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+        $Time_{user}(A) = (N_{instr}(A) \times CPI(A)$ \\ 
+        $ + \textcolor{red}{N_{rw\_op}(A) \times R_{miss}(A) \times N_{miss\_cycles}}) \times Time_{cycle}$
+    }}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $N_{rw\_op}(A)$ | total no. of read/write ops
+        \item $R_{miss}(A)$ | (read and write) miss rate
+        \item $N_{miss\_cycles}$ | no. of add. cycles needed for loading new cache line
+    \end{itemize}    
+\end{itemize}
+
+\subsubsubsection*{5.1.2 Average Memory Access Time}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+        $T_{read\_access}(A) = T_{read\_hit} + R_{read\_miss}(A) \times T_{read\_miss}$
+    }}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $T_{read\_access}(A)$ | avg. read access time of program A
+        \item $T_{read\_hit}$ | time for read access to cache regardless of hit/miss
+        \item $R_{read\_miss}(A)$ | cache miss rate of program A
+        \item $T_{read\_miss}$ | read miss penalty time
+    \end{itemize}
+    \item applicable to multiple level of cache/ virtual memory
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item 1st Level: 
+        \framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+            $T_{read\_access}(A) = T^{L1}_{read\_hit} + R^{L1}_{read\_miss} \times T^{L1}_{read\_miss}$
+        }}
+        \item 2nd Level: 
+        \framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+            $T^{L1}_{read\_miss}(A) = T^{L2}_{read\_hit} + R^{L2}_{read\_miss} \times T^{L2}_{read\_miss}$
+        }}
+        \item \textbf{Global miss rate:} \noindent\fbox{{\textwidth-0pt}$R^{L1}_{read\_miss} \times R^{L2}_{read\_miss}$}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Throughput: Million-Instruction-Per-Second}
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+    $MIPS(A) = \frac{N_{instr}(A)}{Time_{user}(A) \times 10^6}$  | | 
+    $MIPS(A) = \frac{clock\_frequency}{CPI(A) \times 10^6}$
+}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Drawbacks: consider only number of instructions
+    \item Easily manipulated | more instructions that do less (depends on ISA)
+\end{itemize}
+
+\subsubsubsection{Throughput: Million-Floating point-Operation-Per-Second}
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{\itshape%
+    $MFLOPS(A) = \frac{N_{fl\_ops}(A)}{Time_{user}(A) \times 10^6}$
+}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $N_{fl\_ops}(A)$: no. of floating-point operations in program A
+    \item Drawbacks: no differentiation between diff. types of floating-point ops
+\end{itemize}
+
+\subsubsection*{5.2 Parallel Programs $T_p(n)$}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $\boldsymbol{T}$ | End time \- Start time of parallel program on \textbf{all} processors
+    \item $\boldsymbol{p}$ | $p$ processing units \& $\boldsymbol{n}$ | problem of size $n$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Comprised of time for: executing local \textbf{computations}, \textbf{exchange of data} \& \textbf{synchronization} between PU. | \textbf{Waiting time} due to unequal load distribution of PU and wait to access shared data
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{5.2.1 Cost $C_p(n) = p \times T_p(n)$}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $C_p(n)$ measures total amount of work performed by all processors (PUs) i.e. \textbf{processor-runtime product}
+    \item \textit{Parallel Program} is \textcolor{purple}{cost-optimal} if executes the \textcolor{purple}{same} total no. of operations as the \textcolor{purple}{fastest} sequential program
+\end{itemize}
+
+\subsubsubsection{5.2.2 Speedup $S_p(n) = \frac{T_{best\_seq(n)}}{T_p(n)}$}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Theorectically $\boldsymbol{S_p(n) \leq p}$ always holds | In practice $\boldsymbol{S_p(n) > p}$ (superlinear speedup) can occur, e.g. problem working tasks `fits' cache
+\end{itemize}
+
+\subsubsubsection{5.2.3 Efficiency $E_p(n) = \frac{T_{*}(n)}{C_p(n)} = \frac{S_p(n)}{p} = \frac{T_{*}(n)}{p \times T_p(n)}$}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $\boldsymbol{T_{*}}$ | shorthand for $\boldsymbol{T_{best\_seq}}$, ideal speedup $\boldsymbol{S_p(n) = p} \Rightarrow E_p(n) = 1$
+\end{itemize}
+
+\subsubsection*{5.2 Scalability}
+
+\textbf{Amdahl's Law:}
+Speed up of parallel execution limited by fraction of algorithm that cannot be parallized ($f$)
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $\textcolor{red}{f}(0 \leq f \leq 1)$ $\rightarrow$ \textcolor{purple}{sequential fraction} or \textcolor{purple}{fixed-workload-performance}
+    \item In many computing problems $f$ is not constant, commonly dependent on problem size $n$ $\rightarrow f$ is function of $n, f(n)$
+    \item \textbf{Effective parallel algorithm:} $\lim_{n \rightarrow \infty}f(n) = 0$
+    \item \textbf{Speedup:} $\lim_{n \rightarrow \infty}S_p(n) = \frac{1}{1 + (p-1)f(n)} = p$
+\end{itemize}
+\framebox{\parbox{\dimexpr\linewidth-24\fboxsep-2\fboxrule}{\itshape%
+    $S_p(n) = \frac{T_*(n)}{f \times T_*(n) + \frac{1-f}{p} T_*(n)} = \frac{1}{f + \frac{1-f}{p}} \leq \frac{1}{f}$
+}}
+\includegraphics*[width=8.5cm, height=1cm]{images/amdaullaw.png}
+
+\textbf{Gustafson's Law:} applications where main constraint is application time
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item high computing power used to improve accuracy / better result
+    \item If $f$ is not constant but $\downarrow$ when problem size $\uparrow$ then $S_p(n) \leq p$
+    \item $T_f$ = constant execution time for sequential part
+    \item $T_v(n, p)$ = execution time of parallizable part for \textcolor{blue}{problem size $n$ and $p$ processors}: $S_p(n) = \frac{T_f + T_v(n,1)}{T_f + T_v(n,p)}$
+    \item Assume parallel program is perfectly parallizable (\textcolor{red}{without overheads})
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $T_v(n,1) = T^*(n) - T_f$ and $T_v(n,p) = (T^*(n) - T_f)/p$
+        \item $S_p(n) = \frac{T_f + T_v(n,1)}{T_f + T_v(n,p)} = (\frac{T_f}{T^*(n) - T_f} + 1) \div ({\frac{T_f}{T^*(n) - T_f} + \frac{1}{p}})$
+        \item if $T^*(n) \uparrow$ strongly monotonically with $n$, then $\lim_{n\rightarrow\infty}S_p(n) = p$
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Scaling with problem size}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Small problem size:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Parallelism overhead dominates parallelism benefits
+        \item Problem size may be appropriate for small machine but not for large ones
+    \end{itemize}
+    \item Large problem size:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Key working set may not `fit' small machine, $\rightarrow$ thrashing to disk, key working sets exceed cache capacity
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Scaling Constraits}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Application-Oriented scaling properties} | specific to application
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item combination of parameters not necessarily one number only
+    \end{itemize}
+    \item \textbf{Resource-oriented scaling properties}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{Problem constrained (PC)}: use parallel com to solve same problem faster
+        \item \textit{Time constrainted (TC)}: completing more work in fixed amount of time
+        \item \textit{Memory constrained (MC)}: run the largest problem possible without overflowing memory
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Arithmetic Intensity}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item = $\frac{amount \ of \ computation}{amount \ of \ communication}$ e.g instructions $\div$ bytes
+    \item if numerator = exec. time, ratio = avg bandwith required of code
+    \item high arithmetic intensity (low communication-to-computation ratio) required to \textit{efficienty} utilized modern parallel processors
+\end{itemize}
+
+\subsubsubsection{Contention}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item resource can perform operations at given throughput $\rightarrow$ memory, communication links, servers
+    \item occurs when many requests to resource made within small window of time (\textbf{hot spot})
+\end{itemize}
+
+\subsubsubsection{Locality \& Cache lines}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Temporal Locality:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Exploit sharing:} co-locate tasks that operate on same data
+        \item schedule threads working on same data structure at same time on same processor $\rightarrow$ reduce communication
+    \end{itemize}
+    \item \textbf{Spatial Locality:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item avoid sharing cache lines among tasks running on different cores in parallel
+        \item how data stored in memory (layout), \textbf{padding} to avoid cache line sharing
+    \end{itemize}
+    \item allocate work to tasks to take advantage of prefetching
+\end{itemize}
+
+\subsubsection*{5.3 Performance Analysis}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Bottlenecks:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{Instruction-rate:} add `math' (non-memory) instructions
+        \item \textit{Memory bottleneck:} remove almost all math but load same data
+        \item \textit{Locality of data acess:} change all data access to \verb|A[0]|
+        \item \textit{Sync overhead:} remove all atomic operations or locks (provided same amt of work done)
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{5.4 Communication Time}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Sender}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Sender processor:} When sending message | message $\rightarrow$ \textcolor{purple}{system buffer} $\rightarrow$ checksum computer and header added
+        \item \textit{After sending message:} ACK arrives, release \textcolor{purple}{system buffer}, if timer elasped message is \textcolor{red}{re-sent}
+    \end{itemize}
+    \item \textbf{Receiver}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Receiving processor:} message copied from NI $\rightarrow$ \textcolor{purple}{system buffer}
+        \item \textit{After receiving message:} checksum computed, \textbf{mismatch} | discard and re-sent to sender, \textbf{identical} | message copied from \textcolor{blue}{system buffer into user buffer}, application program gets notification and continue execution
+    \end{itemize}
+    \item Total Latency of message of size \verb|m|: $T(m) = O_{send} + T_{delay} + \frac{m}{B} + O_{recv} = T_{overhead} + \frac{m}{B} = T_{overhead} + t_B *m$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $B$ network bandwith, $T_{delay}$ time first bit arrives to receiver
+        \item $T_{overhead} = (O_{send} + T_{delay} + O_{recv})$ | indep. of message size
+        \item $t_B = \frac{1}{B}$ is byte transfer time
+    \end{itemize}
+\end{itemize}
+
+\subsection{\underline{6. GPGPU Programming}}
+\includegraphics*[width=8.2cm, height=3.8cm]{images/systemswithgpu.png}
+\subsubsection*{GPU Architecture}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Mutliple \textcolor{red}{Streaming Multiprocessors} (SMs)
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Memory and cache, connectin interface(PCIE, HBM NVLink)
+    \end{itemize}
+    \item SM consists of multiple compute cores
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Memories (registers, L1/L2 cache and shared memory)
+        \item Logic for thread and instruction management
+    \end{itemize}
+    \item \textbf{Hopper Streaming MultiProcessor:} `latest' version
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \begin{multicols}{2}
+            \item 64 INT32 CUDA Cores/SM
+            \item 64 FP64 CUDA Cores/SM
+            \item 128 FP32 CUDA Cores/SM
+            \item Four 4th Gen Tensor Cores/SM
+        \end{multicols}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Execution Model Mapping to Architecture}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{SIMT (single instruciton, multi-threaded)} execution model
+    \item Multiprocessors creates,manages,schedules,executes threads in SIMT \textcolor{red}{warps}
+    \item \textbf{Wraps:} Groups of 32 parallel thread
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Threads in warp start together at same program address
+        \item Individual instr. program counter and register state
+        \item Ideally threads execute in \textbf{lock-step} $\rightarrow$ all of them in sync in \textit{same step}
+    \end{itemize}
+    \item Wrap executes one common instruction at a time
+    \item Full efficiency realized $\rightarrow$ \textit{all 32 threads} of warp agree on their exec. path
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4cm]{images/nvdiav100sm.png}
+
+\subsubsubsection{CUDA Programming Model | Compute Unified Device Architecture}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Proprietary programming model (NVIDIA)
+    \item Massively hardware multi-threaded, designed to scale well over time
+    \item General purpose programming model
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Simple extension to standard \verb|C|, mature software stack
+        \item Launch batches of threads on GPU, full general load/store memory model (CRCW) and enable \textit{heterogenous systems} (CPU + GPU)
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{CUDA Kernel and Threads}
+\textcolor{red}{Device} = GPU, \textcolor{red}{Host} = CPU, \textcolor{red}{Kernel} = functions that run on \textbf{device}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Parallel portions execute on device by multiple CUDA threads
+    \item CUDA threads \textbf{lightweight}, little overhead creation and instant switching
+    \item CUDA uses \textit{thousands} of threads $\rightarrow$ transparently scales to hundreds of cores and 1000s of parallel threads
+    \item CUDA Kernal executed by \textit{array of threads}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Logically at program level, thread grouped into \textbf{blocks}
+        \item All threads run the kernel (SIMT model)
+        \item Each thread has ID, uses to compute mem address, make control decisions
+    \end{itemize}
+    \item Thread in array \textit{need not be completely independent}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Share results to save computation, share memory access
+        \item In a block the following are shared $\rightarrow$ different blocks cannot cooperate
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Shared memory, atomic operations and barrier synchronization
+        \end{itemize}
+        % \includegraphics*[width=8cm, height=2.4cm]{images/threadcooperation.png}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Transparent Scalability}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Hardware free to schedule thread blocks to any SM
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Kernel scales across any number of parallel Multiprocessors
+        \item Each block can execute in any order relative to other blocks
+    \end{itemize}
+    
+\end{itemize}
+
+\vspace{-1.2\baselineskip}
+\begin{tabular}{@{}p{0.65\linewidth}@{} p{0.3\linewidth}@{}}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Logical (Virtual) Thread Hierarchy}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Kernel} executed by a \textbf{grid} of thread blocks
+            \item \textbf{Grid} divided into \textbf{blocks}: Block ID: 1D/2D/3D
+            \item \textbf{Blocks} contain multiple threads:
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item Thread ID: 1D/2D/3D, share data through shared memory, sync exec.
+                \item Threads from diff blocks cannot cooperate
+            \end{itemize}
+            \item Thread may use ID to decide data to work on
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item Simplifies memory addressing when processing multi-dimensional data
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    &
+    \begin{itemize}[topsep=-15pt,noitemsep,wide=300pt,leftmargin=12pt]
+        \item \includegraphics*[width=2.8cm, height=3cm]{images/threadblockusage.PNG}
+    \end{itemize}
+\end{tabular}
+
+\subsubsubsection{Execution Model Mapping to Architecture}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Kernels launch in \textbf{grid of blocks} $\geq$ 1 kernels execute at a time on an SM
+    \item Block executes on \textcolor{red}{streaming multiprocessor}: DOES NOT MIGRATE DATA
+    \item Several blocks reside concurrently on on SM 
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item control limitations (depending on capability)
+        \item number limited by SM resources
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item register file is partitioned among all resident threads
+            \item shared memory is partitioned among all resident thread blocks`'
+        \end{itemize}
+    \end{itemize}
+    \item SM partitions threads (of a block) into warps and each warp scheduled by \textit{warp scheduler} for execution $\rightarrow$  way warps are patition is \textbf{\underline{consistent}}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Warp contains threads of consecutive, $\uparrow$ thread IDs (first warp thread 0)
+        \item Warps take turn to execute on SM until all threads of block finish
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{CUDA Memory Spaces}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Data must be explicitly transferred from CPU to device
+    \item Global memory and Shared Memory | most important and commonly used
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Global memory is cached while shared memory not cached
+        \item Part of shared memory is the \textit{L1 Cache}
+    \end{itemize}
+    \item Local, Constant and Texture memory for convenience/performance
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Local:} automatic array of variables allocated by compiler (cached)
+        \item \textbf{Constant:} useful for uniformly-accessed read-only data (cached)
+        \item \textbf{Texture:} useful for spatially coherent random-access read-only data \\ $\rightarrow$ provides filtering, address clamping and wrapping (cached)
+    \end{itemize}
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=3cm]{images/cudamemorymodel.png}
+
+
+\subsection*{Programming in CUDA}
+\subsubsubsection{CUDA Programming Interfaces}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item CUDA C Runtime
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Minimal set of extensions to the C language
+        \item Kernels defined as C functions embedded in application source code
+        \item Requires a runtime API (built on top of CUDA driver API)
+    \end{itemize}
+    \item CUDA driver API
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Low-level C API to load compiled kernels, inspect parameters, and launch
+        \item Kernels are written in C and compiled to CUDA binary or assembly code
+        \item Requires more code, harder to program and debug
+        \item Much like using the OpenGL API on GLSL shaders
+    \end{itemize}
+\end{itemize}
+
+\begin{tabular}{@{}p{0.55\linewidth}@{} p{0.4\linewidth}@{}}\subsubsubsection{Compiling and Linking CUDA}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item NVCC: compiler driver for CUDA source
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Works by invoking other tools and compilers like cudacc, g++, cl, ...
+        \end{itemize}
+        \item NVCC outputs
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item C code (host CPU code) $\rightarrow$ must then be using another tool
+            \item PTX $\rightarrow$ object code/PTX source interpreted at runtime
+        \end{itemize}
+        \item Linking with two static/dynamic libraries
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item CUDA runtime library (cudart)
+            \item CUDA core library (cuda)
+        \end{itemize}
+    \end{itemize}
+    &
+    \begin{itemize}[topsep=-15pt,noitemsep,wide=3000pt,leftmargin=12pt]
+        \item \includegraphics*[width=2.8cm, height=3cm]{images/compilingcuda.png}
+    \end{itemize}
+\end{tabular}
+\subsubsubsection*{Device Code}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item C functions with the following restrictions
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Only access \textbf{GPU Memory}
+        \item No variable number of arguments \verb|varargs|
+        \item No static variables and no recursions 
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection*{Function Types}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Function qualifiers: \verb|__host__|, \verb|__device__|, \verb|__global__|
+    \item \verb|__global__| function is a kernel
+    \item Must have \verb|void| return type
+    \item A call to a kernel must specify execution configuration
+    \item Function parameters are passed via shared memory (*)
+    \item \verb|__host__| and \verb|__device__| can be used together
+\end{itemize}
+
+\subsubsubsection*{Launching Kernels}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Modified C function call syntax: \verb|kernel<<<dim3 grid, dim3 block, int smem, int stream>>>(…)|
+    \item Execution Configuration (\verb|<<< >>>|):
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Grid dimensions:} \verb|x| and \verb|y|
+        \item \textbf{Thread-block dimensions:} \verb|x|, \verb|y|, and \verb|z|
+        \item \textbf{Shared memory:} number of bytes per block for external \verb|smem| variables declared without size. $\rightarrow$  Optional, 0 by default
+        \item \textbf{ Stream ID} $\rightarrow$  Optional, 0 by default
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection*{CUDA Built-In Device Variables}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item All \verb|__global__| and \verb|__device__| functions have access to these automatically defined variables:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \verb|dim3 gridDim;| $\rightarrow$ Dimensions of the grid in blocks (\verb|gridDim.z| unused)
+        \item \verb|dim3 blockDim;| $\rightarrow$ Dimensions of the block in threads
+        \item \verb|dim3 blockIdx;| $\rightarrow$ Block index within the grid
+        \item \verb|dim3 threadIdx;| $\rightarrow$ Thread index within the block
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection*{Variable Qualifiers (Device Code)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \verb|__device__|
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Stored in global memory (large, high latency, no cache)
+        \item Read/write by all threads within grid
+        \item Written by CPU via \verb|cudaMemcpyToSymbol()|, has \textit{application lifetime}
+    \end{itemize}
+    \item \verb|__constant__|
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Same as \verb|__device__|, but cached and read-only by threads within the grid
+        \item Written by CPU via \verb|cudaMemcpyToSymbol()|, has \textit{application lifetime}
+    \end{itemize}
+    \item \verb|__shared__|
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Stored in on-chip shared memory (very low latency)
+        \item Read/write by all threads in the same thread block, has \textit{block lifetime}
+    \end{itemize}
+    \item Unqualified variables (in device code):
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Scalars and built-in vector types are stored in registers
+        \item Arrays $> 4$ elements or run-time indices are stored in local memory
+        \item Read/write by thread only, has \textit{thread lifetime}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection*{GPU Memory Allocation / Release / Copy}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item GPU memory allocation / release:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \verb|cudaMalloc(void **pointer, size_t nbytes);|
+        \item \verb|cudaMemset(void *pointer, int value, size_t count);|
+        \item \verb|cudaFree(void* pointer);|
+    \end{itemize}
+    \item Data copy:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \lstinline[breaklines=true]|cudaMemcpy(void *dst, void *src, size_t nbytes, enum cudaMemcpyKind direction);|
+    \end{itemize}
+    \item \verb|enum cudaMemcpyKind|:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \verb|cudaMemcpyHostToDevice|, \verb|cudaMemcpyDeviceToHost|, \verb|cudaMemcpyDeviceToDevice|
+    \end{itemize}
+    \item Unified memory model does not need data transfer.
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \verb|__managed__| $\rightarrow$ Page-locked host memory
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection*{Thread Synchronization Function}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \verb|void __syncthreads();|
+    \item Synchronizes all threads in a block:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Generates barrier synchronization instruction.
+        \item Used to avoid RAW/WAR/WAW hazards when accessing shared memory
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Optimizing CUDA Programs}
+\subsubsubsection{Overall strategies}
+\begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Optimizing memory usage to acheive \textbf{maximum bandwidth}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Different memory spaces/access patterns have different performance
+    \end{itemize}
+    \item Maximizing \textbf{parallel execution}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Restructure algorithm to expose as much \textbf{data parallelism}
+        \item Map to hardware to increase occupancy (hardware utilization)
+    \end{itemize}
+    \item Optimizing instruction usage for maximum \textbf{instruction throughput}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item High throughput through \textit{arithmetic instructions}, avoiding different execution paths in same warp
+    \end{itemize}
+\end{enumerate}
+\subsubsubsection{Memory Optimizations}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Minimize data transfers between host/device
+    \item Ensure global memory access coalesced whenever possible
+    \item Minimize global memory access by using shared memory
+    \item Minimize bank conflicts in shared memory access
+\end{itemize}
+
+\subsubsubsection{Data transfer between Host and Device}
+Device memory $\rightarrow$ GPU $>>$ host memory $\rightarrow$ device memory
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item batching transfers into one larger transfer performs better than transferring separately
+    \item Use page-locked/pinned memory transfer
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Pinned memory is not cached, zero-copy feature allowing the threads to directly access host memory
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Concurrent data transfers and executions}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Overlap async transfers with computation:
+    \item \verb|cudaMemcpyAsync()| instead of \verb|cudaMemcpy()|
+    \item CPU computation while data transfers, followed by device code executed
+    \item Use different streams to concurrently copy/execute
+\end{itemize}
+
+\subsubsubsection{Coalesced Access to Global Memory}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Simultaneous access to global memory by threads in a \textbf{\underline{warp}} coalesced into number of transactions equal to number of 32-byte transactions necessary to service all threads of the warp
+    \item $k^{th}$ thread accesses $k^{th}$ word in 32-byte aligned array, not all threads need to participate
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=2.5cm]{images/coalescedaccess.png}
+
+\subsubsubsection{Shared Memory}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Higher bandwidth/lower latency than local/global Memory
+    \item Divided into equally-sized memory modules (\textbf{banks})
+    \item Bank conflict if 2 addresses of memory request fall into same bank $\rightarrow$ have to be serialized
+    \item Each bank has bandwidth of 32 bits every clock cycle, successive 32-bit words assigned to successive banks
+    \item Warp size is 32 threads and number of banks is also 32
+\end{itemize}
+
+\subsubsubsection{Strided Access}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item threads within warp access words in memory with stride of 2
+    \item results in $50\%$ of load/store efficiency
+    \item half the elements in transactions are not used and represent wasted bandwidth
+\end{itemize}
+
+\subsubsubsection{Execution Configuration}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Balance occupancy and resource utilization.
+    \item Ensure more warps than multiprocessors for improved occupancy.
+    \item Minimum 64 threads per block; multiples of warp size preferred.
+    \item Use smaller thread blocks to avoid memory bank conflicts.
+    \item Block size limited by registers and shared memory; ensure at least one block can run on an SM.
+    \item Avoid multiple contexts per GPU to reduce inefficiencies.
+\end{itemize}
+
+\subsubsubsection{Maximize instruction throughput}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Minimize low-throughput arithmetic instructions.
+    \item Trade precision for speed; prefer single-precision floats.
+    \item Avoid costly integer division and modulo; use bitwise operations.
+    \item Use signed loop counters for aggressive optimizations.
+    \item Optimize functions on char or short types to avoid conversions.
+\end{itemize}
+\subsubsubsection{Control flow}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Minimize divergent warps from control flow instructions.
+    \item Reduce instructions by optimizing synchronization points.
+\end{itemize}
+
+
+
+\subsection*{7. Cache Coherence}
+\subsubsubsection{Cache Properties}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Cache size:} larger cache increase access time, reduce cache misses
+    \item \textbf{Block size:} data transferred between main memory and cache in blocks of a fixed length
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Larger blocks reduces number of blocks but replacement lasts longer
+    \end{itemize}
+    \item typical sizes for L1 cache blocks are 4/8 memory words (4 bytes)
+\end{itemize}
+
+\subsubsubsection{Write Policy}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Write-through:} write access immediately transferred to main memory
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Advantage: \underline{always} get newest value of a memory block
+        \item Disadvantages: slow down $\rightarrow$ many memory accesses (use write buffer)
+    \end{itemize}
+    \item \textbf{Write-back:} write performed to main memory when cache block is replaced
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Advantage: less write operations
+        \item Disadvantages: memory may contain invalid entries, uses a dirty bit
+    \end{itemize}
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Processor performs write to address `misses' in cache
+        \item Cache selection location to place line in cache, if dirty line in current location, its written out of memory
+        \item Cache loads line from memory (allocates line in cache)
+        \item Whole cache line is fetched, cache line marked as dirty
+    \end{enumerate}
+\end{itemize}
+
+\subsubsubsection{Memory Coherence}
+\textcolor{purple}{Coherence} ensures that each processing unit has consistent view of memory (each memory location) through its local cache
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item All PUs must agree on order of reads/writes to \textbf{SAME MEMORY location}
+    \item \textbf{Program Order:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Given this sequence, \textcolor{purple}{\texttt{P}} should get the value written in 1.
+        \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Given sequence \textcolor{purple}{\texttt{P (processing unit)}} writes to \textcolor{blue}{\texttt{X}}
+            \item No write to \textcolor{blue}{\texttt{X}} (from other processing units)
+            \item \textcolor{purple}{\texttt{P}} reads to \textcolor{blue}{\texttt{X}}
+        \end{enumerate}
+    \end{itemize}
+    \item \textbf{Write Propagation}
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Given a system that meets program order property, the sequence:
+        \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textcolor{purple}{\texttt{P\_1}} (PU) writes to \textcolor{blue}{\texttt{X}}.
+            \item No further writes to \textcolor{blue}{\texttt{X}}.
+            \item \textcolor{purple}{\texttt{P\_2}} reads from \textcolor{blue}{\texttt{X}}.
+        \end{enumerate}
+        \item \textcolor{purple}{\texttt{P\_2}} should read value written by \textcolor{purple}{\texttt{P\_1}}
+        \item writes become visible to other processing units \textbf{eventually}
+    \end{enumerate}
+    \item \textbf{Transaction Serialization}
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Given the sequence 
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Write \textcolor{blue}{\texttt{V\_1}} to \textcolor{blue}{\texttt{X}} (by any PU) then Write \textcolor{blue}{\texttt{V\_2}} to \textcolor{blue}{\texttt{X}} (by any PU)
+            \item Processing units can \textbf{never} read \textcolor{blue}{\texttt{X}} as \textcolor{blue}{\texttt{V\_2}} then \textbf{later} \textcolor{blue}{\texttt{V\_1}}
+        \end{itemize}
+        \item All writes to location (by same or different PUs) are seen in same order by all PUs
+    \end{enumerate}
+\end{itemize}
+
+\subsubsubsection{Tracking Cache Line Sharing Status}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Snooping Based:} No centralised directory
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item each cache keeps track of sharing status
+        \item Cache \textit{monitors} or \textit{snoops} bus, to update status of cache line, takes appropriate action  $\rightarrow$ contains a \verb|dirty_bit|
+        \item Common protocol used in architectures with a a bus
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item all PUs on bus can observe every bus transaction (write propagation)
+            \item bus transactions visible to PUs in same order (Write serilization)
+        \end{itemize}
+    \end{itemize}
+    \item \textbf{Directory Based:} sharing status kep in centralized location, used with NUMA architectures
+    \item \textbf{Implications:} Overhead in shared address space, \textbf{Cache ping-pong}: multiple PU read/modify same \textit{global} variable, \textbf{False sharing}
+\end{itemize}
+
+\subsubsubsection{Coherence vs Consistency}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Memory consistency: constraints the order in which memory operations performed by 1 thread become visible to other threads for \textbf{DIFFERENT memory locations}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Consistency deals with when writes to X propagate to other PUs, relative to reads/writes to other addresses
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Memory Operations on Multiprocessors}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item A program defines a sequence of loads and stores, i.e., "program order."
+    \item Four types of memory operation orderings:
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \texttt{W → R}: Write to \texttt{X} must commit before subsequent read from \texttt{Y}.
+        \item \texttt{R → R}: Read from \texttt{X} must commit before subsequent read from \texttt{Y}.
+        \item \texttt{R → W}: Read from \texttt{X} must commit before subsequent write to \texttt{Y}.
+        \item \texttt{W → W}: Write to \texttt{X} must commit before subsequent write to \texttt{Y}.
+    \end{enumerate}
+    \item Memory operations reordered to hide \textit{write latencies}
+\end{itemize}
+
+\subsubsubsection{Sequential Consistency Model}
+Every PU issues its memory operations in program order
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Global result of all memory accesses of all PUs appears to all PUs in same \textbf{sequential order} irrespective of the arbitrary interleaving of the memory accesses by different PUs
+    \item Effect of each memory operation must be visible to all PUs before the next operation on any PU $\rightarrow$ as if only \textit{one memory space, one memory operation}
+    \item Sequentially consistent memory system preserves all 4 memory operation orders (W → R, R → W, W → W, R → R)
+\end{itemize}
+
+\subsubsection{Relaxed Consistency Model}
+Used to hide latencies, gain performance, hiding memory access operations with other operations when they are independent (overlapping)
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item relax the ordering of memory operations if \textcolor{purple}{data dependencies allow}
+    \item Dependencies: if two operations access the \textbf{\underline{same memory location}}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $R \rightarrow W$ anti-dependency (WAR)
+        \item $W \rightarrow W$ output dependency (WAW)
+        \item $W \rightarrow R$ flow dependency (RAW)
+        \item MUST BE PRESERVED
+    \end{itemize}
+    \item Program order relaxation: (1) Write $\rightarrow$ Read, (2) Write $\rightarrow$ Write, (3) Read $\rightarrow$ Read or Write
+\end{itemize}
+
+\subsubsubsection{Write-to-Read Program Order}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Total Store Ordering (TSO)}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item PU \verb|P| can read \verb|B| before its write to \verb|A| is seen by all PUs
+        \item PU can move its own reads in front of its own writes
+        \item Reads by other PUs cannot return new value of A until write to A is \textbf{observed} by all other PU (\textcolor{purple}{write atomicity} property)
+    \end{itemize}
+    \item \textbf{Processor Consistency (PC)}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Return value of any write before write is \textbf{observed by all PUs}
+        \item Write serilization/propagation are preserved buy write atomicity is not
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Writes \textit{observed eveneutally} by all PU
+            \item Writes to same memory location observed by all PUs in the same order
+            \item Writes can be read by some PUs before theya re observed by all PUs
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\includegraphics*[width=8.2cm, height=3.5cm]{images/writeotoread.PNG}
+
+\subsubsubsection{Write-to-Write Program Order}
+Writes can bypass earlier writes (to different locations) in write buffer, allow write miss to overlap and hide latency
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Partial Store Ordering (PSO)} Relax $W \rightarrow R$ and $W \rightarrow W$
+\end{itemize}
+
+Relaxed consistency models does not address software complexity, exists to increase \underline{performance} of programs (allowing programmers to write \textbf{faster code}), rather it increases software complexity further.
+
+\subsection{\underline{8. Performance Analysis and Instrumentation}}
+Preparation $\rightarrow$ Profile $\rightarrow$ Plan $\rightarrow$ Implement $\rightarrow$ Commit $\rightarrow$ repeat Profile  ...
+
+\subsubsection{Perspectives}
+\subsubsubsection{Resource analysis (for system admins)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item analysis of system resources: CPU, memory, disks network interfaces, buses and interconnects $\rightarrow$ Performance issues investigations, capacity planning
+    \item Focuses on \textit{utilization}, demand -supply
+\end{itemize}
+
+\subsubsubsection{Workload analysis (for app developers)}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Examines workload applied and how application is responding
+    \item Targest:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Requests: on workload applied
+        \item Latency: response time of application
+        \item Completion: Looking for errors
+    \end{itemize}
+    \item Metrics: \textit{throughput} and \textit{latency}
+\end{itemize}
+
+\framebox{\parbox{\dimexpr\linewidth-2\fboxsep-2\fboxrule}{% 
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item what makes you think there is a performance problem?
+        \item has system performed well?
+        \item what changed recently
+        \item can performance degredation be expressed in terms of latency/run time
+        \item does problem affect other people/applications(or just you)
+        \item what is the environment (soft/hardware) versions/configs?
+    \end{enumerate}
+}}
+
+\subsubsubsection{Methodologies}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Anti-methods:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Random change anti-method
+        \item Streetlight anti-method | look for obvious issues in tools found elsewhere
+        \item Blame-someone-else-method
+    \end{itemize}
+    \item \textbf{Methods}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Monitoring | records perf statistics over time, so past can be compared to present and \textit{time-based} usage patterns can be identified
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Useful for: capacity planning, quantifying growth/peak usage
+            \item Historic values can provide context for understanding current value
+        \end{itemize}
+        \item USE method
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{U}tilization: busy time
+            \item \textbf{S}aturation: queue length/queue time
+            \item \textbf{E}rrors: easy to interpret
+            \item Helps if there is a diagram of system/env showing all resources
+        \end{itemize}
+        \item Tools method | list all perf tools for each tool list useful metrics provided, for each metric list possible ways to interpret
+        \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textit{Observability:} watch activity under workload, safe depending on resource overhead, insert timing statements/check perf counters
+            \item \textit{Static:} attributes of system at rest instead of under active workload
+            \item \textit{Benchmarking:} Load test - prod tests may cause issues (contention)
+            \item \textit{Tuning:} change default settings - changes could hurt performance
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item Fixed counters: counters maintaine dby kernel (hardware)
+                \item Event-based counters: profiling (characterizes target by collecting set of samples), tracing (instruments occurence of event, store event-based details for later analysis)
+                \item Instrumentation code: modify source code, executable or runtime to understand performance
+            \end{itemize}
+        \end{enumerate}
+        \item CPU profile method
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Profile CPU usage by stack sampling/generating CPU flame graphs
+            \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item \verb|perf| modern architectures expose hardware performance counters
+                \item \verb|perf_events| \textbf{multi-tool} for CPU profiling, cache profiling, static and dynamic tracing
+                \item Flame graphs - each box represents function in stack, x-axis $\%$ of time on CPU, y-axis is stack depth
+            \end{enumerate}
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Debugging tools}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \verb|Valgrind|
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Heavy-weight binary instrumentation $>4\times overhead$
+        \item Designed to shadow all program values, requires serializing threads
+        \item Usually used for memory check
+    \end{itemize}
+    \item Santizers (compilation-based approach)
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item e.g. Thread/Memory Sanitizers (data races/unitialized reads)
+        \item e.g. UndefinedBehaviorSanitizer (Int Overlfow/NPE)
+        \item e.g. LeakSanitizer (for memory leaks)
+    \end{itemize}
+\end{itemize}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Shadow memory:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Used to track/store info on memory used by program during execution
+        \item Used to detect and report incorrect accesses of memory
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item A-bit: corresponding byte accessible
+            \item V-bit: corresponding bit initialized
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+\includegraphics*[width=8.2cm, height=1.2cm]{images/shadowmemory.jpg}
+
+\subsubsubsection{False Sharing}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Identifying using \verb|perf c2c|
+    \item At high level shows cache lines where false sharing detected
+    \item Readers/writers to cache lines and offsets where accesses occured
+    \item pid, tid, instruction addr,  fn name, binary object name for r/writers
+    \item source file and line number for each reader/writer
+    \item avg load latency for the loads to those cache lines
+\end{itemize}
+
+\includegraphics*[width=8.2cm, height=4.4cm]{images/falsesharing.png}
+\subsubsubsection{Benchmarking}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Results usually misleading, benchmark workload is synthetic and does not resemble real-world workload
+    \item Common mistakes, testing/choosing wrong target (FS cache instead of disk)
+    \item Benchmark \verb|A| but measure \verb|B| concluded measuring \verb|C| instead
+    \item Difficult to show benchmarks not relevant, so easier to just run them
+\end{itemize}
+
+\subsection{\underline{9. Parallel Programming Models - II}}
+\subsubsection{Data Distribution | Blockwise vs Cyclic Data Distribution}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Blockwise:} divide into blocks of $B = \lceil\frac{n}{p}\rceil$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $P_j$ takes maximum $B$ elements starting from $((j-1)\times B + 1)$
+        \item suitable for programs that operate on spatially adjacent elements
+    \end{itemize}
+    \item \textbf{Cyclic:} $P_j$ takes elements $[j, j+p], \cdots j+ (\lceil\frac{n}{p}\rceil - 1) \times p]$ if $p$ divides $n$ or $j \leq (n (mod p))$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Otherwise $[j, j+p], \cdots j+ (\lceil\frac{n}{p}\rceil - 2) \times p]$ 
+        \item many procecssors, computation per value expensive (need balanced load)
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Data distribution for 2D Arrays: Block-Cyclic}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item One-dimension distributions
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Consider \textbf{Block-Cyclic} distributions
+        \item Form blocks of size $b$ then perform cyclic (round robin) allocation
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Data distribution for 2D Arrays: Checkerboard}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Processors \textbf{virtually organized into 2D mesh of R $\times$ C}
+    \item \textbf{Blockwise:} elements split into blocks along both dimensions 
+    \item \textbf{Cyclic:} cyclic assignment of elements according to processor mesh
+    \item \textbf{Block-cyclic:} elements split $b_1 \times b_2$ size nlocks, then cyclical assignment
+\end{itemize}
+
+\includegraphics*[width=8.5cm, height=4.5cm]{images/checkboard.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Example: heat transfer simulation, what other work do we need to do?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $P_1$ needs to ask $P_2$ and $P_3$ for latest data \textit{across} data boundaries
+        \item If we have more processors but same N by N grids, more communication for each step, more granular work for each processor
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Information Exchange}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Purpose:} make sure every processor receives/has access to relevant information to do its intended task
+    \item \textbf{Shared address space:} uses shared variables while \textbf{Distributed address space} uses communication operations
+\end{itemize}
+
+\subsubsubsection{Distribution Memory: Communication Operations}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Shared variables do not apply in \textit{distributed memory programming}
+    \item Disjoint memory spaces, exchange data between processors through dedicated communication operations
+    \item e.g. \textit{message-passing programming model}
+    \begin{multicols}{2}
+        \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textit{point-to-point}
+            \item \textbf{global/collective communication}
+        \end{enumerate}
+    \end{multicols}
+\end{itemize}
+
+\subsubsubsection{Principles of Message Passing Model}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Data \textbf{explicitly partitioned} for each process, interactions require \textit{both parties to participate} | \textit{explicitly express parallelism}
+    \item \textbf{Loosely synchronous paradigm}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{Synchronous:} tasks or subsets of tasks sometimes synchronize when communicating / interacting with one another
+        \item \textit{Asynchronous:} \textbf{Between} these limited interactions, tasks execute async
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Communication Protocols}
+Point-to-point, usually sends significant amount of data to one another
+
+\subsubsubsection{Blocking / Non-Blocking}
+\textit{Blocking} call returns when resources used in the call may be \textit{re-used safely} by programming
+\begin{multicols}{2}
+    \begin{lstlisting}
+int a = {0, 1, ... , N};
+blocking_send(&a, P1);
+a[5]=0;
+// legal as variable a can be resued after send
+    \end{lstlisting}
+
+    \columnbreak
+    \begin{lstlisting}
+int a = {0, 1, ... , N};
+nonblocking_send(&a, P1);
+a[5]=0;
+// not legal as variable a might not be safe to use yet
+    \end{lstlisting}
+\end{multicols}
+
+\textit{Non-blocking} call resources may not be safe to use after returns,
+requires a \verb|test| function to check if call completed
+\begin{lstlisting}
+int a = {0, 1, ... , N};
+request = nonblocking_send(&a, P1);
+do_other_useful_work();
+while(!test(request));
+a[5]=0;
+// legal as test fn returned true before array reused
+\end{lstlisting}
+
+\subsubsubsection{Buffer vs Non-buffered}
+\begin{multicols}{2}
+    
+\textit{Buffered} call copies user-provided data into \underline{internal buffer} then it returns control to the user
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Memory copy speed is faster than network speed, trading off space for time
+\end{itemize}
+\includegraphics*[width=3.6cm, height=1.8cm]{images/buffervsnonbuffer.png}
+\end{multicols}
+
+\subsubsubsection{Synchronous vs Asynchronous}
+\textit{Synchronous} call send complete only when \textbf{matching receive} has started to execute (`non-local' behavior)
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Non-local: requires \textbf{coordination with other processes}
+\end{itemize}
+
+\subsubsubsection{Non-buffered + Blocking}
+Considerable \textit{idling} overheads, due to \textbf{mismatch} in timing btw send/receiver
+\includegraphics*[width=8.5cm, height=2.8cm]{images/nonbufferedblocking.png}
+
+\subsubsubsection{Buffered + Blocking}
+Copying data to internal buffer removes idling time
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item With hardward support, data transfer entirely in background
+    \item Without, receiver is interrupted to transfer data to its buffer
+\end{itemize}
+\includegraphics*[width=8.5cm, height=2.8cm]{images/bufferedblocking.png}
+
+\subsubsubsection{Bounded Buffer Size: Impact}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Buffers have finite size, if consumer slower than producer
+    \item Producer will be blocked, waiting for its buffer to clear
+    \item unforseen delays if this was not already planned for
+    \item Deadlock in blocking operations
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item When blocking \verb|receive| without matching \verb|send|
+        \begin{multicols}{2}
+            \begin{lstlisting}
+receive(&a, P1);
+send(&b, P1);
+            \end{lstlisting}
+            \columnbreak
+            \begin{lstlisting}
+receive(&a, P0);
+send(&b, P0);
+            \end{lstlisting}
+        \end{multicols}
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Non-Buffered + Non-Blocking}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Cannot re-use data until transfer complete, but no idle time
+    \item Hardware support: program encounters little to no overhead
+\end{itemize}
+\includegraphics*[width=8.5cm, height=2.8cm]{images/nonblockingnonbuffered.png}
+
+\subsubsubsection{Summary}
+\includegraphics*[width=8.5cm, height=4cm]{images/blockingvsbuffering.png}
+\includegraphics*[width=8cm, height=2cm]{images/asyncvssync.png}
+
+\subsection{10. Message Passing}
+MPI \textbf{standardized specification} for message passing libs (fn signatures, behavior, defs)
+
+\subsubsubsection{Program Structure}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \verb|MPI_Init()|: must be \textbf{called once and before} any other routines
+    \item \verb|MPI_Send()|, \verb|MPI_Receive()| or other functions
+    \item \verb|MPI_Finalize()|: terminate MPI processing normally, \textbf{LAST MPI CALL}
+    \item \verb|MPI_Abort()|: force all MPI processes to terminate
+\end{itemize}
+
+\subsubsection{Point-to-Point Communication}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Blocking:} on return, can re-use resources in call: \verb|MPI_Send|, \verb|MPI_Recv|
+    \item \textbf{Non-blocking:} on-return, resources may not be safe to reuse yet: \verb|MPI_Isend|, \verb|MPI_Irecv| $\rightarrow$ both blocking/non-block can be \textit{mixed}
+    \item \textbf{MPI Messages Format:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Message = \textcolor{red}{data} (actual data to send/rcv) + \textcolor{teal}{envelop} (how to route data)
+        \item Data = \textcolor{blue}{start-buffer} (where data starts) + \textcolor{blue}{count} (no. of elements in message) +  \textcolor{blue}{datatype}(type of data to be transmitted)
+        \item Envelop = \textcolor{blue}{dest/src} (defined via process \textit{rank} in communicator) + \textcolor{blue}{tag} (arbitrary no. to distinguish msgs) + \textcolor{blue}{communicator} (set of processes we communicate within)
+    \end{itemize}
+    \item Every process is executing a (mostly) independent copy of the program
+    \item Assume 2 processes, gurantee \textbf{non-overtaking}: if 1 sender sends 2 msg in succession to same receiver, msg delivered in order they were sent
+\end{itemize}
+
+\subsubsubsection{Blocking Send and Receive}
+\begin{lstlisting}[basicstyle = \tiny\ttfamily]
+int MPI_Send(void* buf, int count, MPI_Datatype dt, int dest, int tag, MPI_Comm c);
+int MPI_Recv(void* buf, int count, MPI_Datatype dt, int src, int tag, MPI_Comm c, MPI_Status *status);
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item User passes buffer with data (or empty one to rcv)
+    \item src/dest is \textit{rank} of the target process (unique ID)
+    \item Recevied message must be $\leq$ length of rcv buf
+    \item src = \verb|MPI_ANY_SOURCE| from any process, tag = \verb|MPI_ANY_TAG| from any tag (cannot SEND to any process only RECEIVE)
+    \item \verb|MPI_STATUS| is structure with: \verb|MPI_SOURCE|, \verb|MPI_TAG|, \verb|MPI_ERROR|
+\end{itemize}
+
+\subsubsubsection{MPI Semantics}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Blocking:} if resources are safe to reuse on function call return
+    \item \textbf{Synchronous:} if communications operations (send/rcv) require \textit{the other side} (rcv/send) to start participating before completing
+    \item \textbf{Buffered:} if data being send can be copied to internal system buffer to avoid idling while waitng for matching receive
+    \item may be buffered $\rightarrow$ leave it to MPI to decide buffer or not
+\end{itemize}
+\includegraphics*[width=8.5cm, height=3.5cm]{images/sendreceivempi.png}
+
+
+\subsubsection{Deadlocks in MPI}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item When messsage passing not completed (send/receive order)
+    \begin{lstlisting}[basicstyle = \tiny\ttfamily]
+if (my_rank == 0) {
+  MPI_Recv(recvbuf, count, MPI_INT, 1, tag, comm, &status)
+  MPI_Send(sendbuf, count, MPI_INT, 1, tag, comm)
+} else if (my_rank == 1) { // 0 always waits for 1 and vice versa
+  MPI_Recv(recvbuf, count, MPI_INT, 0, tag, comm, &status)
+  MPI_Send(sendbuf, count, MPI_INT, 0, tag, comm)    
+}
+    \end{lstlisting}
+    \item Relying on system buffer
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item If runtime system does not use system buffers or system buffers are too small $\rightarrow$ sends cannot complete
+    \end{itemize}
+    \begin{lstlisting}[basicstyle = \tiny\ttfamily]
+if (my_rank == 0) {
+  MPI_Send(sendbuf, count, MPI_INT, 1, tag, comm)
+  MPI_Recv(recvbuf, count, MPI_INT, 1, tag, comm, &status)
+} else if (my_rank == 1) { 
+  MPI_Send(sendbuf, count, MPI_INT, 0, tag, comm)    
+  MPI_Recv(recvbuf, count, MPI_INT, 0, tag, comm, &status)
+}
+    \end{lstlisting}
+    \item Deadlock free logical ring:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Exchange data, process rank $i$ sends data to $i+1$, receives from $i-1$
+        \item \textbf{Even} rank: send $\rightarrow$ receive, \textbf{Odd} rank: receive $\rightarrow$ send
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Non-Blocking Send and Receive}
+\begin{lstlisting}[basicstyle = \tiny\ttfamily]
+int MPI_Isend(void *buf, int count, MPI_Datatype datatype, int dest, int tag, MPI_Comm comm, MPI_Request *request);
+int MPI_Irecv(void *buf, int count, MPI_Datatype datatype, int source, int tag, MPI_Comm comm, MPI_Request *request);
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Non-blocking calls can be useful to avoid Deadlocks
+    \item Check whether \verb|buf| is safe to reuse/has finally receive data $\rightarrow$ have to \textit{explicitly test} or \textit{wait} on the \verb|request| object
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \verb|MPI_Test(MPI_Request *request, int *flag, MPI_Status *status)| $\rightarrow$ Returns immediately, flag == true indicates request has completed
+        \item \verb|PI_Wait(MPI_Request *request, MPI_Status *status)| $\rightarrow$ Only returns when request is completed
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection{Process Groups and Communicators}
+\textbf{Process Groups} $\Rightarrow$ \textbf{ordered set} of processes, each process in group has a \textbf{unique rank} consecutively from $0$
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item processes may be member of \textbf{multiple groups} \textit{different ranks} in these groups
+\end{itemize}
+
+\textbf{Process Groups} $\Rightarrow$ handle that processes can use to comm. with one another
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Intra-communicators:} supports execution of arbitrary point-to-point and \textit{collective communication} operations on \underline{single group} (default: \verb|MPI_COMM_WORLD| contains all processes)
+    \item \textbf{Inter-communicators:} support communication operations between \textit{2 processor groups}
+    \item Logical separation of processes based on tasks, \textit{collective communication operations} across subset of related processes 
+    \item $\rightarrow$ faster if fewer ranks involved and provided basis for \textit{user-defined} topology
+\end{itemize}
+
+\textbf{Process Virtual Topologies} 
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Processes can be given specific logical organizations e.g. processes most communicate with neighbor processes that are
+    \item organized as a mesh, or even an arbitrary graph pattern $\rightarrow$ Virtual topologies allow neighbors to be easily addressable
+\end{itemize}
+
+\subsubsection{Collective Communication}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Operations that invovle \textbf{all} processes in communicator, otherwise \underline{deadlock!}
+    \item Both blocking and non-blocking versions of calls exists
+    \item \verb|int MPI_BArrier(MPI_Comm comm)| the only collective \textbf{\textit{synchronization} operation} $\rightarrow$ processes block until all processes of communicator have started \verb|MPI_Barrier| call
+\end{itemize}
+
+\subsubsubsection{Single Broadcast} 
+\begin{lstlisting}[basicstyle = \tiny\ttfamily]
+int MPI_Bcast(void* buf, int count, MPI_Datatype dt, int root, MPI_Comm c);
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Sender (`root' process) sends \textit{same block of data} to all other processes
+    \item Modelling tasks via collectives can make scaling up much easier than point-to-point operations
+    \item \underline{Every process must call MPI\_Bcast}, \textit{undefined behavior} not to do so. 
+\end{itemize}
+
+\subsubsubsection{Single Broadcast} 
+\begin{lstlisting}[basicstyle = \tiny\ttfamily]
+int MPI_Allgather(void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, MPI_Comm comm)
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Each processor sends the same data block to every other processor, no root processor. Data blocks are collected in rank order
+\end{itemize}
+
+\subsubsubsection{Scatter and Gather} 
+\begin{lstlisting}[basicstyle = \tiny\ttfamily]
+int MPI_Scatter(void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm);
+int MPI_Gather(void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, int root, MPI_Comm comm);
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Scatter:} root process divides data among itself and others
+    \item \textbf{Gather:} root process collects data 
+\end{itemize}
+
+\subsubsubsection{Single-accumulation (Gather with Reduction Op)} 
+\begin{lstlisting}[basicstyle = \tiny\ttfamily]
+int MPI_Reduce(void *sendbuf, void *recvbuf, int count, MPI_Datatype datatype, MPI_Op op, int root, MPI_Comm comm);
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Each processor provides a block of data with the same type and size
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textcolor{blue}{reduction} (binary associated and communitative) \textcolor{blue}{operation} applied to element by element to data blocks, \textcolor{blue}{results} placed in root processor
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Multi-accumulation} 
+\begin{lstlisting}[basicstyle = \tiny\ttfamily]
+int MPI_Reduce_scatter(void *sendbuf, void *recvbuf, const int recvcounts[], MPI_Datatype datatype, MPI_Op op, MPI_Comm comm);
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Each processor provides for every other processor a potentially \textit{different} data block $\rightarrow$ Data blocks for same receiver comibined and given reduction operation no root processor 
+\end{itemize}
+
+\subsubsubsection{Total Exchange} 
+\begin{lstlisting}[basicstyle = \tiny\ttfamily]
+int MPI_Alltoall(void *sendbuf, int sendcount, MPI_Datatype sendtype, void *recvbuf, int recvcount, MPI_Datatype recvtype, MPI_Comm comm);
+\end{lstlisting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Each processor provides for every other processor a potentially \textit{different} data block $\rightarrow$ Effectively each processor executes a scatter operation, no root processor
+\end{itemize}
+
+\subsubsubsection{Duality of Communication Operations}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item A communication operation can be represented by a graph
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Spanning tree where nodes are processes and directed edges are where communication occurs
+    \end{itemize}
+    \item 2 communication operations are \textbf{duality} if same spanning tree can be used for both operations with the edge directions reversed
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Single-broadcast operation:} top-down traversal
+        \item \textbf{Single-accumulation operation:} bottom-up traversal
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Stepwise Specialization}
+Communication operations can be ordered into a hierarchy:
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item From the most general to the most specific: where specific operations can be implemented in terms of more generation operations 
+    \item Operations that are resulted from stepwise specialization are placed near to each other
+\end{itemize}
+
+\subsection{11. Interconnection Networks}
+\subsubsection{Motivation Examples: Sorting}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Sorting on Linear Array:} Odd-Even Transposition sort $n$ rounds given $n$ processors $\Rightarrow$ if 1 round done in 1 step (in parallel), $O(n)$ complexity
+    \item \textbf{2-D Mesh}: PEs have 2 links at corners, and 3 links on the edges, wrap left to right, top to bottom $\Rightarrow$ \textit{Torus}. Sorting 2D Mesh:
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Each PE arranged in 2D Mesh with 1 number, $\sqrt{N}$ rows and columns, sort into `snake like order'
+        \item \textit{Phase 1 Row Sorting:} Odd rows in \textcolor{cyan}{ascending}, Even rows in \textcolor{purple}{descending}
+        \item \textit{Phase 2 Column Sorting:} All columns in \textcolor{cyan}{ascending} order (top to bottom)
+        \item \textit{Repeat until sorted}
+        \item Complexity:
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Use parallel odd-even transposition sorts for each row/column sorts, each needs $\sqrt{N}$ steps $\Rightarrow$ For $N$ numbers, $\log_2 N +1$ phases, thus parallel shear sort $= \sqrt{N} \times (\log_2 N + 1)$ steps
+        \end{itemize}
+    \end{enumerate}
+\end{itemize}
+
+\subsubsection{Interconect Topology}
+\subsubsubsection{Direct Interconection}
+\textbf{Static} or \textbf{Point-to-Point}, often endpoints are of the same type (cores/memory)
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Topology modeled as a \textbf{graph} \verb|G = (V,E)|, \verb|V| = vertices, \verb|E| = edges
+    \item \verb|V| are \textit{processors}, \verb|E| are \textit{connections} e.g. network cable
+    \item \textbf{Metrics:}
+    \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{Diameter $\delta(G)$:} \textit{maximum distance} between any pair of node
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item $\delta(G) = \max \min \{k \ | \ k \text{is the length of path} \ \phi \ \text{from u to v} \}$, $u,v\in V \ \& \ \phi \ \text{path from} \ u \ \text{to} \ v$
+            \item small diameters $\Rightarrow$ small worst-case distance for message transmission
+            \item \textbf{Lower latency} delay for given message to travel from A to B
+        \end{itemize}
+        \item \textbf{Degree $g(v)$:} \textit{number of direct neighbour nodes} of node $v$
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Degree $g(G)$:} \textit{maximum degree} of a node in graph $G$
+            \item $g(G) = \max\{g(v) \ | \ g(v) \ \text{degree of } \ v \in V \}$
+            \item Small node degrees $\Rightarrow$ fewer links between nodes, cheaper!
+        \end{itemize}
+        \item \textbf{Bisection width $B(G)$:} \textit{minimum number of edges} that have to be removed to divide network in \textbf{two equal halves}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Bisection bandwidth $BW(G)$:} total \textit{bandwidth} available between 2 bisected portions of network $U_1, U_2$ partition of $V$, $|U_1| - |U_2| \leq 1$:
+            \item $B(G) = \min |\{(u, v) \in E \ | \ u \in U_1, v \in U_2 \} |$
+            \item Measure of network's capacity in worst case
+            \item Such a bisection has \textit{minimum bandwidth} between 2 positions, therefore when many nodes transmitting simultaneously across bisection, this is the expected bandwidth/bottleneck of network
+        \end{itemize}
+        \item \textbf{Connectivity:}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item \textbf{Node $nc(G)$:} \textit{min} no. of nodes when fail, disconnects network
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item $nc(G) = \min \{|M| \ | \ $ there exists $u, v \in V \setminus M$ s.t. there exists no path in $G_{V \setminus M}$ from $u$ to $v \}$, where $M \subset V$
+                \item Determine the robustness of the network
+            \end{itemize}
+            \item \textbf{Edge $ec(G)$:} \textit{min} no. of edges when fail, disconnects network
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item $ec(G) = \min \{|F| \ | \ $ there exists $u, v \in V \setminus M$ s.t. there exists no path in $G_{E \setminus F}$ from $u$ to $v \}$, where $F \subset E$
+                \item Determine number of independent paths between any pair of nodes
+            \end{itemize}
+        \end{itemize}
+    \end{enumerate}
+\end{itemize}
+
+\begin{multicols}{2}
+    \subsubsubsection{Complete, Linear Array \& Ring}
+    \includegraphics*[width=4.2cm, height=2.8cm]{images/completelineararrayring.PNG}
+
+    \subsubsubsection{Complete Binary Tree}
+    \includegraphics*[width=4.2cm, height=2.5cm]{images/completebinarytree.PNG}
+
+    \subsubsubsection{2-Dimensional Mesh and Torus}
+    \includegraphics*[width=4.2cm, height=2.8cm]{images/2dmeshandtorus.PNG}
+
+    \subsubsubsection{Hypercube}
+    \includegraphics*[width=4.2cm, height=2.5cm]{images/hypercube.PNG}
+\end{multicols}
+
+\subsubsubsection{Cube-Connected-Cycles (CCC)}
+\begin{multicols}{2}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item From k-dimensional hypercube ($k \geq 3$), each of the $k-$nodes take one of the original $k$ links $\Rightarrow$ total nodes = $k2^k$
+    \item Each node labelled as $(X, Y)$
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $X = $ corresponding node index in hypercube, $Y = $ position in cycle
+    \end{itemize}
+    \item Node (X, Y) is connected to 
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $(X, (Y+1) \mod K)$ AND $(X, (Y-1) \mod K)$
+        \item $(X \oplus 2^y, Y)$ $\rightarrow$ link for corresponding dim in original hypercube
+    \end{itemize}
+\end{itemize}
+
+\includegraphics*[width=4.2cm, height=3.2cm]{images/ccc.PNG}
+\end{multicols}
+
+\includegraphics*[width=8.5cm, height=5.4cm]{images/summaroftopo.PNG}
+
+
+\subsubsection{Indirect Interconnects}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Why?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Reduce hardware costs by sharing switches and links
+        \item Sometimes (but not necessarily) connects two different types of hardware, e.g., processors and memory modules
+    \end{itemize}
+    \item How?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Switches provide indirect connections between nodes and can be configured dynamically
+    \end{itemize}
+    \item What metrics?
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Cost (number of switches / links) AND Concurrent connections
+    \end{itemize}
+\end{itemize}
+
+
+\subsubsubsection{Bus Network}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item set of wires to transport data from sender to receiver
+    \item only one pair of devices can communicate at a time
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item bus arbiter used for coordination, typically for small no. of processes
+    \end{itemize}
+\end{itemize}
+
+\begin{tabular}{@{}p{0.3\linewidth}@{} p{0.6\linewidth}@{}}\subsubsubsection{Multistage Switching Network}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item several intermediate switches with connecting wires btw neighbouring stages
+        \item \textbf{Goal:} obtain a small distance for arbitrary pairs of input and output devices
+    \end{itemize}
+    &
+    \begin{itemize}[topsep=-15pt,noitemsep,wide=3000pt,leftmargin=12pt]
+        \item \includegraphics*[width=6cm, height=3cm]{images/multistageswitch.png}
+    \end{itemize}
+\end{tabular}
+
+\subsubsubsection{Crossbar Network}
+\begin{multicols}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item A $n \times m$  crossbar network has $n$ inputs and $m$ outputs
+        \item Two states of a crossbar switch: \textit{straight} or \textit{direction} change
+        \item Hardware is costly ($n \times m$ switches) vs small number of processors
+    \end{itemize}
+    \columnbreak
+    \includegraphics*[width=4.2cm, height=2.3cm]{images/crossbarnetwork.png}
+\end{multicols}
+
+\subsubsubsection{Omega Network}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{One unique path} for every input to output
+    \item $n \times n$ omega network has $\log n$ stages $\Rightarrow$ $\frac{n}{2}$ switches per stage
+    \item connection between stages are regular $(\log n - 1)$ - dimension omega network (connect 16 processors to 16 memory nodes), using $2\times 2$ switches
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Total no. of switches = $\frac{n}{2}$ switches/stage $\times \log n$ stages $= 32$ switches
+        \item Crossbar $= 16 \times 16 = 256$ switches
+    \end{itemize}
+    \item A specific switch’s position: $\textcolor{red}{(\alpha, i)}$
+    \begin{multicols}{2}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item $\alpha$: position of a switch within a stage; i: stage number
+        \end{itemize}
+        \item Has an edge from node $\textcolor{red}{(\alpha, i)}$ to two nodes $\textcolor{cyan}{(\beta, i + 1)}$ where
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item $\beta$ = $\alpha$ with a cyclic left shift
+            \item $\beta$ = $\alpha$ with a cyclic left shift + inversion of the LSBit
+        \end{itemize}
+
+        \columnbreak
+        \includegraphics*[width=4.2cm, height=2.3cm]{images/constructionomeganetwork.png}
+    \end{multicols}
+
+\end{itemize}
+
+
+\subsubsubsection{Butterfly Network}
+\begin{multicols}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Node $\textcolor{red}{(\alpha, i)}$ connects to:
+        \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item $\textcolor{red}{(\alpha, i)}$, i.e., a straight edge.
+            \item \textbf{$(\alpha ', i)$}, where $\alpha$ \& $\alpha '$ differ in the $(i + 1)^{\text{th}}$ bit from the left (cross edge)
+        \end{enumerate}
+    \end{itemize}
+    \columnbreak
+    \includegraphics*[width=3.2cm, height=2cm]{images/butterfly.png}
+\end{multicols}
+
+
+\subsubsubsection{Baseline Network}
+\begin{multicols}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Node $\textcolor{red}{(\alpha, i)}$ to \textbf{two} nodes $\textcolor{cyan}{(\beta, i+1)}$:
+        \begin{enumerate}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item $\beta =$ cyclic right shift of last $(k-i)$ bits of $\alpha$, where $k$ is the no. of bits
+            \item $\beta =$ inversion of the LSBit of $\alpha$, then cyclic right shift of last $(k-i)$ bits
+        \end{enumerate}
+    \end{itemize}
+    \columnbreak
+    \includegraphics*[width=3.2cm, height=2.3cm]{images/baseline.png}
+\end{multicols}
+
+\subsubsection{Routing}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Based on path length:} Minimal or Non-minimal routing: whether the shortest path is always chosen
+    \item \textbf{Based on adaptivity:}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{Deterministic:} Always use the same path for the same pair of (source, destination) node
+        \item \textit{Adaptive:} May take into account of network status and adapt accordingly, e.g. avoid congested path, avoid dead nodes etc
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{XY Routing for 2D Mesh} $(X_{src}, Y_{src})$ to $(X_{dst}, Y_{dst})$, move in $X$ direction until $X_{src} == X_{dst}$ then move in $Y$ direction until $Y_{src} == Y_{dst}$
+
+\subsubsubsection{E-Cube Routing for Hyper-cube}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Let $\textcolor{red}{(\alpha_{n-1}, \alpha_{n-2}, \cdot \alpha_0}$ and $\textcolor{cyan}{(\beta_{n-1}, \beta_{n-2}, \cdot \beta_0)}$ be the bit representations of source and destination node address respectively:
+    \item no. of bits diff in src/dst node addr $\rightarrow$ number of hops (\textit{hamming distance})
+    \item Start from MSB to LSB (or LSB to MSB)
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Find first different bit
+        \item Go to the neighbouring node with the bit corrected, \underline{at most} $n$ hops
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{XOR-Tag Routing for Omega Network}
+\includegraphics*[width=8.5cm, height=2.3cm]{images/xortagrouting.png}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Let T = Source Id $\oplus$ Destination Id
+    \item At stage-$k$ (and assuming MSB is bit 0):
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Go straight if bit $k$ of T is $0$
+        \item Crossover if bit $k$ of T is $1$
+    \end{itemize}
+\end{itemize}
+
+
+\subsection{12. Energy-efficient Computing}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Energy:} (unit $J$ Joules): capacity for doing work
+    \item \textbf{Power:} (unit $W$ or $J/s$ watts or Joules/sec): amount of energy transferred/converted per unit time
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Higher power \textit{costs} more (more energy used, more to pay) 
+        \item and increases \textit{heat} as it limits the amount of power a processor can use
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Increases in \underline{Power Density}: End of Dennar Scaling}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{Dennard Scaling:} the theory that processors could always fit more transistors in the same area without using more power (false since 2005)
+    \item more complex / performant processors ($\uparrow$ transistors) $\rightarrow$ need more power
+    \item processors improvements are currently \textbf{power-limited}
+\end{itemize}
+
+\subsubsection{Per-Processor Efficiency}
+\subsubsubsection{Performance-based efficiency metrics}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Performance-per-watt is a very common efficiency metric $\Rightarrow$ what is performance?
+    \item Running particular workload/benchmark for a \textit{score}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textbf{HPL:} solve dense linear system (GFLOPs)
+        \item \textbf{POVRay:} Raytracing scene rendering (unitless value rendertime/FPS)
+    \end{itemize}
+    \item \textit{Performance-per-watt:} \textbf{Total score} $\div$ \textbf{CPU Power}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Perf-per-watt vs Clock freq, performance-per-watt \underline{is not constant}
+        \item Clock frequency of processor also cause power used to increase $\downarrow$ efficiency
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Power vs Performance: \underline{Diminishing Returns}}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textit{Very very broadly}, clock frequency $\uparrow$ can result in score $\uparrow$
+    \item However, clock frequency $\uparrow$ results in processor power usage $\uparrow \uparrow \uparrow$
+    \item \textcolor{red}{Performance often does not increase linearly with power}
+\end{itemize}
+
+\subsubsubsection{Processor Power, Frequency, Voltage, Temperature}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item $\uparrow$ clock freq. requires $\uparrow$ CPU voltage, or processor will not function correctly
+    \item Processor voltage $>>>$ effect on processor power and therefore temperature
+    \item Factors affecting processor power usage:
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $P_{total} = P_{dynamic} + P_{static}$
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item $P_{total}$: total power used
+            \item $P_{dynamic}$: power used for processor to perform operations
+            \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+                \item = $k \times V^2 \times f \rightarrow V/f$: processor voltage/frequency respecitvely
+                \item \textcolor{red}{voltage and freq are not independent}, $\uparrow$ freq require $\uparrow$ voltages
+                \item $k$: value depending on the \textbf{complexity} of the \textbf{program} being ran and underlying processor hardware
+            \end{itemize}
+            \item $P_{static}$: power used by independent of the work done by the processor
+        \end{itemize}
+        \item Every clock frequency value for a processor has a \textbf{minimum} safe voltage where the processor will operate correctly
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Dynamic Voltage and Frequency Scaling (DVFS)}
+\begin{multicols}{2}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Modern processors can adjust their voltage/clock frequency dynamically to $\downarrow$ power usage and heat
+        \item Idle CPU / simple background tasks $\Rightarrow$ need less performance (clock frequency) $\Rightarrow \downarrow$ frequency/voltage
+    \end{itemize}
+\end{multicols}
+
+
+\subsubsubsection{Heterogeneous Cores}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Put \textbf{two types of procecssors} side-by-side
+    \item e.g. P-cores (more efficient at higher performance levels) and E-cores (efficient at lower power levels) for Intel Meteor Lake
+\end{itemize}
+\includegraphics*[width=8.5cm, height=3.5cm]{images/heterogenouscore.png}
+
+\subsubsubsection{Questions to ask about processors}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Is the benchmark CPU bound? What benchmark program? At what settings?
+    \item What absolute performance was achieved? At what processor wattage?
+    \item How does the performance per watt vary for different loads, frequencies, etc?
+\end{itemize}
+
+\subsubsection{Data Centers/HPC Clusters}
+IT infrastructure / compute is often transferred to data centers
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item Easy access from any location/machine
+    \item Users don’t have to manage their own hardware
+    \item Centralizing hardware $\Rightarrow$ easier to manage power (UPS systems), cooling (centralized cooling solutions), etc
+    \item Fast networking between nodes allows for fast, large distributed jobs
+    \item \textbf{Cost of Datacenters / HPC}
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item $>$ 460 TWh per year, $>$ 2\% of global electricity usage
+        \item 0.9\% of energy-related greenhouse gas emissions, 0.6\% of total
+    \end{itemize}
+\end{itemize}
+
+\subsubsubsection{Metrics for Datacenter Efficiency}
+\begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+    \item \textbf{GFLOPs-per-watt:} similar to per-processor efficiency, but now applied across large, multi-node benchmarks
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item \textit{Green500 List:} Tracks the energy efficiency of Top500 supercomputers in GFLOPs per watt $\Rightarrow$ measured using HPL benchmark
+        \item Power Usage only takes \textit{compute power use} into account
+        \item \textit{NVIDIA Grace Hopper Superchip} $\rightarrow$ high bandwidth CPU-GPU connection (900GB/s data rate, 5x less power usage for data transfers)
+    \end{itemize}
+    \item \textbf{Power Usage Effectiveness:} overall data center energy efficiency: energy used for compute vs total energy usage
+    \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+        \item Supporting a datacenter’s compute takes energy
+        \item a metric to determine how much of the total datacenter’s energy is used for useful computation vs other overheads (cooling, lighting, pumps…)
+        \item $PUE = \frac{\text{Total Facility Energy}}{\text{IT Equipment Energy}} = 1 + \frac{\text{Non IT Facility Energy}}{\text{IT Equipment Energy}}$
+        \item Cyclic trends due to seasons, warmer seasons takes more energy to cool
+        \item \textbf{Issues:}
+        \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+            \item Hotter climates are automatically disadvantaged
+            \item Due to calculation being ((Overhead + IT) ÷ IT), perversely, running larger compute loads often decreases PUE! $\Rightarrow$ incentives datacenters to use more absolute energy doing computation
+            \item Operators are incentivised to measure fewer overheads
+        \end{itemize}
+        \item \textbf{Techniques to reduce PUE:} \\ 
+        \includegraphics*[width=8.2cm, height=4cm]{images/hotaisle.PNG} \\ 
+        \includegraphics*[width=8.2cm, height=4cm]{images/warmwater.PNG}
+    \end{itemize}
+\end{itemize}
+
+% \subsubsection{OpenMP Code Samples}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item OpenMP (Open Multi-Processing) is an API that supports multi-platform shared-memory parallel programming in C, C++, and Fortran
+%     \item Uses compiler directives (pragmas) to parallelize code
+%     \item \textbf{Basic Parallel Regions}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Example code structure:
+%         \begin{lstlisting}[language=C]
+% #pragma omp parallel
+% {
+%     // Code executed by multiple threads
+% }
+%         \end{lstlisting}
+%     \end{itemize}
+%     \item \textbf{Parallel Constructs}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \verb|pragma omp parallel|
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Creates a team of threads and executes entire block by default
+%         \end{itemize}
+%         \item \verb|pragma omp for|
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Distributes loop iterations among threads, automatically divides work
+%         \end{itemize}
+%         \item \verb|pragma omp parallel for|
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Combines parallel and for directives (most common loop parallization method)
+%         \end{itemize}
+%     \end{itemize}
+%     \item \textbf{Work-Sharing Constructs}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \verb|pragma omp sections|
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Divide work into distinct sections each executed by a different thread
+%         \end{itemize}
+%         \item \verb|pragma omp single|
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Code block executed by only 1 thread, useful for initialization or I/O
+%         \end{itemize}
+%     \end{itemize}
+%     \item \textbf{Synchronization Constructs}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \verb|pragma omp barrier|
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Synchronization point, threads wait until all reach this point
+%         \end{itemize}
+%         \item \verb|pragma omp critical|
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Ensures only 1 thread executes block at a time
+%         \end{itemize}
+%         \item \verb|pragma omp atomic|
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Guarantees atomic update of a memory location, lightweight compared to critical section
+%         \end{itemize}
+%     \end{itemize}
+%     \item \textbf{Clauses and Variations}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \textbf{private(variables)}
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Creates thread-local copies of variables, prevents shared memory conflicts
+%         \end{itemize}
+
+%         \item \textbf{shared(variables)}
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Variables accessible by all threads, require careful synchronization
+%         \end{itemize}
+
+%         \item \textbf{reduction(operator:variables)}
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Performs reduction operations safely (supports +, -, *, min, max)
+%         \end{itemize}
+%     \end{itemize}
+
+%     \item \textbf{Schedule Clause}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \textbf{schedule(type[, chunk])}
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item \texttt{static}: Fixed-size chunks
+%             \item \texttt{dynamic}: Smaller, dynamically assigned chunks
+%             \item \texttt{guided}: Large chunks reducing in size
+%             \item \texttt{runtime}: Determined at runtime
+%         \end{itemize}
+%     \end{itemize}
+%     \item \textbf{Example: Parallel Reduction}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Code example:
+%         \begin{lstlisting}[language=C]
+% #pragma omp parallel for reduction(+:sum)
+% for (int i = 0; i < n; i++) {
+%     sum += array[i];
+% }
+%         \end{lstlisting}
+%     \end{itemize}
+%     \begin{multicols}{2}
+%     \item \textbf{Best Practices}
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Minimize critical sections
+%             \item Use \texttt{schedule} for load balancing
+%             \item Avoid false sharing
+%             \item Profile and measure performance
+%         \end{itemize}
+%         \columnbreak
+%         \item \textbf{Common Pitfalls}
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item Race conditions, Load imbalance
+%             \item Excessive synchronization
+%             \item Overhead of creating too many threads
+%         \end{itemize}
+%     \end{multicols}
+% \end{itemize}
+
+% \begin{lstlisting}
+% #include <stdio.h>
+% #include <omp.h>
+% int main() {
+%   // Example 1: Basic Variable Sharing
+%   int shared_var = 10;   // Shared variable
+%   int private_var = 5;   // Initially private
+%   int reduction_sum = 0; // Reduction variable
+%   #pragma omp parallel shared(shared_var) {
+%       // All threads see same mem location:
+%       #pragma omp critical {
+%       shared_var += omp_get_thread_num();
+%     }
+%   }
+
+%   // Example 2: Private Variables
+%   #pragma omp parallel private(private_var) {
+%     // Each thread gets its own copy of private_var
+%     private_var = omp_get_thread_num() * 2;
+%     printf("Thread %d: private_var = %d\n", 
+%       omp_get_thread_num(), private_var);
+%   }
+%   // private_var outside parallel region unchanged
+
+%   // Example 3: Reduction Example
+%   int array[1000];
+%   // Initialize array
+%   for(int i = 0; i < 1000; i++) {
+%     array[i] = 1;
+%   }
+
+%   // Parallel reduction to sum array elements
+%   #pragma omp parallel for reduction(+:reduction_sum)
+%   for(int i = 0; i < 1000; i++) {
+%     reduction_sum += array[i];
+%   }
+
+%   // Example 4: Complex Reduction Example
+%   printf("Example 4: Complex Reduction\n");
+%   int max_value = 0;
+%   int min_value = 1000;
+%   #pragma omp parallel for reduction(max:max_value) reduction(min:min_value)
+%   for(int i = 0; i < 1000; i++) {
+%     // Simulate finding max and min
+%     if (array[i] > max_value) max_value = array[i];
+%     if (array[i] < min_value) min_value = array[i];
+%   }
+%   printf("Max value: %d\n", max_value);
+%   printf("Min value: %d\n", min_value);
+%   return 0;
+% }
+% \end{lstlisting}
+
+% \subsubsubsection{OpenMP Solution for Top10}
+% TOP10 problem for the shared memory machine and assume A can fit in memory. In a simplistic sequential approach, TOP10 problem would be solved by first finding the
+% maximum value MAX(A) in A, followed by another iteration through elements of A to find numbers that are at most $10\%$ less than MAX(A).
+% \begin{lstlisting}
+% // input: array A of size N
+% // output: max_val (global maximum), top_elements (values >= 0.9 * max_val)
+
+% double max_val = -inf;
+% vector<double> top_elements;
+
+% // step 1: parallel computation of local maxima
+% #pragma omp parallel {
+%   int tid = omp_get_thread_num();
+%   int num_threads = omp_get_num_threads();
+%   int chunk_size = N / num_threads;
+%   // determine chunk bounds
+%   int start = tid * chunk_size;
+%   int end = (tid == num_threads - 1) ? N : start + chunk_size;
+%   // local variables for each thread
+%   double local_max = -inf;
+%   // step 2: compute local maximum
+%   for (int i = start; i < end; i++) {
+%     if (A[i] > local_max) {
+%       local_max = A[i];
+%     }
+%   }
+%   // step 3: reduction to find global maximum
+%   #pragma omp critical {
+%     if (local_max > max_val) {
+%       max_val = local_max;
+%     }
+%   }
+% }
+% // step 4: find elements >= 0.9 * max_val
+% double threshold = 0.9 * max_val;
+% #pragma omp parallel {
+%   vector<double> local_top_elements;
+%   int tid = omp_get_thread_num();
+%   int num_threads = omp_get_num_threads();
+%   int chunk_size = N / num_threads;
+%   // determine chunk bounds
+%   int start = tid * chunk_size;
+%   int end = (tid == num_threads - 1) ? N : start + chunk_size;
+%   // step 5: collect elements >= threshold
+%   for (int i = start; i < end; i++) {
+%     if (A[i] >= threshold) {
+%       local_top_elements.push_back(A[i]);
+%     }
+%   }
+%   // step 6: merge local results into global list
+%   #pragma omp critical {
+%     top_elements.insert(top_elements.end(), 
+%       local_top_elements.begin(),
+%       local_top_elements.end());
+%   }
+% }
+% // return results: max_val, top_elements    
+% \end{lstlisting}
+
+% \subsection{CUDA Code Samples}
+% \subsubsubsection{CUDA Functions}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item \textbf{Kernel Functions:} These are the functions executed on the GPU by many threads in parallel. They are defined using the \verb| __global__ | qualifier
+%     \begin{lstlisting}
+% __global__ void addArrays(float* a, float* b, float* c, int n) {
+%     int idx = blockIdx.x * blockDim.x + threadIdx.x;
+%     if (idx < n) {
+%         c[idx] = a[idx] + b[idx];
+%     }
+% }
+%     \end{lstlisting}
+%     \item \textbf{Host Functions:} These are regular C++ functions executed on the CPU. They are defined without any specific qualifiers.
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Purpose is to: set up memory allocation, launch kernels, manage synchronization and data transfer
+%         \begin{lstlisting}
+% void initializeArrays(float* arr, int n) {
+%     for (int i = 0; i < n; i++) {
+%         arr[i] = static_cast<float>(i);
+%     }
+% }
+%         \end{lstlisting}
+%     \end{itemize}
+%     \item \textbf{Device Functions:}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item These are functions executed on the GPU and called by kernel functions. They are defined using the \verb|__device__| qualifier.
+%         \item Purpose: Encapsulate reusable logic that will run on the GPU.
+%         \begin{lstlisting}
+% __device__ float multiply(float a, float b) {
+%     return a * b;
+% }
+%         \end{lstlisting}
+%     \end{itemize}
+%     \item \textbf{Memory Management Functions:} CUDA provides a set of functions to manage memory allocation and transfer between host (CPU) and device (GPU).
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Host-Device Memory Allocation:
+%         \begin{lstlisting}
+% cudaMalloc(&devicePtr, size);
+% cudaFree(devicePtr);
+%         \end{lstlisting}
+%         \item Data transfer:
+%         \begin{lstlisting}
+% cudaMemcpy(dst,src,size,cudaMemcpyHostToDevice);
+% cudaMemcpy(dst,src,size,cudaMemcpyDeviceToHost);
+%         \end{lstlisting}
+%     \end{itemize}
+% \end{itemize}
+% \subsubsubsection{CUDA Runtime Memory Functions}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item \verb|cudaMalloc()|: Allocates memory on the GPU device.
+%     \begin{lstlisting}
+% cudaError_t cudaMalloc(void **devPtr, size_t size);
+%     \end{lstlisting}
+%     \item \verb|cudaMemcpy()|: Copies data between host (CPU) and device (GPU).
+%     \begin{lstlisting}
+% cudaError_t cudaMalloc(void **devPtr, size_t size);
+%     \end{lstlisting}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \verb|dst|: Destination pointer, \verb|src|: Source pointer.
+%         \item \verb|count|: Number of bytes to copy, \verb|kind|: Direction of the copy:
+%         \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%             \item \verb|cudaMemcpyHostToDevice|: Host to Device.
+%             \item \verb|cudaMemcpyDeviceToHost|: Device to Host.
+%             \item \verb|cudaMemcpyDeviceToDevice|: Device to Device.
+%         \end{itemize}
+%     \end{itemize}
+%     \begin{lstlisting}
+% float h_array[100]; // Host array
+% float *d_array;     // Device array
+% cudaMalloc((void **)&d_array, 100 * sizeof(float));
+% cudaMemcpy(d_array, h_array, 100 * sizeof(float), cudaMemcpyHostToDevice);]
+%     \end{lstlisting}
+%     \item \verb|cudaFree()|: Frees previously allocated device memory.
+%     \begin{lstlisting}
+% cudaError_t cudaFree(void *devPtr);
+% // devPtr: pointer to memory to free e.g:
+% cudaFree(d_array);
+%     \end{lstlisting}
+%     \item \verb|cudaMemset()|: Sets device memory to specific value
+%     \begin{lstlisting}
+% cudaError_t cudaMemset(void *devPtr, int value, size_t count);
+% // e.g.:
+% cudaMemset(d_array, 0, 100 * sizeof(float));
+%     \end{lstlisting}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \verb|devPtr|: Pointer to the memory to set.
+%         \item \verb|value|: Value to set each byte to.
+%         \item \verb|count|: Number of bytes to set.
+%     \end{itemize}
+% \end{itemize}
+
+% \subsubsubsection{CUDA Device management}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item \verb|cudaSetDevice():| Sets the active GPU device for execution.
+%     \begin{lstlisting}
+% cudaError_t cudaSetDevice(int device);
+% // device: Device ID to make active e.g.:
+% cudaSetDevice(0);
+%     \end{lstlisting}
+%     \item \verb|cudaGetDeviceCount():| Retrieves the number of available GPU devices.
+%     \begin{lstlisting}
+% cudaError_t cudaGetDeviceCount(int *count);
+% // count: Pointer to store the number of devices e.g.:
+% int deviceCount;
+% cudaGetDeviceCount(&deviceCount);
+% std::cout << "Number of GPUs: " << deviceCount << std::endl;
+%     \end{lstlisting}
+%     \item \verb|cudaDeviceSynchronize()|
+%     \begin{lstlisting}
+% cudaError_t cudaDeviceSynchronize();
+% // e.g.:
+% // Launch a kernel (assuming kernel<<<blocks, threads>>>() is defined)
+% kernel<<<1, 256>>>();
+% // Ensure GPU tasks are complete before accessing results
+% cudaDeviceSynchronize();
+%     \end{lstlisting}
+%     \item Combined Example:
+%     \begin{lstlisting}
+% #include <cuda_runtime.h>
+% #include <iostream>
+
+% __global__ void addKernel(float *a, float *b, float *c, int n) {
+%   int idx = threadIdx.x + blockIdx.x * blockDim.x;
+%   if (idx < n) {
+%     c[idx] = a[idx] + b[idx];
+%   }
+% }
+
+% int main() {
+%   int deviceCount;
+%   cudaGetDeviceCount(&deviceCount); // Get the number of GPUs
+%   std::cout << "Number of GPUs: " << deviceCount << std::endl;
+%   const int BLOCK_SIZE = 8;       // Number of threads per block
+%   cudaSetDevice(0); // Set the first GPU as active
+
+%   const int N = 100;
+%   size_t size = N * sizeof(float);
+
+%   // Allocate host memory
+%   float h_a[N], h_b[N], h_c[N];
+%   for (int i = 0; i < N; i++) {
+%     h_a[i] = static_cast<float>(i);
+%     h_b[i] = static_cast<float>(i * 2);
+%   }
+
+%   // Allocate device memory
+%   float *d_a, *d_b, *d_c;
+%   cudaMalloc((void **)&d_a, size);
+%   cudaMalloc((void **)&d_b, size);
+%   cudaMalloc((void **)&d_c, size);
+
+%   // Copy data to the device
+%   cudaMemcpy(d_a, h_a, size, cudaMemcpyHostToDevice);
+%   cudaMemcpy(d_b, h_b, size, cudaMemcpyHostToDevice);
+
+%   // Set initial values in device memory for c
+%   cudaMemset(d_c, 0, size);
+
+%   // Launch the kernel
+%   int gridSize = (N + BLOCK_SIZE - 1) / BLOCK_SIZE; // Number of blocks
+%   addKernel<<<gridSize, BLOCK_SIZE>>>(d_a, d_b, d_c, N);
+
+%   // Synchronize to ensure kernel execution is complete
+%   cudaDeviceSynchronize();
+
+%   // Copy result back to the host
+%   cudaMemcpy(h_c, d_c, size, cudaMemcpyDeviceToHost);
+
+%   // Print results
+%   std::cout << "Results:" << std::endl;
+%   for (int i = 0; i < N; i++) {
+%     std::cout << h_c[i] << " ";
+%   }
+%   std::cout << std::endl;
+
+%   // Free device memory
+%   cudaFree(d_a);
+%   cudaFree(d_b);
+%   cudaFree(d_c);
+
+%   return 0;
+% }        
+%     \end{lstlisting}
+% \end{itemize}
+
+% \subsubsubsection{CUDA Assignment 2 functions:}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item \verb|runMatcher()|
+%     \begin{lstlisting}
+% void runMatcher(const std::vector<klibpp::KSeq>& samples, const std::vector<klibpp::KSeq>& signatures, std::vector<MatchResult>& matches) {
+%     KSeqGPU* d_samples;
+%     KSeqGPU* d_signatures;
+
+%     int numSamples = samples.size();
+%     int numSignatures = signatures.size();
+
+%     // Copy Samples and Signatures to Device
+%     copyKSeqsToDevice(samples, &d_samples, numSamples);
+%     cudaDeviceSynchronize();
+%     copyKSeqsToDevice(signatures, &d_signatures, numSignatures);
+
+%     cudaDeviceSynchronize();
+
+%     // Allocate memory for the d_matchInfos array on the device
+%     int maxMatches = numSamples * numSignatures;
+%     MatchInfo* d_matchInfos;
+%     cudaMalloc(&d_matchInfos, maxMatches * sizeof(MatchInfo));
+
+%     // Find Sample Signature Matches
+%     const dim3 blockDim = {16, 16, 1};
+%     const dim3 gridDim = {static_cast<unsigned int>((numSamples + 15)/ 16), static_cast<unsigned int>((numSignatures + 15) / 16), 1};
+%     findSignatureKernel<<<gridDim, blockDim>>>(d_matchInfos, d_samples, d_signatures, numSamples, numSignatures);
+
+%     MatchInfo* d_consolidatedMatches;
+%     cudaMalloc(&d_consolidatedMatches, maxMatches * sizeof(MatchInfo));
+
+%     int* d_matchCount;
+%     cudaMalloc(&d_matchCount, sizeof(int));
+%     cudaMemset(d_matchCount, 0, sizeof(int));
+
+%     // Consolidate Matches
+%     consolidateMatches<<<1, 1>>>(d_matchInfos, d_consolidatedMatches, numSamples, numSignatures, d_matchCount);
+%     cudaDeviceSynchronize();
+
+%     // Host variable to store the match count
+%     int h_matchCount;
+
+%     // Copy the matchCount from device to host
+%     cudaMemcpy(&h_matchCount, d_matchCount, sizeof(int), cudaMemcpyDeviceToHost);
+%     cudaDeviceSynchronize();
+
+%     MatchResultGPU* d_matchResults;
+%     cudaMalloc(&d_matchResults, h_matchCount * sizeof(MatchResultGPU));
+
+%     dim3 threadsPerBlock(256);
+%     dim3 numBlocks((h_matchCount + threadsPerBlock.x) / threadsPerBlock.x);
+%     // Compute Phred Score for all matches
+%     computePhredScore<<<numBlocks, threadsPerBlock>>>(d_matchResults, d_consolidatedMatches, d_samples, d_signatures, h_matchCount, numSamples);
+%     cudaDeviceSynchronize();
+
+%     // Copy Matches back to host
+%     copyMatchesToHost(d_matchResults, matches, h_matchCount, samples, signatures);
+% }
+%     \end{lstlisting}
+%     \item \verb|findKernelSignature()|
+%     \begin{lstlisting}
+% __global__ void findSignatureKernel(MatchInfo* d_matchInfos, KSeqGPU* samples, KSeqGPU* signatures, int numSamples, int numSignatures)
+% {
+%     int sampleIdx = blockIdx.x * blockDim.x + threadIdx.x;
+%     int signatureIdx = blockIdx.y * blockDim.y + threadIdx.y;
+
+%     if (sampleIdx >= numSamples || signatureIdx >= numSignatures) {
+%         return;
+%     }
+
+%     KSeqGPU sample = samples[sampleIdx];
+%     KSeqGPU signature = signatures[signatureIdx];
+
+%     auto [sample_name, sample_seq, sample_qual, sample_len] = sample;
+%     auto [signature_name, signature_seq, signature_qual, signature_len] = signature;
+
+%     int match_index = -1;
+%     int i;
+%     for (i = 0; i <= sample_len - signature_len; i++) {
+%         bool match = true;
+
+%         for (int j = 0; j < signature_len; j++) {
+%             if (sample_seq[i + j] != signature_seq[j] && sample_seq[i + j] != 'N' && signature_seq[j] != 'N') {
+%                 match = false;
+%                 break;
+%             }
+%         }
+
+%         if (match) {
+%             match_index = i;
+%             break;
+%         }
+%     }
+
+%     MatchInfo matchInfo;
+%     matchInfo.sample_index = -1;
+%     matchInfo.signature_index = -1;
+%     matchInfo.match_start_index = -1;
+
+%     if (match_index != -1) {
+%         // Populate the MatchInfo struct
+%         matchInfo.sample_index = sampleIdx;
+%         matchInfo.signature_index = signatureIdx;
+%         matchInfo.match_start_index = match_index;  // Assign your match start index
+%     }
+%     else {
+%         matchInfo.sample_index = -1;
+%         matchInfo.signature_index = -1;
+%         matchInfo.match_start_index = -1;
+%     }
+
+%     int idx = sampleIdx * numSignatures + signatureIdx;
+%     // Store the matchInfo into d_matchInfos at the computed index
+%     d_matchInfos[idx] = matchInfo;
+% }
+%     \end{lstlisting}
+% \end{itemize}
+
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item Host functions manage memory, launch kernels, or handle data transfer. A commonly used host function is cudaMalloc, which allocates memory on the device.
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item it demonstrates memory allocation (\verb|cudaMalloc()|), memory copy (\verb|cudaMemcpy|) and the workflow for transferring data to device
+%     \end{itemize}
+%     \begin{lstlisting}
+% void copyKSeqsToDevice(const std::vector<klibpp::KSeq>& kseqs, KSeqGPU** d_kseqs, int count) {
+%     // Allocate memory for KSeqGPU array on the device
+%     cudaMalloc((void**)d_kseqs, count * sizeof(KSeqGPU));
+
+%     KSeqGPU* h_kseqs = new KSeqGPU[count];
+
+%     for (int i = 0; i < count; ++i) {
+%         const klibpp::KSeq& kseq = kseqs[i];
+%         cudaMalloc((void**)&h_kseqs[i].name, kseq.name.size() + 1);
+%         cudaMemcpy(h_kseqs[i].name, kseq.name.c_str(), kseq.name.size() + 1, cudaMemcpyHostToDevice);
+%         cudaMalloc((void**)&h_kseqs[i].seq, kseq.seq.size() + 1);
+%         cudaMemcpy(h_kseqs[i].seq, kseq.seq.c_str(), kseq.seq.size() + 1, cudaMemcpyHostToDevice);
+%         h_kseqs[i].seq_len = kseq.seq.length();
+%     }
+
+%     cudaMemcpy(*d_kseqs, h_kseqs, count * sizeof(KSeqGPU), cudaMemcpyHostToDevice);
+
+%     delete[] h_kseqs;
+% }
+%     \end{lstlisting}
+%     \item Host function (execution): A well-used host function that orchestrates the CUDA workflow, including data transfers, kernel launches, and memory management.
+%     \begin{lstlisting}
+% void runMatcher(const std::vector<klibpp::KSeq>& samples, const std::vector<klibpp::KSeq>& signatures, std::vector<MatchResult>& matches) {
+%     KSeqGPU* d_samples;
+%     KSeqGPU* d_signatures;
+
+%     int numSamples = samples.size();
+%     int numSignatures = signatures.size();
+
+%     // Copy Samples and Signatures to Device
+%     copyKSeqsToDevice(samples, &d_samples, numSamples);
+%     cudaDeviceSynchronize();
+%     copyKSeqsToDevice(signatures, &d_signatures, numSignatures);
+
+%     cudaDeviceSynchronize();
+
+%     // Allocate memory for the d_matchInfos array on the device
+%     int maxMatches = numSamples * numSignatures;
+%     MatchInfo* d_matchInfos;
+%     cudaMalloc(&d_matchInfos, maxMatches * sizeof(MatchInfo));
+
+%     // Find Sample Signature Matches
+%     const dim3 blockDim = {16, 16, 1};
+%     const dim3 gridDim = {static_cast<unsigned int>((numSamples + 15)/ 16), static_cast<unsigned int>((numSignatures + 15) / 16), 1};
+%     findSignatureKernel<<<gridDim, blockDim>>>(d_matchInfos, d_samples, d_signatures, numSamples, numSignatures);
+
+%     MatchInfo* d_consolidatedMatches;
+%     cudaMalloc(&d_consolidatedMatches, maxMatches * sizeof(MatchInfo));
+
+%     int* d_matchCount;
+%     cudaMalloc(&d_matchCount, sizeof(int));
+%     cudaMemset(d_matchCount, 0, sizeof(int));
+
+%     // Consolidate Matches
+%     consolidateMatches<<<1, 1>>>(d_matchInfos, d_consolidatedMatches, numSamples, numSignatures, d_matchCount);
+%     cudaDeviceSynchronize();
+
+%     // Host variable to store the match count
+%     int h_matchCount;
+
+%     // Copy the matchCount from device to host
+%     cudaMemcpy(&h_matchCount, d_matchCount, sizeof(int), cudaMemcpyDeviceToHost);
+%     cudaDeviceSynchronize();
+
+%     MatchResultGPU* d_matchResults;
+%     cudaMalloc(&d_matchResults, h_matchCount * sizeof(MatchResultGPU));
+
+%     dim3 threadsPerBlock(256);
+%     dim3 numBlocks((h_matchCount + threadsPerBlock.x) / threadsPerBlock.x);
+%     // Compute Phred Score for all matches
+%     computePhredScore<<<numBlocks, threadsPerBlock>>>(d_matchResults, d_consolidatedMatches, d_samples, d_signatures, h_matchCount, numSamples);
+%     cudaDeviceSynchronize();
+
+%     // Copy Matches back to host
+%     copyMatchesToHost(d_matchResults, matches, h_matchCount, samples, signatures);
+% }
+%     \end{lstlisting}
+%     \item Device function: Device functions (\verb|__device__|) are utility functions used within kernels. The \verb|getPhredScore| function is an example of a simple, reusable utility.
+%     \item This function provides a specific calculation (converting a character into a Phred score) that can be reused across kernels. Device functions enhance modularity and reduce code duplication.
+%     \begin{lstlisting}
+% __device__ int getPhredScore(char c) {
+%   return static_cast<int>(c) - 33;
+% }
+%     \end{lstlisting}
+%     \item Kernel Functions: core of CUDA programming, executed in parallel across multiple threads on the GPU. A good example is \verb|findSignatureKernel|.
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Demonstrates thread indexing (\verb|blockIdx|, \verb|threadIdx|) to divide work among threads.
+%         \item Performs core matching logic in parallel for all samples and signatures.
+%         \item Writes results back to a global memory array (\verb|d_matchInfos|).
+%     \end{itemize}
+%     \begin{lstlisting}
+% __global__ void findSignatureKernel(MatchInfo* d_matchInfos, KSeqGPU* samples, KSeqGPU* signatures, int numSamples, int numSignatures) {
+%     int sampleIdx = blockIdx.x * blockDim.x + threadIdx.x;
+%     int signatureIdx = blockIdx.y * blockDim.y + threadIdx.y;
+
+%     if (sampleIdx >= numSamples || signatureIdx >= numSignatures) {
+%         return;
+%     }
+
+%     KSeqGPU sample = samples[sampleIdx];
+%     KSeqGPU signature = signatures[signatureIdx];
+
+%     int match_index = -1;
+%     for (int i = 0; i <= sample.seq_len - signature.seq_len; i++) {
+%         bool match = true;
+%         for (int j = 0; j < signature.seq_len; j++) {
+%             if (sample.seq[i + j] != signature.seq[j] && sample.seq[i + j] != 'N' && signature.seq[j] != 'N') {
+%                 match = false;
+%                 break;
+%             }
+%         }
+%         if (match) {
+%             match_index = i;
+%             break;
+%         }
+%     }
+
+%     MatchInfo matchInfo;
+%     matchInfo.sample_index = sampleIdx;
+%     matchInfo.signature_index = signatureIdx;
+%     matchInfo.match_start_index = match_index;
+
+%     int idx = sampleIdx * numSignatures + signatureIdx;
+%     d_matchInfos[idx] = matchInfo;
+% }        
+%     \end{lstlisting}
+% \end{itemize}
+
+
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item \textbf{Initialization and Finalization}
+%     \begin{lstlisting}
+% #include <mpi.h>
+% int main(int argc, char *argv[]) {
+%     MPI_Init(&argc, &argv);  // Initialize MPI
+%     int rank, size;
+%     MPI_Comm_rank(MPI_COMM_WORLD, &rank);  // Get process rank
+%     MPI_Comm_size(MPI_COMM_WORLD, &size);  // Get number of processes
+%     MPI_Finalize();  // Finalize MPI
+%     return 0;
+% }
+%     \end{lstlisting}
+%     \item \textbf{Point-to-Point Communication}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \textbf{Blocking Send and Receive}
+%         \begin{lstlisting}
+% MPI_Send(&data, count, MPI_INT, dest, tag, MPI_COMM_WORLD);
+% MPI_Recv(&data, count, MPI_INT, source, tag, MPI_COMM_WORLD, &status);
+%         \end{lstlisting}
+
+%         \item \textbf{Non-blocking Send and Receive}
+%         \begin{lstlisting}
+% MPI_Isend(&data, count, MPI_INT, dest, tag, MPI_COMM_WORLD, &request);
+% MPI_Irecv(&data, count, MPI_INT, source, tag, MPI_COMM_WORLD, &request);
+% MPI_Wait(&request, &status);
+%         \end{lstlisting}
+%     \end{itemize}
+%     \item \textbf{Collective Communication}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \textbf{Broadcast}
+%         \begin{lstlisting}
+% MPI_Bcast(&data, count, MPI_INT, root, MPI_COMM_WORLD);
+%         \end{lstlisting}
+%         \item \textbf{Scatter}
+%         \begin{lstlisting}
+% MPI_Scatter(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, root, MPI_COMM_WORLD);
+%         \end{lstlisting}
+%         \item \textbf{Gather}
+%         \begin{lstlisting}
+% MPI_Gather(sendbuf, sendcount, MPI_INT, recvbuf, recvcount, MPI_INT, root, MPI_COMM_WORLD);
+%         \end{lstlisting}
+%         \item \textbf{Reduce}
+%         \begin{lstlisting}
+% MPI_Reduce(&sendbuf, &recvbuf, count, MPI_INT, MPI_SUM, root, MPI_COMM_WORLD);
+%         \end{lstlisting}
+%     \end{itemize}
+%     \item \textbf{Scatterv and Gatherv}
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item \textbf{Scatterv}
+%         \begin{lstlisting}
+% MPI_Scatterv(sendbuf, sendcounts, displs, MPI_INT, recvbuf, recvcount, MPI_INT, root, MPI_COMM_WORLD);
+%         \end{lstlisting}
+%         \item \textbf{Gatherv}
+%         \begin{lstlisting}
+% MPI_Gatherv(sendbuf, sendcount, MPI_INT, recvbuf, recvcounts, displs, MPI_INT, root, MPI_COMM_WORLD);
+%         \end{lstlisting}
+%     \end{itemize}
+%     [topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item \textbf{Synchronization}
+%     \begin{lstlisting}
+% MPI_Barrier(MPI_COMM_WORLD);
+%     \end{lstlisting}
+%     \item \textbf{Topology Functions}
+%     \begin{lstlisting}
+% MPI_Cart_create(MPI_COMM_WORLD, ndims, dims, periods, reorder, &comm_cart);
+% MPI_Cart_coords(comm_cart, rank, ndims, coords);
+% MPI_Cart_shift(comm_cart, direction, disp, &rank_source, &rank_dest);
+%     \end{lstlisting}
+% \end{itemize}
+
+% \subsubsubsection{Data Functions}
+% \begin{itemize}
+%     \item \textbf{Example 1: Broadcasting, Scattering, and Gathering Data}
+%     \begin{lstlisting}
+% #include <mpi.h>
+% #include <iostream>
+% #include <vector>
+
+% void broadcast_scatter_gather_example() {
+%     int rank, size;
+%     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+%     MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+%     std::vector<int> data(10);
+%     std::vector<int> recvbuf(2);
+%     std::vector<int> result(10);
+
+%     if (rank == 0) {
+%         for (int i = 0; i < 10; i++) {
+%             data[i] = i + 1;  // Initialize data array on root process
+%         }
+%     }
+
+%     // Broadcast the data size
+%     int data_size = 10;
+%     MPI_Bcast(&data_size, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+%     // Scatter the data to all processes
+%     MPI_Scatter(data.data(), 2, MPI_INT, recvbuf.data(), 2, MPI_INT, 0, MPI_COMM_WORLD);
+
+%     // Perform computation on each process
+%     for (int& value : recvbuf) {
+%         value *= 2;  // Example computation: double the values
+%     }
+
+%     // Gather the results back to the root
+%     MPI_Gather(recvbuf.data(), 2, MPI_INT, result.data(), 2, MPI_INT, 0, MPI_COMM_WORLD);
+
+%     if (rank == 0) {
+%         std::cout << "Final result: ";
+%         for (int value : result) {
+%             std::cout << value << " ";
+%         }
+%         std::cout << std::endl;
+%     }
+% }
+%     \end{lstlisting}
+
+%     \item \textbf{Example 2: Using Reduce and Broadcast Together}
+%     \begin{lstlisting}
+% #include <mpi.h>
+% #include <iostream>
+
+% void reduce_broadcast_example() {
+%     int rank, size;
+%     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+%     MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+%     int local_value = rank + 1;  // Each process has a local value
+%     int global_sum;
+
+%     // Compute the sum of all local values
+%     MPI_Reduce(&local_value, &global_sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+
+%     // Broadcast the global sum to all processes
+%     MPI_Bcast(&global_sum, 1, MPI_INT, 0, MPI_COMM_WORLD);
+
+%     std::cout << "Process " << rank << " received the global sum: " << global_sum << std::endl;
+% }
+%     \end{lstlisting}
+
+%     \item \textbf{Example 3: Non-Blocking Communication with Synchronization}
+%     \begin{lstlisting}
+% #include <mpi.h>
+% #include <iostream>
+
+% void nonblocking_sync_example() {
+%     int rank, size;
+%     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+%     MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+%     int send_data = rank + 10;
+%     int recv_data = -1;
+
+%     MPI_Request request;
+%     MPI_Status status;
+
+%     // Non-blocking send to the next process (cyclic)
+%     MPI_Isend(&send_data, 1, MPI_INT, (rank + 1) % size, 0, MPI_COMM_WORLD, &request);
+
+%     // Non-blocking receive from the previous process (cyclic)
+%     MPI_Irecv(&recv_data, 1, MPI_INT, (rank - 1 + size) % size, 0, MPI_COMM_WORLD, &request);
+
+%     // Wait for non-blocking communication to complete
+%     MPI_Wait(&request, &status);
+
+%     // Synchronize all processes
+%     MPI_Barrier(MPI_COMM_WORLD);
+
+%     std::cout << "Process " << rank << " received data: " << recv_data << std::endl;
+% }
+%     \end{lstlisting}
+% \end{itemize}
+
+% \subsubsubsection{Communicators}
+
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item \textbf{Example 1: Creating a New Group and Communicator} This example creates a subgroup of processes and assigns them a new communicator.
+%     \begin{lstlisting}
+% #include <mpi.h>
+% #include <iostream>
+% #include <vector>
+
+% void communicator_example() {
+%     int rank, size;
+%     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+%     MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+%     // Get the group of MPI_COMM_WORLD
+%     MPI_Group world_group;
+%     MPI_Comm_group(MPI_COMM_WORLD, &world_group);
+
+%     // Define ranks to include in the new group (e.g., even ranks only)
+%     std::vector<int> include_ranks;
+%     for (int i = 0; i < size; i++) {
+%         if (i % 2 == 0) {  // Include even ranks
+%             include_ranks.push_back(i);
+%         }
+%     }
+
+%     // Create a new group with the specified ranks
+%     MPI_Group new_group;
+%     MPI_Group_incl(world_group, include_ranks.size(), include_ranks.data(), &new_group);
+
+%     // Create a new communicator for the new group
+%     MPI_Comm new_comm;
+%     MPI_Comm_create(MPI_COMM_WORLD, new_group, &new_comm);
+
+%     // Check if the process is part of the new communicator
+%     if (new_comm != MPI_COMM_NULL) {
+%         int new_rank, new_size;
+%         MPI_Comm_rank(new_comm, &new_rank);
+%         MPI_Comm_size(new_comm, &new_size);
+
+%         std::cout << "Process " << rank << " is in the new communicator with rank "
+%                   << new_rank << " and size " << new_size << std::endl;
+%     } else {
+%         std::cout << "Process " << rank << " is not in the new communicator" << std::endl;
+%     }
+
+%     // Free the groups and communicators
+%     if (new_comm != MPI_COMM_NULL) MPI_Comm_free(&new_comm);
+%     MPI_Group_free(&new_group);
+%     MPI_Group_free(&world_group);
+% }
+%     \end{lstlisting}
+%     \item \textbf{Example 2: Working with Group Ranks} This example demonstrates retrieving ranks from a group and communicator.
+% \begin{lstlisting}
+% #include <mpi.h>
+% #include <iostream>
+% #include <vector>
+
+% void group_rank_example() {
+%     int rank, size;
+%     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+%     MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+%     // Get the group of MPI_COMM_WORLD
+%     MPI_Group world_group;
+%     MPI_Comm_group(MPI_COMM_WORLD, &world_group);
+
+%     // Define ranks to include in the new group
+%     std::vector<int> include_ranks = {0, 1, 2};  // First 3 ranks
+
+%     // Create a new group with the specified ranks
+%     MPI_Group new_group;
+%     MPI_Group_incl(world_group, include_ranks.size(), include_ranks.data(), &new_group);
+
+%     // Find the rank of the current process in the new group
+%     int group_rank;
+%     MPI_Group_rank(new_group, &group_rank);
+
+%     if (group_rank != MPI_UNDEFINED) {
+%         std::cout << "Process " << rank << " is in the new group with group rank "
+%                     << group_rank << std::endl;
+%     } else {
+%         std::cout << "Process " << rank << " is not in the new group" << std::endl;
+%     }
+
+%     // Free the groups
+%     MPI_Group_free(&new_group);
+%     MPI_Group_free(&world_group);
+% }
+% \end{lstlisting}
+%     \item \textbf{Example 3: Cartesian Topology and Communication}
+% \begin{lstlisting}
+% #include <mpi.h>
+% #include <iostream>
+% #include <vector>
+
+% void cartesian_topology_example() {
+%     int rank, size;
+%     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+%     MPI_Comm_size(MPI_COMM_WORLD, &size);
+
+%     std::vector<int> dims(2, 0);
+%     MPI_Dims_create(size, 2, dims.data());
+
+%     std::vector<int> periods(2, 1);  // Wrap around in both dimensions
+%     MPI_Comm cart_comm;
+%     MPI_Cart_create(MPI_COMM_WORLD, 2, dims.data(), periods.data(), 0, &cart_comm);
+
+%     std::vector<int> coords(2);
+%     MPI_Cart_coords(cart_comm, rank, 2, coords.data());
+
+%     int rank_up, rank_down;
+%     MPI_Cart_shift(cart_comm, 0, 1, &rank_up, &rank_down);
+
+%     std::cout << "Process " << rank << " has coordinates (" << coords[0] << ", " << coords[1]
+%                 << "). Neighbors: up=" << rank_up << ", down=" << rank_down << std::endl;
+
+%     MPI_Comm_free(&cart_comm);
+% }    
+% \end{lstlisting}
+% \end{itemize}
+
+% \subsubsubsection{Explanation of MPI Functions Used}
+% \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%     \item \verb|MPI_Comm_group|
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Retrieves the group associated with a communicator.
+%         \item Example: \verb|MPI_Comm_group(MPI_COMM_WORLD, &world_group);|
+%     \end{itemize}
+%     \item \verb|MPI_Group_incl|
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Creates a new group by including specific ranks from an existing group.
+%         \item Example: \verb|MPI_Group_incl(world_group, include_ranks.size(), include_ranks.data(), &new_group);|
+%     \end{itemize}
+%     \item \verb|MPI_Comm_create|
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Creates a new communicator based on a group.
+%         \item Example: \verb|MPI_Comm_create(MPI_COMM_WORLD, new_group, &new_comm);|
+%     \end{itemize}
+%     \item \verb|MPI_Group_rank|
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Retrieves the rank of the calling process within a group.
+%         \item Example: \verb|MPI_Group_rank(new_group, &group_rank);|
+%     \end{itemize}
+%     \item \verb|MPI_Comm_rank|
+%     \begin{itemize}[topsep=0pt,noitemsep,wide=0pt, leftmargin=\dimexpr\labelwidth + 2\labelsep\relax]
+%         \item Retrieves the rank of the calling process within a communicator.
+%         \item Example: \verb|MPI_Comm_rank(new_comm, &new_rank);|
+%     \end{itemize}
+% \end{itemize}
+\end{multicols*}
+\end{document}

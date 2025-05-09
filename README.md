@@ -22,3 +22,6 @@ A repository of cheatsheets for modules taken in NUS
   - CS3230: Design and Analysis of Algorithms
   - CS4226: Internet Architecture
   - IS2218: Digital Platforms for Business
+- [x] **AY24/25 S2**
+  - CS3223: Database Systems Implementation
+  - CS4222: Wireless Networking
